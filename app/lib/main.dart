@@ -56,11 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true, // For anroid, defualt on iOS
         // FIXME: make button to push on DDU
         actions: [const Icon(Icons.arrow_circle_up_sharp)],
         title: const Text(
           "MCDU MENU",
-          textAlign: TextAlign.right,
         ),
       ),
       body: const Center(
