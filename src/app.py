@@ -1,14 +1,49 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 import requests
+# import db
+from typing import Annotated, Union
+from contextlib import asynccontextmanager
+import os
+from dotenv import load_dotenv
+from sqlmodel import create_engine, SQLModel, Session
 
-api = FastAPI()
+from models.flight import Flight
+# Database 
+
+load_dotenv()
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
+engine = create_engine(DATABASE_URL, echo=True)
+
+
+def init_db():
+    SQLModel.metadata.create_all(engine)
+
+
+def get_session():
+    with Session(engine) as session:
+        yield session
+
+SessionDep = Annotated[Session, Depends(get_session)]
+app = FastAPI()
+
+@asynccontextmanager
+def startup_event():
+    init_db()
 
 @app.get("/")
-def home():
+async def home():
     return {"hello" : "world"}
 
+@app.post('/flight/init')
+async def init_flight(flight:Flight, session:SessionDep):
+    session.add(flight)
+    session.commit()
+    session.refresh(flight)
+    return flight
+
 @app.get("/metar/{icao}")
-def metar(icao: str):
+async def metar(icao: str):
     """
     Get's the metar from Vatsim but the metar should match the metar from real life
     https://vatsim.dev/services/apis#metar-api
@@ -17,13 +52,13 @@ def metar(icao: str):
     return {"metar" : req.text}
 
 # @app.get("/wx/{icao}")
-# def wx(icao: str):
+# async def wx(icao: str):
 #     """
 #     Get's the weather from Vatsim
 #     """
 
 @app.get("atis/{icao}")
-def atis(icao: str):
+async def atis(icao: str):
     """
     Generates a random ATIS, I can't yet find an api to get an atis
     """
