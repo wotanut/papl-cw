@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends
 import requests
 # import db
+import logging
 from typing import Annotated, Union
 from contextlib import asynccontextmanager
 import os
@@ -10,13 +11,16 @@ from sqlmodel import create_engine, SQLModel, Session
 from models.flight import Flight
 # Database 
 
+logger = logging.getLogger('uvicorn.error')
+logger.setLevel(logging.DEBUG)
+
 load_dotenv()
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
 engine = create_engine(DATABASE_URL, echo=True)
 
 
-def init_db():
+async def init_db():
     SQLModel.metadata.create_all(engine)
 
 
@@ -25,11 +29,19 @@ def get_session():
         yield session
 
 SessionDep = Annotated[Session, Depends(get_session)]
+
+# @asynccontextmanager
+# async def lifespan(app: FastAPI):
+#     logger.debug("Startup")
+#     await init_db()
+
+# app = FastAPI(lifespan=lifespan)
 app = FastAPI()
 
-@asynccontextmanager
-def startup_event():
-    init_db()
+@app.on_event("startup")
+async def startup_event():
+    logger.debug("Starting Up")
+    await init_db()
 
 @app.get("/")
 async def home():
