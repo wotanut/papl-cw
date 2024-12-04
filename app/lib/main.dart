@@ -57,7 +57,11 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         // FIXME: make button to push on DDU
-        leading: const Icon(Icons.arrow_circle_up_sharp),
+        actions: [const Icon(Icons.arrow_circle_up_sharp)],
+        title: const Text(
+          "MCDU MENU",
+          textAlign: TextAlign.right,
+        ),
       ),
       body: const Center(
         // Center is a layout widget. It takes a single child and positions it
