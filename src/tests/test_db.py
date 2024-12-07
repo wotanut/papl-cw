@@ -29,8 +29,8 @@ class TestDB:
 
     def test_insert(self):
         init_db()
-        # resetDB()
         with Session(engine) as session:
+            resetDB(session)
             for flight in self.flights:
                 session.add(flight)
             session.commit()
