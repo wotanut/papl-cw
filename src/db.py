@@ -2,7 +2,9 @@ import os
 
 from sqlmodel import create_engine, SQLModel, Session, select
 from models.flight import Flight
+from dotenv import load_dotenv
 
+load_dotenv()
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
 engine = create_engine(DATABASE_URL, echo=True)

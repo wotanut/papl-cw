@@ -30,7 +30,7 @@ app = FastAPI()
 @app.on_event("startup")
 async def startup_event():
     logger.debug("Starting Up")
-    await init_db()
+    init_db()
 
 @app.get("/")
 async def home():
