@@ -1,9 +1,10 @@
 from fastapi.testclient import TestClient
 from sqlmodel import Session, select
+import pytest
 
 from ..app import app
 from ..db import *
-from ..models.flight import FlightStage
+from ..models.flightStage import FlightStage
 
 client = TestClient(app)
 
@@ -30,7 +31,7 @@ def test_good_flight_init():
         index = 0
         for result in results:
             assert result.id == flight["id"]
-            assert result.stage == flight["stage"]
+            assert result.stage.value == flight["stage"]
             assert result.dep == flight["dep"]
             assert result.dest == flight["dest"]
             assert result.altn == flight["altn"]
@@ -39,9 +40,7 @@ def test_good_flight_init():
         assert index == 1
         resetDB(session)
 
-
-
-def test_bad_flight_init():
+def test_bad_stage():
     with Session(engine) as session:
         resetDB(session)
         flight ={
@@ -52,13 +51,15 @@ def test_bad_flight_init():
                 "altn" : "KBOS",
                 "ete" : "0015"
             }# Invalid because stage can not be e
-        response = client.post(
-            '/flight/init', 
-            json=flight,
-        )
-        assert response.status_code == 200
-        # Should'nt have been inserted
+        with pytest.raises(Exception):
+            response = client.post(
+                '/flight/init', 
+                json=flight,
+            )
+            assert response.status_code == 400
+            
+            # Should'nt have been inserted
 
-        statement = select(Flight).where(Flight.id == flight["id"])
-        results = session.exec(statement)
-        assert results == None
+            statement = select(Flight).where(Flight.id == flight["id"])
+            results = session.exec(statement)
+            assert results == None
