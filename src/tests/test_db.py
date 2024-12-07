@@ -8,12 +8,23 @@ from time import sleep
 
 from models.flight import Flight
 
+from dotenv import load_dotenv
+
 class TestDB:
     flights = [
         Flight(id="AAL1254", stage="Departing",dep="EGLL", dest="KJFK",altn="CYYZ",ete="0015"),
         Flight(id="BAW15K", stage="Departing",dep="EGLL", dest="KJFK",altn="CYYZ",ete="0015"),
         Flight(id="VIR27L", stage="Departing",dep="EGLL", dest="KJFK",altn="CYYZ",ete="0015"),
     ]
+
+    def test_database_url(self):
+        """
+        This test is important because if it fails you've done something wrong
+
+        Checks to see if the database URL is none, if it is it will fail and then subsequent tests will fail
+        """
+        load_dotenv()
+        assert os.environ.get("DATABASE_URL") != None
 
 
     def test_insert(self):
@@ -34,7 +45,6 @@ class TestDB:
                 assert flightDB.altn == flight.altn
                 assert flightDB.ete == flight.ete
 
-    @pytest.mark.dependency(depends=['test_insert']) # Forces the inserts to be done first
     async def test_reset(self):
         with Session(engine) as session:
 
