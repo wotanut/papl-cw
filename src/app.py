@@ -1,14 +1,16 @@
-from fastapi import FastAPI, Depends
-import requests
-from db import *
 import logging
-from typing import Annotated, Union
-from contextlib import asynccontextmanager
 import os
-from dotenv import load_dotenv
-from sqlmodel import create_engine, SQLModel, Session, exists
+from contextlib import asynccontextmanager
+from typing import Annotated, Union
 
+import requests
+from dotenv import load_dotenv
+from fastapi import Depends, FastAPI
+from sqlmodel import Session, SQLModel, create_engine, exists
+
+from db import *
 from models.flight import Flight
+
 # Database 
 
 logger = logging.getLogger('uvicorn.error')
