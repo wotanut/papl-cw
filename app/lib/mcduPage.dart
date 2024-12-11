@@ -15,11 +15,6 @@ class Mcdupage extends StatefulWidget {
 class _McdupageState extends State<Mcdupage> {
   @override
   Widget build(BuildContext context) {
-    // return Column(
-    //   children: [
-    //     for (int i = 0; i < widget.slkButtons.length; i++) widget.slkButtons[i],
-    //   ],
-    // );
     // NOTE - Can't use for each because need to jump up by two each time
     return Container(
       child: Column(
