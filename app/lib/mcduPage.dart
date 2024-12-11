@@ -23,11 +23,15 @@ class _McdupageState extends State<Mcdupage> {
     return Container(
       child: Column(
         children: [
-          for (int i = 0; i <= widget.slkButtons.length; i++)
-            Row(children: [
-              widget.slkButtons[i],
-              // widget.slkButtons[i + 1],
-            ]),
+          for (int i = 0; i < widget.slkButtons.length; i++)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                widget.slkButtons[i],
+                widget.slkButtons[i],
+                // widget.slkButtons[i + 1],
+              ],
+            ),
         ],
       ),
     );
