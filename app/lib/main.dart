@@ -1,3 +1,5 @@
+import 'package:app/button.dart';
+import 'package:app/mcduPage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -57,7 +59,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  final int _counter = 0;
 
   void _incrementCounter() {
     setState(() {});
@@ -75,30 +77,22 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         centerTitle: true, // For anroid, defualt on iOS
         // FIXME: make button to push on DDU
-        actions: [const Icon(Icons.arrow_circle_up_sharp)],
+        actions: const [Icon(Icons.arrow_circle_up_sharp)],
         title: const Text(
           "MCDU MENU",
         ),
       ),
       body: const Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Text("Hello World"
-            // Column is also a layout widget. It takes a list of children and
-            // arranges them vertically. By default, it sizes itself to fit its
-            // children horizontally, and tries to be as tall as its parent.
-            //
-            // Column has various properties to control how it sizes itself and
-            // how it positions its children. Here we use mainAxisAlignment to
-            // center the children vertically; the main axis here is the vertical
-            // axis because Columns are vertical (the cross axis would be
-            // horizontal).
-            //
-            // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-            // action in the IDE, or press "p" in the console), to see the
-            // wireframe for each widget.
-            ),
-      ),
+          // Center is a layout widget. It takes a single child and positions it
+          // in the middle of the parent.
+          child: Mcdupage(slkButtons: [
+        mcduEntryBTN(),
+        mcduEntryBTN(),
+        mcduEntryBTN(),
+        mcduEntryBTN(),
+        mcduEntryBTN(),
+        mcduEntryBTN()
+      ])),
     );
   }
 }
