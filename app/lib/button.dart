@@ -16,10 +16,17 @@ class mcduEntryBTN extends StatefulWidget {
 class _mcduEntryBTNState extends State<mcduEntryBTN> {
   @override
   Widget build(BuildContext context) {
+    var actualTitle = widget.title;
+    if (widget.isRightSide) {
+      actualTitle = "< ${widget.title}";
+    } else if (!widget.isRightSide) {
+      actualTitle = "${widget.title} >";
+    }
+
     return Container(
         decoration: BoxDecoration(border: Border.all(color: Colors.cyan)),
         child: TextButton(
-            child: Text(widget.title),
+            child: Text(actualTitle),
             onPressed: () {
               print("Clicked");
             }));
