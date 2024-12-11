@@ -91,6 +91,12 @@ class _MyHomePageState extends State<MyHomePage> {
         mcduEntryBTN(),
         mcduEntryBTN(),
         mcduEntryBTN(),
+        mcduEntryBTN(),
+        mcduEntryBTN(),
+        mcduEntryBTN(),
+        mcduEntryBTN(),
+        mcduEntryBTN(),
+        mcduEntryBTN(),
         mcduEntryBTN()
       ])),
     );

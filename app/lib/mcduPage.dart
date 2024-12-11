@@ -15,10 +15,21 @@ class Mcdupage extends StatefulWidget {
 class _McdupageState extends State<Mcdupage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        for (int i = 0; i < widget.slkButtons.length; i++) widget.slkButtons[i],
-      ],
+    // return Column(
+    //   children: [
+    //     for (int i = 0; i < widget.slkButtons.length; i++) widget.slkButtons[i],
+    //   ],
+    // );
+    return Container(
+      child: Column(
+        children: [
+          for (int i = 0; i <= widget.slkButtons.length; i++)
+            Row(children: [
+              widget.slkButtons[i],
+              // widget.slkButtons[i + 1],
+            ]),
+        ],
+      ),
     );
   }
 }
