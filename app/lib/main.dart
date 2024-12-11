@@ -86,11 +86,21 @@ class _MyHomePageState extends State<MyHomePage> {
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
           child: Mcdupage(slkButtons: [
+        mcduEntryBTN(
+          isRightSide: true,
+          title: "FMGC",
+        ),
         mcduEntryBTN(),
-        mcduEntryBTN(),
-        mcduEntryBTN(),
-        mcduEntryBTN(),
-        mcduEntryBTN(),
+        mcduEntryBTN(
+          isRightSide: true,
+          title: "ATSU",
+        ),
+        mcduEntryBTN(
+          title: "OPTS",
+        ),
+        mcduEntryBTN(
+          title: "ABOUT",
+        ),
         mcduEntryBTN(),
         mcduEntryBTN(),
         mcduEntryBTN(),
