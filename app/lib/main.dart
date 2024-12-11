@@ -89,17 +89,21 @@ class _MyHomePageState extends State<MyHomePage> {
         mcduEntryBTN(
           isRightSide: true,
           title: "FMGC",
+          slk: 1,
         ),
         mcduEntryBTN(),
         mcduEntryBTN(
           isRightSide: true,
           title: "ATSU",
+          slk: 2,
         ),
         mcduEntryBTN(
           title: "OPTS",
+          slk: 5,
         ),
         mcduEntryBTN(
           title: "ABOUT",
+          slk: 6,
         ),
         mcduEntryBTN(),
         mcduEntryBTN(),
