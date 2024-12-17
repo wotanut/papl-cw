@@ -1,5 +1,8 @@
-from sqlmodel import Field, Session, SQLModel, create_engine, select, Column, Enum, CheckConstraint
+from sqlmodel import (CheckConstraint, Column, Enum, Field, Relationship,
+                      Session, SQLModel, create_engine, select)
+
 from .flightStage import FlightStage
+
 
 class Flight(SQLModel, table=True):
     """
@@ -27,10 +30,17 @@ class Flight(SQLModel, table=True):
     @flightStage
     """
     id: str = Field(primary_key=True, unique=True,max_length=7,min_length=7 ,description="Can be a string of 7 digits as all callsigns are unique") #NOTE - ID can be a string as all callsigns will be unique
-    stage: FlightStage = Field(sa_column=Column(Enum(FlightStage)), default="PreDep")
+    stage: FlightStage = Field(sa_column=Column(Enum(FlightStage)), default=FlightStage.PreDep.value)
     dep: str = Field(max_length=4,min_length=4,nullable=False,sa_column_args=CheckConstraint(r"^[A-Z]{4}$"))
     dest: str = Field(max_length=4,min_length=4,nullable=False,sa_column_args=CheckConstraint(r"^[A-Z]{4}$"))
     altn: str = Field(max_length=4,min_length=4,nullable=False,sa_column_args=CheckConstraint(r"^[A-Z]{4}$"))
     ete: str = Field(max_length=4,min_length=4,nullable=False,sa_column_args=CheckConstraint(r"^[0-9]{4}$"))
     ADCReq: bool | None = Field(default=None, nullable=True) # ADC is a type of message
     #TODO: FK to Messages and FlightAware
+
+class __Flight(Flight):
+    id: str
+    filedFL: str = Field(max_length=5, sa_column_args=CheckConstraint(r"^FL[0-9]{3}%"))
+    currentFL: str = Field(max_length=5, sa_column_args=CheckConstraint(r"^FL[1-9]{3}%"))
+    #NOTE - This would be where FL's will be stored as well as messages so that they're not accesible over the API and can't be accessed from initial set
+    #TODO: Add filedFL and currentFL
