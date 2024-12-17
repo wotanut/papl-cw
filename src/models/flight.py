@@ -55,7 +55,10 @@ def getICAO(flight: Flight):
 
 def generateCallsign(airline: Optional[str], fltnmb: Optional[str]):
     """
-    Generates a callsign from either a given airline icao or a flight number. If neither are provided generates one for both
+    Generates a callsign from either a given airline icao or a flight number. If neither are provided generates one for both.
+    
+    WARNING:
+        Does not check to see if the callsign is in use
 
     Returns:
     - Callsign: Str - A callsign for use
