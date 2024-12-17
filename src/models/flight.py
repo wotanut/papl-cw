@@ -1,3 +1,8 @@
+import json
+import random
+import re
+from typing import Optional
+
 from sqlmodel import (CheckConstraint, Column, Enum, Field, Relationship,
                       Session, SQLModel, create_engine, select)
 
@@ -47,3 +52,48 @@ class __Flight(Flight):
 
 def getICAO(flight: Flight):
     return flight.id[:3] # :3
+
+def generateCallsign(airline: Optional[str], fltnmb: Optional[str]):
+    """
+    Generates a callsign from either a given airline icao or a flight number. If neither are provided generates one for both
+
+    Returns:
+    - Callsign: Str - A callsign for use
+    """
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    airlines :dict = {}
+    callsign = ""
+    with open('../airlines.json') as f:
+        airlines = json.load(f)
+        f.close()
+    if airline:
+        # Check to see if it's a valid airline
+        if airline in airlines:
+            shouldChange = False
+            for key, value in airlines.items():
+                if airline == value and key == "IATA":
+                    # Change it to be an ICAO code instead
+                    shouldChange =  not shouldChange
+                elif shouldChange == True or airline == value and key == "ICAO":
+                    callsign = callsign + key.upper() # Adds the airline to the callsign
+    else:
+        # pick a random airline
+        callsign = random.choice(list(airlines.values()))
+    if fltnmb:
+        # pass it through a regex for flight numbers
+        nmbr = re.search(r"^[1-9][0-9]{0,3}[A-Z]?$", fltnmb)
+        if nmbr: # A match was found
+            callsign = callsign + fltnmb
+    else:
+        nmbr = random.choice(0,9999)
+        strnmbr = str(nmbr).split(0)
+        done = False
+        for number in strnmbr:
+            if number == "0":
+                number = random.choice(alphabet)
+                done = True
+                callsign = callsign + number
+            elif not done:
+                callsign = callsign + number
+        # TODO - Differentiate between America (15k, 2K etc.. and 1534)
+    return callsign
