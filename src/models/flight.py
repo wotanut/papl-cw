@@ -44,3 +44,6 @@ class __Flight(Flight):
     currentFL: str = Field(max_length=5, sa_column_args=CheckConstraint(r"^FL[1-9]{3}%"))
     #NOTE - This would be where FL's will be stored as well as messages so that they're not accesible over the API and can't be accessed from initial set
     #TODO: Add filedFL and currentFL
+
+def getICAO(flight: Flight):
+    return flight.id[:3] # :3

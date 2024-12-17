@@ -1,6 +1,7 @@
 import logging
 import os
 from contextlib import asynccontextmanager
+from random import randint
 from typing import Annotated, Union
 
 import requests
@@ -9,7 +10,8 @@ from fastapi import Depends, FastAPI
 from sqlmodel import Session, SQLModel, create_engine, exists
 
 from db import *
-from models.flight import Flight
+from models.flight import Flight, getICAO
+from models.message import Message
 
 # Database 
 
@@ -59,6 +61,21 @@ async def metar(icao: str):
 #     """
 #     Get's the weather from Vatsim
 #     """
+
+@app.get('/msg/adc')
+async def sendADC(flight: Flight):
+    """
+    On request, checks to see if the aircraft requires an ADC to be submitted, if so will send an ADC required msg otherwise will send ADC not req
+    """
+    probaility = randint(0,100)
+    content = ""
+    if probaility % 4 == 0 or flight.ADCReq == True:
+        content = f"ADC Required for {probaility} minutes delay. Send via company tablet"
+    else:
+        content = "ADC Not rqrd"
+    msg = Message("Company", sender=f"{getICAO(flight)}OPS")
+    return msg
+        
 
 @app.get("atis/{icao}")
 async def atis(icao: str):
