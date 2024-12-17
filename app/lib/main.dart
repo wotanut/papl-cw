@@ -111,7 +111,15 @@ class _MyHomePageState extends State<MyHomePage> {
         mcduEntryBTN(),
         mcduEntryBTN(),
         mcduEntryBTN(),
-        mcduEntryBTN()
+        mcduEntryBTN(
+          title: "OPTS",
+          slk: 5,
+        ),
+        mcduEntryBTN(),
+        mcduEntryBTN(
+          title: "ABOUT",
+          slk: 6,
+        )
       ])),
     );
   }
