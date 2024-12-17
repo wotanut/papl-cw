@@ -73,7 +73,7 @@ async def sendADC(flight: Flight):
         content = f"ADC Required for {probaility} minutes delay. Send via company tablet"
     else:
         content = "ADC Not rqrd"
-    msg = Message("Company", sender=f"{getICAO(flight)}OPS")
+    msg = Message("Company", sender=f"{getICAO(flight)}OPS", content=content)
     return msg
         
 
