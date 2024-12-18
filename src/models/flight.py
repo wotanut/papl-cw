@@ -182,11 +182,11 @@ def generateAirport(icao: Optional[str]) -> str:
                 return icao
 
 
-def generateETE(ete: Optional[str]) -> str:
+def generateETE(ete: Optional[str] = None) -> str:
     """
     Checks that the ETE provided is valid and if not generates one
     """
-    if ete:
+    if ete != None:
         while len(ete) != 4:
             ete = "0" + ete
         match = re.search(r"^(?!0000)[0-9]{4}$",ete)
