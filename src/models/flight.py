@@ -106,7 +106,7 @@ def generateCallsign(airline: Optional[str], fltnmb: Optional[str]):
         # TODO - Differentiate between America (15k, 2K etc.. and 1534)
     return callsign
 
-def generateAirport(icao: str) -> str | bool:
+def generateAirport(icao: str) -> str:
     """
     Checks that the airport exists, if it doesn't, a random ICAO will be retruned.
     If an IATA code is provided, an IACO one will be returned (EG LHR provided EGLL returned)
@@ -115,15 +115,16 @@ def generateAirport(icao: str) -> str | bool:
     - Bool if unsuccesful (for whatever reason)
     - The ICAO code of the airport specified if not
     """
+    invalid = False
     if len(icao) == 3:
         api_url = f'https://api.api-ninjas.com/v1/airports?iata={icao}'
     elif len(icao) == 4:
         api_url = f'https://api.api-ninjas.com/v1/airports?iaco={icao}'
     else:
-        return False
+        invalid = True
     response = requests.get(api_url, headers={'X-Api-Key': os.environ.get("APININJAS")})
     
-    if response.ok:
+    if response.ok and not invalid:
         return response.json()['icao'].upper()
 
     # Generate a random airport
