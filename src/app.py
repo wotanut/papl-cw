@@ -10,13 +10,8 @@ from fastapi import Depends, FastAPI, HTTPException
 from sqlmodel import Session, SQLModel, create_engine, exists
 
 from db import *
-from models.flight import (
-    Flight,
-    generateAirport,
-    generateCallsign,
-    generateETE,
-    getICAO,
-)
+from models.flight import (Flight, generateAirport, generateCallsign,
+                           generateETE, getFltNmbr, getICAO)
 from models.message import Message
 
 # Database
@@ -103,8 +98,7 @@ async def init(flight: Optional[Flight], session: SessionDep):
 
     if flight:
         try:
-            airline = flight.id[:3]
-            nmbr = flight.id[3:]
+            airline, nmbr = getICAO(flight), getFltNmbr(flight)
             cs = generateCallsign(airline, nmbr)
         except Exception as e:
             errors.append(e)
@@ -114,7 +108,7 @@ async def init(flight: Optional[Flight], session: SessionDep):
             generateAirport(flight.dest),
             generateAirport(flight.altn),
         )  # TODO - Better error validation
-        ete = generateETE(ete)
+        ete = generateETE(flight.ete)
     else:
         cs = generateCallsign
         dep, dest, altn = generateAirport(), generateAirport(), generateAirport()
