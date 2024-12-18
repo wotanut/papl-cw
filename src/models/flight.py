@@ -106,7 +106,7 @@ def generateCallsign(airline: Optional[str], fltnmb: Optional[str]):
         # TODO - Differentiate between America (15k, 2K etc.. and 1534)
     return callsign
 
-def generateAirport(icao: str) -> str:
+def generateAirport(icao: Optional[str]) -> str:
     """
     Checks that the airport exists, if it doesn't, a random ICAO will be retruned.
     If an IATA code is provided, an IACO one will be returned (EG LHR provided EGLL returned)
@@ -137,3 +137,18 @@ def generateAirport(icao: str) -> str:
             if next:
                 icao = line.split(">")[1].split('<')[0] # searching through pure html, just need to get an attribute
                 return icao
+
+def generateETE(ete: Optional[str]) -> str:
+    """
+    Checks that the ETE provided is valid and if not generates one
+    """
+    if ete:
+        while len(ete) != 4:
+            ete = "0" + ete
+        match = re.search(r"^(?!0000)[0-9]{4}$")
+        if match:
+            return ete
+    ete = str(random.randint(0,999))
+    while len(ete) != 4:
+            ete = "0" + ete
+    return ete
