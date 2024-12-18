@@ -94,6 +94,12 @@ def getICAO(flight: Flight):
     """
     return flight.id[:3]  # :3
 
+def getFltNmbr(flight: Flight):
+    """
+    Get's the flight number of a flight
+    """
+    return flight.id[3:]
+
 
 def generateCallsign(airline: Optional[str], fltnmb: Optional[str]):
     """
