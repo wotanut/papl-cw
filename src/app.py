@@ -2,15 +2,16 @@ import logging
 import os
 from contextlib import asynccontextmanager
 from random import randint
-from typing import Annotated, Union
+from typing import Annotated, Optional, Union
 
 import requests
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, HTTPException
 from sqlmodel import Session, SQLModel, create_engine, exists
 
 from db import *
-from models.flight import Flight, getICAO
+from models.flight import (Flight, generateAirport, generateCallsign,
+                           generateETE, getICAO)
 from models.message import Message
 
 # Database 
@@ -62,6 +63,55 @@ async def metar(icao: str):
 #     Get's the weather from Vatsim
 #     """
 
+@app.get("/init/request")
+async def init(flight: Optional[Flight], session:SessionDep):
+    """
+    Generates a random flight for the aircraft. Normally this would send the aircraft registration but as that has no significance to a schedule
+    (at least at this time) that's been left out. If no flight is supplied then a random one will be generated and returned. If an incorrect paramter
+    is found it will be replace with a random corrected paramater and there will be an optional text entry for the scratchpad to display. Incorrect entries refer to a wrong flight ID (I.E BA154 as opposed to BAW154)
+    An incorrectly formatted destination (LHR as opposed to EGLL), horrible ETE (0000) etc..
+
+    Paramters:
+    flight: Optional[Flight] - an optional parameter that will override any custom entries, assuming it is all of the correct format
+
+    Raises:
+    401: If the callsign is already in use
+
+    Returns:
+    - Errors: If an exception is raised will return any error, namely "Callsign in use"
+    - entry: If there is an entry for the scratchpad to display
+    - flight: The updated flight object (mainly for error validation) 
+    """
+    errors = []
+    entry = ""
+
+    exists = Session.exec(exists().where(Flight.id==flight.id))
+    if exists:
+        errors.append("Callsign in use")
+        raise HTTPException(status_code=401, detail="Callsign in use")
+
+    if flight:
+        try:
+            airline = flight.id[:3]
+            nmbr = flight.id[3:]
+            cs = generateCallsign(airline,nmbr)
+        except Exception as e:
+            errors.append(e)
+            entry = "Invalid Callsign"
+        dep,dest,altn = generateAirport(flight.dep),generateAirport(flight.dest),generateAirport(flight.altn) # TODO - Better error validation
+        ete = generateETE(ete)
+    else:
+        cs = generateCallsign
+        dep,dest,altn = generateAirport(),generateAirport(),generateAirport()
+        ete = generateETE()
+    newFlight = Flight(id=cs, stage=flight.stage,dep=dep,dest=dest,altn=altn,ete=ete,ADCReq=flight.ADCReq)
+
+    session.add(newFlight)
+    session.commit()
+    return {"success": True, flight: newFlight, entry:entry}
+    
+
+
 @app.get('/msg/adc')
 async def sendADC(flight: Flight):
     """
@@ -74,6 +124,7 @@ async def sendADC(flight: Flight):
     else:
         content = "ADC Not rqrd"
     msg = Message("Company", sender=f"{getICAO(flight)}OPS", content=content)
+    # TODO: Add that the message was sent to the message database
     return msg
         
 
