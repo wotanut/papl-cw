@@ -6,17 +6,8 @@ from typing import Optional
 
 import requests
 from dotenv import load_dotenv
-from sqlmodel import (
-    CheckConstraint,
-    Column,
-    Enum,
-    Field,
-    Relationship,
-    Session,
-    SQLModel,
-    create_engine,
-    select,
-)
+from sqlmodel import (CheckConstraint, Column, Enum, Field, Relationship,
+                      Session, SQLModel, create_engine, select)
 
 from .Types import FlightStage
 
@@ -87,17 +78,20 @@ class Flight(SQLModel, table=True):
     # TODO: FK to Messages and FlightAware
 
 
-class __Flight(Flight):
-    id: str
-    filedFL: str = Field(max_length=5, sa_column_args=CheckConstraint(r"^FL[0-9]{3}%"))
-    currentFL: str = Field(
-        max_length=5, sa_column_args=CheckConstraint(r"^FL[1-9]{3}%")
-    )
+# class __Flight(Flight):
+#     id: str
+#     filedFL: str = Field(max_length=5, sa_column_args=CheckConstraint(r"^FL[0-9]{3}%"))
+#     currentFL: str = Field(
+#         max_length=5, sa_column_args=CheckConstraint(r"^FL[1-9]{3}%")
+#     )
     # NOTE - This would be where FL's will be stored as well as messages so that they're not accesible over the API and can't be accessed from initial set
     # TODO: Add filedFL and currentFL
 
 
 def getICAO(flight: Flight):
+    """
+    Get's the ICAO Code of an airline
+    """
     return flight.id[:3]  # :3
 
 
@@ -195,7 +189,7 @@ def generateETE(ete: Optional[str]) -> str:
     if ete:
         while len(ete) != 4:
             ete = "0" + ete
-        match = re.search(r"^(?!0000)[0-9]{4}$")
+        match = re.search(r"^(?!0000)[0-9]{4}$",ete)
         if match:
             return ete
     ete = str(random.randint(0, 999))
