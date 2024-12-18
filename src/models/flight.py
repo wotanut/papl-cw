@@ -106,18 +106,17 @@ def generateCallsign(airline: Optional[str], fltnmb: Optional[str]):
         # TODO - Differentiate between America (15k, 2K etc.. and 1534)
     return callsign
 
-def checkAirport(icao: str) -> str | bool:
+def generateAirport(icao: str) -> str | bool:
     """
-    Checks that the airport exists. No other information will be provided. If an IATA code is provided, an IACO one will be returned (EG LHR provided EGLL returned)
+    Checks that the airport exists, if it doesn't, a random ICAO will be retruned.
+    If an IATA code is provided, an IACO one will be returned (EG LHR provided EGLL returned)
     
     Returns:
     - Bool if unsuccesful (for whatever reason)
     - The ICAO code of the airport specified if not
     """
-    iata = False
     if len(icao) == 3:
         api_url = f'https://api.api-ninjas.com/v1/airports?iata={icao}'
-        iata = True
     elif len(icao) == 4:
         api_url = f'https://api.api-ninjas.com/v1/airports?iaco={icao}'
     else:
@@ -126,5 +125,14 @@ def checkAirport(icao: str) -> str | bool:
     
     if response.ok:
         return response.json()['icao'].upper()
-    return False
-        
+
+    # Generate a random airport
+    response = requests.get('https://ourairports.com/random') # Gets a random airport
+    if response.ok:
+        next = False
+        for line in response.text:
+            if "GPS Code" in line:
+                next = True
+            if next:
+                icao = line.split(">")[1].split('<')[0] # searching through pure html, just need to get an attribute
+                return icao
