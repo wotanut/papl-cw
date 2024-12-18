@@ -1,13 +1,17 @@
 import json
+import os
 import random
 import re
 from typing import Optional
 
+import requests
+from dotenv import load_dotenv
 from sqlmodel import (CheckConstraint, Column, Enum, Field, Relationship,
                       Session, SQLModel, create_engine, select)
 
 from .flightStage import FlightStage
 
+load_dotenv()
 
 class Flight(SQLModel, table=True):
     """
@@ -63,6 +67,7 @@ def generateCallsign(airline: Optional[str], fltnmb: Optional[str]):
     Returns:
     - Callsign: Str - A callsign for use
     """
+    # Won't use a regex here so that someoen doesn't try and use XK234 as a valid callsign
     alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     airlines :dict = {}
     callsign = ""
@@ -100,3 +105,26 @@ def generateCallsign(airline: Optional[str], fltnmb: Optional[str]):
                 callsign = callsign + number
         # TODO - Differentiate between America (15k, 2K etc.. and 1534)
     return callsign
+
+def checkAirport(icao: str) -> str | bool:
+    """
+    Checks that the airport exists. No other information will be provided. If an IATA code is provided, an IACO one will be returned (EG LHR provided EGLL returned)
+    
+    Returns:
+    - Bool if unsuccesful (for whatever reason)
+    - The ICAO code of the airport specified if not
+    """
+    iata = False
+    if len(icao) == 3:
+        api_url = f'https://api.api-ninjas.com/v1/airports?iata={icao}'
+        iata = True
+    elif len(icao) == 4:
+        api_url = f'https://api.api-ninjas.com/v1/airports?iaco={icao}'
+    else:
+        return False
+    response = requests.get(api_url, headers={'X-Api-Key': os.environ.get("APININJAS")})
+    
+    if response.ok:
+        return response.json()['icao'].upper()
+    return False
+        
