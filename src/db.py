@@ -1,8 +1,9 @@
 import os
 
-from sqlmodel import create_engine, SQLModel, Session, select
-from models.flight import Flight
 from dotenv import load_dotenv
+from sqlmodel import Session, SQLModel, create_engine, select
+
+from models.flight import Flight
 
 load_dotenv()
 DATABASE_URL = os.environ.get("DATABASE_URL")
@@ -25,6 +26,7 @@ def resetDB(session: Session):
 
     This is primarily a debug tool but could prove useful for an ADMIN ONLY API endpoint to allow admins to delete everything from the database and reinitialise it
     """
+    # NOTE - Whenever you add more tables, they needed to be added here in order to properly reset the database
     with session:
         flights = select(Flight)  # Selects all the flights
         results = session.exec(flights)
