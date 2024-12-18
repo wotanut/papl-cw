@@ -7,7 +7,7 @@ from fastapi.testclient import TestClient
 from sqlmodel import Session, select
 
 from models.flight import (generateAirport, generateCallsign, generateETE,
-                           getICAO)
+                           getFltNmbr, getICAO)
 
 from ..app import app
 from ..db import *
@@ -24,7 +24,7 @@ flights = [
             ete="15",
         ),
         Flight(
-            id="BAW15K",
+            id="BAW15K9",
             stage="Departing",
             dep="EGLL",
             dest="KJFK",
@@ -50,9 +50,15 @@ class TestAirport:
         """
         pass
 
-# class TestCallsign:
+class TestCallsign:
+    def test_valid_callsign(self):
+        """
+        Gives it a valid callsign and checks to see if the outcome is valid
+        """
+        assert generateCallsign(getICAO(flights[0]),getFltNmbr(flights[0])) == flights[0].id # Valid callsign
+
 class TestETE:
-    def test_valid_ete(self):
+    def test_ete(self):
         assert generateETE(flights[0].ete) == "0015"
         assert generateETE(flights[0].ete) != "15" # This is what is passed in originally to flight 0
 
@@ -77,3 +83,10 @@ class TestICAO:
         assert getICAO(flights[0]) == "AAL"
         assert getICAO(flights[1]) == "BAW"
         assert getICAO(flights[2]) == "VIR"
+
+    def test_valid_fltnmbr(self):
+        """
+        Tests that the icao works by passing in a valid flight number
+        """
+        assert getFltNmbr(flights[0]) == "1254"
+        assert getFltNmbr(flights[2]) == "27L"

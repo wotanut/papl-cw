@@ -2,7 +2,7 @@ import json
 import os
 import random
 import re
-from typing import Optional
+from typing import Dict, List, Optional
 
 import requests
 from dotenv import load_dotenv
@@ -100,7 +100,6 @@ def getFltNmbr(flight: Flight):
     """
     return flight.id[3:]
 
-
 def generateCallsign(airline: Optional[str], fltnmb: Optional[str]):
     """
     Generates a callsign from either a given airline icao or a flight number. If neither are provided generates one for both.
@@ -113,24 +112,23 @@ def generateCallsign(airline: Optional[str], fltnmb: Optional[str]):
     """
     # Won't use a regex here so that someoen doesn't try and use XK234 as a valid callsign
     alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    airlines: dict = {}
+    airlines: List[Dict] = []
     callsign = ""
-    with open("../airlines.json") as f:
+    with open("/home/sam/Code/papl-cw/src/models/airlines.json") as f: #FIXME - unfuck this
         airlines = json.load(f)
         f.close()
     if airline:
         # Check to see if it's a valid airline
-        if airline in airlines:
-            shouldChange = False
-            for key, value in airlines.items():
+        shouldChange = False
+        for line in airlines:
+            for key,value in line.items():
                 if airline == value and key == "IATA":
                     # Change it to be an ICAO code instead
                     shouldChange = not shouldChange
-                elif shouldChange == True or airline == value and key == "ICAO":
-                    callsign = (
-                        callsign + key.upper()
-                    )  # Adds the airline to the callsign
-    else:
+                elif shouldChange == True or (airline == value and key == "ICAO"):
+                    callsign = callsign + value.upper()  # Adds the airline to the callsign
+                    break
+    elif callsign == '' or not airline: 
         # pick a random airline
         callsign = random.choice(list(airlines.values()))
     if fltnmb:
@@ -186,7 +184,6 @@ def generateAirport(icao: Optional[str]) -> str:
                     0
                 ]  # searching through pure html, just need to get an attribute
                 return icao
-
 
 def generateETE(ete: Optional[str] = None) -> str:
     """
