@@ -10,11 +10,33 @@ from models.flight import Flight
 
 from dotenv import load_dotenv
 
+
 class TestDB:
     flights = [
-        Flight(id="AAL1254", stage="Departing",dep="EGLL", dest="KJFK",altn="CYYZ",ete="0015"),
-        Flight(id="BAW15K", stage="Departing",dep="EGLL", dest="KJFK",altn="CYYZ",ete="0015"),
-        Flight(id="VIR27L", stage="Departing",dep="EGLL", dest="KJFK",altn="CYYZ",ete="0015"),
+        Flight(
+            id="AAL1254",
+            stage="Departing",
+            dep="EGLL",
+            dest="KJFK",
+            altn="CYYZ",
+            ete="0015",
+        ),
+        Flight(
+            id="BAW15K",
+            stage="Departing",
+            dep="EGLL",
+            dest="KJFK",
+            altn="CYYZ",
+            ete="0015",
+        ),
+        Flight(
+            id="VIR27L",
+            stage="Departing",
+            dep="EGLL",
+            dest="KJFK",
+            altn="CYYZ",
+            ete="0015",
+        ),
     ]
 
     def test_database_url(self):
@@ -25,7 +47,6 @@ class TestDB:
         """
         load_dotenv()
         assert os.environ.get("DATABASE_URL") != None
-
 
     def test_insert(self):
         init_db()

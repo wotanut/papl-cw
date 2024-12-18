@@ -10,13 +10,18 @@ from fastapi import Depends, FastAPI, HTTPException
 from sqlmodel import Session, SQLModel, create_engine, exists
 
 from db import *
-from models.flight import (Flight, generateAirport, generateCallsign,
-                           generateETE, getICAO)
+from models.flight import (
+    Flight,
+    generateAirport,
+    generateCallsign,
+    generateETE,
+    getICAO,
+)
 from models.message import Message
 
-# Database 
+# Database
 
-logger = logging.getLogger('uvicorn.error')
+logger = logging.getLogger("uvicorn.error")
 logger.setLevel(logging.DEBUG)
 
 load_dotenv()
@@ -32,21 +37,25 @@ SessionDep = Annotated[Session, Depends(get_session)]
 # app = FastAPI(lifespan=lifespan)
 app = FastAPI()
 
+
 @app.on_event("startup")
 async def startup_event():
     logger.debug("Starting Up")
     init_db()
 
+
 @app.get("/")
 async def home():
-    return {"hello" : "world"}
+    return {"hello": "world"}
 
-@app.post('/flight/init')
-async def init_flight(flight:Flight, session:SessionDep):
+
+@app.post("/flight/init")
+async def init_flight(flight: Flight, session: SessionDep):
     session.add(flight)
     session.commit()
     session.refresh(flight)
     return flight
+
 
 @app.get("/metar/{icao}")
 async def metar(icao: str):
@@ -55,7 +64,8 @@ async def metar(icao: str):
     https://vatsim.dev/services/apis#metar-api
     """
     req = requests.get("https://metar.vatsim.net/{icao}")
-    return {"metar" : req.text}
+    return {"metar": req.text}
+
 
 # @app.get("/wx/{icao}")
 # async def wx(icao: str):
@@ -63,8 +73,9 @@ async def metar(icao: str):
 #     Get's the weather from Vatsim
 #     """
 
+
 @app.get("/init/request")
-async def init(flight: Optional[Flight], session:SessionDep):
+async def init(flight: Optional[Flight], session: SessionDep):
     """
     Generates a random flight for the aircraft. Normally this would send the aircraft registration but as that has no significance to a schedule
     (at least at this time) that's been left out. If no flight is supplied then a random one will be generated and returned. If an incorrect paramter
@@ -80,12 +91,12 @@ async def init(flight: Optional[Flight], session:SessionDep):
     Returns:
     - Errors: If an exception is raised will return any error, namely "Callsign in use"
     - entry: If there is an entry for the scratchpad to display
-    - flight: The updated flight object (mainly for error validation) 
+    - flight: The updated flight object (mainly for error validation)
     """
     errors = []
     entry = ""
 
-    exists = Session.exec(exists().where(Flight.id==flight.id))
+    exists = Session.exec(exists().where(Flight.id == flight.id))
     if exists:
         errors.append("Callsign in use")
         raise HTTPException(status_code=401, detail="Callsign in use")
@@ -94,43 +105,58 @@ async def init(flight: Optional[Flight], session:SessionDep):
         try:
             airline = flight.id[:3]
             nmbr = flight.id[3:]
-            cs = generateCallsign(airline,nmbr)
+            cs = generateCallsign(airline, nmbr)
         except Exception as e:
             errors.append(e)
             entry = "Invalid Callsign"
-        dep,dest,altn = generateAirport(flight.dep),generateAirport(flight.dest),generateAirport(flight.altn) # TODO - Better error validation
+        dep, dest, altn = (
+            generateAirport(flight.dep),
+            generateAirport(flight.dest),
+            generateAirport(flight.altn),
+        )  # TODO - Better error validation
         ete = generateETE(ete)
     else:
         cs = generateCallsign
-        dep,dest,altn = generateAirport(),generateAirport(),generateAirport()
+        dep, dest, altn = generateAirport(), generateAirport(), generateAirport()
         ete = generateETE()
-    newFlight = Flight(id=cs, stage=flight.stage,dep=dep,dest=dest,altn=altn,ete=ete,ADCReq=flight.ADCReq)
+    newFlight = Flight(
+        id=cs,
+        stage=flight.stage,
+        dep=dep,
+        dest=dest,
+        altn=altn,
+        ete=ete,
+        ADCReq=flight.ADCReq,
+    )
 
     session.add(newFlight)
     session.commit()
-    return {"success": True, flight: newFlight, entry:entry}
-    
+    return {"success": True, flight: newFlight, entry: entry}
 
 
-@app.get('/msg/adc')
+@app.get("/msg/adc")
 async def sendADC(flight: Flight):
     """
     On request, checks to see if the aircraft requires an ADC to be submitted, if so will send an ADC required msg otherwise will send ADC not req
     """
-    probaility = randint(0,100)
+    probaility = randint(0, 100)
     content = ""
     if probaility % 4 == 0 or flight.ADCReq == True:
-        content = f"ADC Required for {probaility} minutes delay. Send via company tablet"
+        content = (
+            f"ADC Required for {probaility} minutes delay. Send via company tablet"
+        )
     else:
         content = "ADC Not rqrd"
     msg = Message("Company", sender=f"{getICAO(flight)}OPS", content=content)
     # TODO: Add that the message was sent to the message database
     return msg
-        
+
 
 @app.get("atis/{icao}")
 async def atis(icao: str):
     """
     Generates a random ATIS, I can't yet find an api to get an atis
     """
-    return {"atis" : "LONDON HEATHROW AIRPORT INFORMATION A...  1420Z...  WIND 110 AT 7 KNOTS...  VISIBILITY 7 KILOMETERS...  CEILING 1300 OVERCAST...  TEMPERATURE 11, DEWPOINT 8...  QNH 1029, ALTIMETER 3039...  LANDING RUNWAY 27L...  DEPARTING RUNWAY 27R...  ADVISE CONTROLLER ON INITIAL CONTACT THAT YOU HAVE INFORMATION A... "}
+    return {
+        "atis": "LONDON HEATHROW AIRPORT INFORMATION A...  1420Z...  WIND 110 AT 7 KNOTS...  VISIBILITY 7 KILOMETERS...  CEILING 1300 OVERCAST...  TEMPERATURE 11, DEWPOINT 8...  QNH 1029, ALTIMETER 3039...  LANDING RUNWAY 27L...  DEPARTING RUNWAY 27R...  ADVISE CONTROLLER ON INITIAL CONTACT THAT YOU HAVE INFORMATION A... "
+    }
