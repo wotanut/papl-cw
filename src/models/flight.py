@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from sqlmodel import (CheckConstraint, Column, Enum, Field, Relationship,
                       Session, SQLModel, create_engine, select)
 
-from .flightStage import FlightStage
+from .Types import FlightStage
 
 load_dotenv()
 

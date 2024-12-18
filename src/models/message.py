@@ -17,6 +17,6 @@ class Message(SQLModel, table=True):
     :content: The content of the message, for example "ADC Required, send an ADC when convenient via ADV menu."
     """
     id: Optional[int] = Field(default=None, primary_key=True, unique=True)
-    type: MsgType = Field(nullable=False)
+    type: MsgType = Field(nullable=False) # Note a literal due to https://github.com/fastapi/sqlmodel/issues/57
     sender: str = Field(min_length=3,max_length=15) #NOTE - sender will appear as title for company msgs
     content: str = Field(max_length=70)

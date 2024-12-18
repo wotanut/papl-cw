@@ -1,10 +1,10 @@
+import pytest
 from fastapi.testclient import TestClient
 from sqlmodel import Session, select
-import pytest
 
 from ..app import app
 from ..db import *
-from ..models.flightStage import FlightStage
+from ..models.Types import FlightStage
 
 client = TestClient(app)
 
