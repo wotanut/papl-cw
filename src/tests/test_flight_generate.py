@@ -3,16 +3,12 @@
 import re
 
 import pytest
-from fastapi.testclient import TestClient
-from sqlmodel import Session, select
 
 from models.flight import (generateAirport, generateCallsign, generateETE,
                            getFltNmbr, getICAO)
 
 from ..app import app
 from ..db import *
-
-client = TestClient(app)
 
 flights = [
         Flight(
@@ -42,13 +38,14 @@ flights = [
     ]
 
 class TestAirport:
-    def test_valid_gener(self):
+    def test_airports(self):
         """
-        This test is important because if it fails you've done something wrong
-
-        Checks to see if the database URL is none, if it is it will fail and then subsequent tests will fail
+        Tests the generate airport function
         """
-        pass
+        assert generateAirport("EGLL") == "EGLL" # Test airport does exist
+        assert generateAirport("LHR") == "EGLL" # Test IATA airport
+        assert re.search(r"[A-Z]{4}",generateAirport("KEGL")) != None # Test airport does not exist
+        assert re.search(r"[A-Z]{4}",generateAirport("KEGL")) != None # Test no airport provided
 
 class TestCallsign:
     def test_valid_callsign(self):
@@ -67,6 +64,9 @@ class TestCallsign:
         # Focus on the mvp first
 
 class TestETE:
+    """
+    Test the function for generating ETE's
+    """
     def test_ete(self):
         assert generateETE(flights[0].ete) == "0015"
         assert generateETE(flights[0].ete) != "15" # This is what is passed in originally to flight 0
@@ -83,8 +83,10 @@ class TestETE:
             assert re.search(r"^(?!0000)[0-9]{4}$",generateETE()) != None
 
 
-
 class TestICAO:
+    """
+    Test airline ICAO validation 
+    """
     def test_valid_icao(self):
         """
         Tests that the icao works by passing in a valid flight number
