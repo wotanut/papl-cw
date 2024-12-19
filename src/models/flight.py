@@ -1,3 +1,4 @@
+import csv
 import json
 import os
 import random
@@ -153,8 +154,7 @@ def generateCallsign(airline: Optional[str] = None, fltnmb: Optional[str] = None
         # TODO - Differentiate between America (15k, 2K etc.. and 1534)
     return callsign
 
-
-def generateAirport(icao: Optional[str]) -> str:
+def generateAirport(icao: Optional[str] = None) -> str:
     """
     Checks that the airport exists, if it doesn't, a random ICAO will be retruned.
     If an IATA code is provided, an IACO one will be returned (EG LHR provided EGLL returned)
@@ -163,30 +163,51 @@ def generateAirport(icao: Optional[str]) -> str:
     - Bool if unsuccesful (for whatever reason)
     - The ICAO code of the airport specified if not
     """
-    invalid = False
-    if len(icao) == 3:
-        api_url = f"https://api.api-ninjas.com/v1/airports?iata={icao}"
-    elif len(icao) == 4:
-        api_url = f"https://api.api-ninjas.com/v1/airports?iaco={icao}"
-    else:
-        invalid = True
-    response = requests.get(api_url, headers={"X-Api-Key": os.environ.get("APININJAS")})
+    with open("/home/sam/Code/papl-cw/src/models/airports.csv",newline='') as csvfile:
+        if not icao:
+            random = True
+        if len(icao) != 3 or len(icao) != 4: # Get a random airport
+            random = True
+        reader = csv.reader(csvfile,delimiter=" ")
+        # ICAO is the 0th item, IATA is the 1st (0b index)
+        for row in reader:
+            line = row[0].split(',')
+            iata = line[1]
+            gps = line[0]
+            if iata == icao or gps == icao:
+                return gps
+            
 
-    if response.ok and not invalid:
-        return response.json()["icao"].upper()
+    # invalid = False
+    # if len(icao) == 3:
+    #     api_url = f"https://api.api-ninjas.com/v1/airports?iata={icao}"
+    # elif len(icao) == 4:
+    #     api_url = f"https://api.api-ninjas.com/v1/airports?icao={icao}"
+    # else:
+    #     invalid = True
+    # if not invalid:
+    #     response = requests.get(api_url, headers={"X-Api-Key": os.environ.get("APININJAS")})
 
-    # Generate a random airport
-    response = requests.get("https://ourairports.com/random")  # Gets a random airport
-    if response.ok:
-        next = False
-        for line in response.text:
-            if "GPS Code" in line:
-                next = True
-            if next:
-                icao = line.split(">")[1].split("<")[
-                    0
-                ]  # searching through pure html, just need to get an attribute
-                return icao
+    # if response.ok and not invalid:
+    #     try:
+    #         icao = response.json()[0]["icao"]
+    #         return icao
+    #     except Exception as e:
+    #         # it's invalid
+    #         pass
+
+    # # Generate a random airport
+    # response = requests.get("https://ourairports.com/random")  # Gets a random airport
+    # if response.ok:
+    #     next = False
+    #     for line in response.text.split("\n"):
+    #         if "GPS Code" in line:
+    #             next = True
+    #         if next:
+    #             icao = line.split(">")[1].split("<")[
+    #                 0
+    #             ]  # searching through pure html, just need to get an attribute
+    #             return icao
 
 def generateETE(ete: Optional[str] = None) -> str:
     """
