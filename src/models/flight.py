@@ -163,51 +163,36 @@ def generateAirport(icao: Optional[str] = None) -> str:
     - Bool if unsuccesful (for whatever reason)
     - The ICAO code of the airport specified if not
     """
+    rand = False
     with open("/home/sam/Code/papl-cw/src/models/airports.csv",newline='') as csvfile:
         if not icao:
-            random = True
-        if len(icao) != 3 or len(icao) != 4: # Get a random airport
-            random = True
+            rand = True
+        if len(icao) != 3 and len(icao) != 4: # Get a random airport
+            print(len(icao))
+            rand = True
         reader = csv.reader(csvfile,delimiter=" ")
+
+        choice = random.randint(0, 4240)
+        index = 0
+        airfield = "EGLL" # Failsafe in case the airport wasn't found
+
         # ICAO is the 0th item, IATA is the 1st (0b index)
         for row in reader:
+            if rand == True:
+                if index -1 != choice:
+                    continue
             line = row[0].split(',')
             iata = line[1]
             gps = line[0]
             if iata == icao or gps == icao:
                 return gps
-            
+            if index - 1 == choice:
+                airfield = gps
+            index = index + 1
 
-    # invalid = False
-    # if len(icao) == 3:
-    #     api_url = f"https://api.api-ninjas.com/v1/airports?iata={icao}"
-    # elif len(icao) == 4:
-    #     api_url = f"https://api.api-ninjas.com/v1/airports?icao={icao}"
-    # else:
-    #     invalid = True
-    # if not invalid:
-    #     response = requests.get(api_url, headers={"X-Api-Key": os.environ.get("APININJAS")})
-
-    # if response.ok and not invalid:
-    #     try:
-    #         icao = response.json()[0]["icao"]
-    #         return icao
-    #     except Exception as e:
-    #         # it's invalid
-    #         pass
-
-    # # Generate a random airport
-    # response = requests.get("https://ourairports.com/random")  # Gets a random airport
-    # if response.ok:
-    #     next = False
-    #     for line in response.text.split("\n"):
-    #         if "GPS Code" in line:
-    #             next = True
-    #         if next:
-    #             icao = line.split(">")[1].split("<")[
-    #                 0
-    #             ]  # searching through pure html, just need to get an attribute
-    #             return icao
+        return airfield
+        
+        # The airport wasn't found
 
 def generateETE(ete: Optional[str] = None) -> str:
     """
