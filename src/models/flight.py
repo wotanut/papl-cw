@@ -128,7 +128,7 @@ def generateCallsign(airline: Optional[str] = None, fltnmb: Optional[str] = None
                 elif shouldChange == True or (airline == value and key == "ICAO"):
                     callsign = callsign + value.upper()  # Adds the airline to the callsign
                     break
-    elif callsign == '' or not airline: 
+    if callsign == '' or not airline: 
         # pick a random airline
         callsign = random.choice(airlines).get("ICAO")
     if fltnmb:
