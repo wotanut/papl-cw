@@ -56,6 +56,13 @@ class TestCallsign:
         Gives it a valid callsign and checks to see if the outcome is valid
         """
         assert generateCallsign(getICAO(flights[0]),getFltNmbr(flights[0])) == flights[0].id # Valid callsign
+        assert generateCallsign("AAL",getFltNmbr(flights[0])) == flights[0].id # Valid callsign but uses IATA insstead of ICAO
+        # assert re.search(rf"^[A-Z]{{3}}{getFltNmbr(flights[0])}$",generateCallsign("NMX",getFltNmbr(flights[0]))) != None # Invalid callsign, bad airline
+        assert re.search(rf"^[A-Z]{{3}}{getFltNmbr(flights[0])}$",generateCallsign(fltnmb=getFltNmbr(flights[0]))) != None # Invalid callsign, no airline
+        assert generateCallsign("AAL","12345") == flights[0].id # Invalid callsign, longer than 4 digit flt nmbr
+        assert generateCallsign("AAL","123") == flights[0].id # Invalid callsign, shorter than 4 digit flt nmbr
+        assert generateCallsign("AAL") == flights[0].id # Invalid callsign, no flt nmbr
+        assert generateCallsign() == flights[0].id # no callsign
 
 class TestETE:
     def test_ete(self):
@@ -83,6 +90,7 @@ class TestICAO:
         assert getICAO(flights[0]) == "AAL"
         assert getICAO(flights[1]) == "BAW"
         assert getICAO(flights[2]) == "VIR"
+        # TODO - Test for IATA (so AA as opposed to AAL)
 
     def test_valid_fltnmbr(self):
         """
