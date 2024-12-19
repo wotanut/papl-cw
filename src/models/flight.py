@@ -115,7 +115,7 @@ def generateCallsign(airline: Optional[str] = None, fltnmb: Optional[str] = None
     alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     airlines: List[Dict] = []
     callsign = ""
-    with open("/home/sam/Code/papl-cw/src/models/airlines.json") as f: #FIXME - unfuck this
+    with open(os.path.join(os.path.dirname(__file__), "airlines.json")) as f:
         airlines = json.load(f)
         f.close()
     if airline:
@@ -164,7 +164,8 @@ def generateAirport(icao: Optional[str] = None) -> str:
     - The ICAO code of the airport specified if not
     """
     rand = False
-    with open("/home/sam/Code/papl-cw/src/models/airports.csv",newline='') as csvfile:
+    path = os.path.join(os.path.dirname(__file__), "airports.csv")
+    with open(path,newline='') as csvfile:
         if not icao:
             rand = True
         if len(icao) != 3 and len(icao) != 4: # Get a random airport
