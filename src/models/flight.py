@@ -100,7 +100,7 @@ def getFltNmbr(flight: Flight):
     """
     return flight.id[3:]
 
-def generateCallsign(airline: Optional[str], fltnmb: Optional[str]):
+def generateCallsign(airline: Optional[str] = None, fltnmb: Optional[str] = None):
     """
     Generates a callsign from either a given airline icao or a flight number. If neither are provided generates one for both.
 
@@ -130,7 +130,7 @@ def generateCallsign(airline: Optional[str], fltnmb: Optional[str]):
                     break
     elif callsign == '' or not airline: 
         # pick a random airline
-        callsign = random.choice(list(airlines.values()))
+        callsign = random.choice(airlines).get("ICAO")
     if fltnmb:
         # pass it through a regex for flight numbers
         nmbr = re.search(r"^[1-9][0-9]{0,3}[A-Z]?$", fltnmb)
