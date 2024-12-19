@@ -124,21 +124,24 @@ def generateCallsign(airline: Optional[str] = None, fltnmb: Optional[str] = None
             for key,value in line.items():
                 if airline == value and key == "IATA":
                     # Change it to be an ICAO code instead
-                    shouldChange = not shouldChange
+                    shouldChange = True
                 elif shouldChange == True or (airline == value and key == "ICAO"):
                     callsign = callsign + value.upper()  # Adds the airline to the callsign
                     break
     if callsign == '' or not airline: 
         # pick a random airline
         callsign = random.choice(airlines).get("ICAO")
+    shouldChange = False # Reset the variable so it can be used for the fltnmbr
     if fltnmb:
         # pass it through a regex for flight numbers
         nmbr = re.search(r"^[1-9][0-9]{0,3}[A-Z]?$", fltnmb)
         if nmbr:  # A match was found
             callsign = callsign + fltnmb
-    else:
-        nmbr = random.choice(0, 9999)
-        strnmbr = str(nmbr).split(0)
+        else:
+            shouldChange = True
+    if not fltnmb or shouldChange:
+        nmbr = random.randint(0, 9999)
+        strnmbr = str(nmbr)
         done = False
         for number in strnmbr:
             if number == "0":

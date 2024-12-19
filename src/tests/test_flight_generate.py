@@ -57,12 +57,14 @@ class TestCallsign:
         """
         assert generateCallsign(getICAO(flights[0]),getFltNmbr(flights[0])) == flights[0].id # Valid callsign
         assert generateCallsign("AAL",getFltNmbr(flights[0])) == flights[0].id # Valid callsign but uses IATA insstead of ICAO
-        # assert re.search(rf"^[A-Z]{{3}}{getFltNmbr(flights[0])}$",generateCallsign("NMX",getFltNmbr(flights[0]))) != None # Invalid callsign, bad airline
+        assert re.search(rf"^[A-Z]{{3}}{getFltNmbr(flights[0])}$",generateCallsign("NMX",getFltNmbr(flights[0]))) != None # Invalid callsign, bad airline
         assert re.search(rf"^[A-Z]{{3}}{getFltNmbr(flights[0])}$",generateCallsign(fltnmb=getFltNmbr(flights[0]))) != None # Invalid callsign, no airline
-        assert generateCallsign("AAL","12345") == flights[0].id # Invalid callsign, longer than 4 digit flt nmbr
-        assert generateCallsign("AAL","123") == flights[0].id # Invalid callsign, shorter than 4 digit flt nmbr
-        assert generateCallsign("AAL") == flights[0].id # Invalid callsign, no flt nmbr
-        assert generateCallsign() == flights[0].id # no callsign
+        assert re.search(rf"^{getICAO(flights[0])}[1-9][0-9]{{0,3}}[A-Z]?$$",generateCallsign(airline=getICAO(flights[0]),fltnmb="12345")) != None # Invalid callsign, longer than 4 digit flt nmbr
+        assert re.search(rf"^{getICAO(flights[0])}[1-9][0-9]{{0,3}}[A-Z]?$$",generateCallsign(airline=getICAO(flights[0]),fltnmb="123")) != None # Invalid callsign, shorter than 4 digit flt nmbr
+        assert re.search(rf"^{getICAO(flights[0])}[1-9][0-9]{{0,3}}[A-Z]?$$",generateCallsign(airline=getICAO(flights[0]))) != None # Invalid callsign, no flt nmbr
+        assert re.search(rf"^[A-Z]{{3}}[1-9][0-9]{{0,3}}[A-Z]?$$",generateCallsign()) != None # Invalid callsign, no callsign
+        # NOTE - Could make the above test case more accurate by searching for the returned callsign in the airlines.json file but too time consuming rn
+        # Focus on the mvp first
 
 class TestETE:
     def test_ete(self):
