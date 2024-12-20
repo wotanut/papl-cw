@@ -173,7 +173,9 @@ def generateAirport(icao: Optional[str] = None) -> str:
     with open(path, newline="") as csvfile:
         if not icao:
             rand = True
-        if len(icao) != 3 and len(icao) != 4:  # Get a random airport
+        if (
+            icao is not None and len(icao) != 3 and len(icao) != 4
+        ):  # Get a random airport
             print(len(icao))
             rand = True
         reader = csv.reader(csvfile, delimiter=" ")
