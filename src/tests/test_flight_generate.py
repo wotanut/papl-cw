@@ -51,7 +51,7 @@ class TestAirport:
             re.search(r"[A-Z]{4}", generateAirport("KEGL")) is not None
         )  # Test airport does not exist
         assert (
-            re.search(r"[A-Z]{4}", generateAirport("KEGL")) is not None
+            re.search(r"[A-Z]{4}", generateAirport()) is not None
         )  # Test no airport provided
 
 
