@@ -1,5 +1,6 @@
 import logging
 import os
+import random
 from random import randint
 from typing import Annotated, Optional
 
@@ -18,6 +19,7 @@ from models.flight import (
     getICAO,
 )
 from models.message import Message
+from models.Types import FlightStage
 
 # Database
 
@@ -96,7 +98,6 @@ async def init(session: SessionDep, flight: Optional[Flight] = None):
     """
     errors = []
     entry = ""
-
     if flight:
         exists = Session.get(Flight, flight.id)
         if exists:
@@ -115,18 +116,22 @@ async def init(session: SessionDep, flight: Optional[Flight] = None):
             generateAirport(flight.altn),
         )  # TODO - Better error validation
         ete = generateETE(flight.ete)
+        adcReq = flight.ADCReq | random.choice([True, False])
     else:
-        cs = generateCallsign
+        cs = generateCallsign()
         dep, dest, altn = generateAirport(), generateAirport(), generateAirport()
         ete = generateETE()
+        adcReq = random.choice([True, False])
+
+    print(cs)
     newFlight = Flight(
         id=cs,
-        stage=flight.stage,
+        stage=FlightStage.PreDep.value,
         dep=dep,
         dest=dest,
         altn=altn,
         ete=ete,
-        ADCReq=flight.ADCReq,
+        ADCReq=adcReq,
     )
 
     session.add(newFlight)
