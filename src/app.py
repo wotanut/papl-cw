@@ -51,6 +51,7 @@ async def home():
 
 @app.post("/flight/init")
 async def init_flight(flight: Flight, session: SessionDep):
+    # FIXME - Deprecate testing endpoint
     session.add(flight)
     session.commit()
     session.refresh(flight)
@@ -74,8 +75,8 @@ async def metar(icao: str):
 #     """
 
 
-@app.get("/init/request")
-async def init(flight: Optional[Flight], session: SessionDep):
+@app.post("/init/request")
+async def init(session: SessionDep, flight: Optional[Flight] = None):
     """
     Generates a random flight for the aircraft. Normally this would send the aircraft registration but as that has no significance to a schedule
     (at least at this time) that's been left out. If no flight is supplied then a random one will be generated and returned. If an incorrect paramter
@@ -96,12 +97,12 @@ async def init(flight: Optional[Flight], session: SessionDep):
     errors = []
     entry = ""
 
-    exists = Session.get(Flight, flight.id)
-    if exists:
-        errors.append("Callsign in use")
-        raise HTTPException(status_code=401, detail="Callsign in use")
-
     if flight:
+        exists = Session.get(Flight, flight.id)
+        if exists:
+            errors.append("Callsign in use")
+            raise HTTPException(status_code=401, detail="Callsign in use")
+
         try:
             airline, nmbr = getICAO(flight), getFltNmbr(flight)
             cs = generateCallsign(airline, nmbr)
