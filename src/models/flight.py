@@ -5,10 +5,8 @@ import random
 import re
 from typing import Dict, List, Optional
 
-import requests
 from dotenv import load_dotenv
-from sqlmodel import (CheckConstraint, Column, Enum, Field, Relationship,
-                      Session, SQLModel, create_engine, select)
+from sqlmodel import CheckConstraint, Column, Enum, Field, SQLModel
 
 from .Types import FlightStage
 
@@ -85,8 +83,8 @@ class Flight(SQLModel, table=True):
 #     currentFL: str = Field(
 #         max_length=5, sa_column_args=CheckConstraint(r"^FL[1-9]{3}%")
 #     )
-    # NOTE - This would be where FL's will be stored as well as messages so that they're not accesible over the API and can't be accessed from initial set
-    # TODO: Add filedFL and currentFL
+# NOTE - This would be where FL's will be stored as well as messages so that they're not accesible over the API and can't be accessed from initial set
+# TODO: Add filedFL and currentFL
 
 
 def getICAO(flight: Flight):
@@ -95,11 +93,13 @@ def getICAO(flight: Flight):
     """
     return flight.id[:3]  # :3
 
+
 def getFltNmbr(flight: Flight):
     """
     Get's the flight number of a flight
     """
     return flight.id[3:]
+
 
 def generateCallsign(airline: Optional[str] = None, fltnmb: Optional[str] = None):
     """
@@ -122,17 +122,19 @@ def generateCallsign(airline: Optional[str] = None, fltnmb: Optional[str] = None
         # Check to see if it's a valid airline
         shouldChange = False
         for line in airlines:
-            for key,value in line.items():
+            for key, value in line.items():
                 if airline == value and key == "IATA":
                     # Change it to be an ICAO code instead
                     shouldChange = True
-                elif shouldChange == True or (airline == value and key == "ICAO"):
-                    callsign = callsign + value.upper()  # Adds the airline to the callsign
+                elif shouldChange is True or (airline == value and key == "ICAO"):
+                    callsign = (
+                        callsign + value.upper()
+                    )  # Adds the airline to the callsign
                     break
-    if callsign == '' or not airline: 
+    if callsign == "" or not airline:
         # pick a random airline
         callsign = random.choice(airlines).get("ICAO")
-    shouldChange = False # Reset the variable so it can be used for the fltnmbr
+    shouldChange = False  # Reset the variable so it can be used for the fltnmbr
     if fltnmb:
         # pass it through a regex for flight numbers
         nmbr = re.search(r"^[1-9][0-9]{0,3}[A-Z]?$", fltnmb)
@@ -154,6 +156,7 @@ def generateCallsign(airline: Optional[str] = None, fltnmb: Optional[str] = None
         # TODO - Differentiate between America (15k, 2K etc.. and 1534)
     return callsign
 
+
 def generateAirport(icao: Optional[str] = None) -> str:
     """
     Checks that the airport exists, if it doesn't, a random ICAO will be retruned.
@@ -165,24 +168,24 @@ def generateAirport(icao: Optional[str] = None) -> str:
     """
     rand = False
     path = os.path.join(os.path.dirname(__file__), "airports.csv")
-    with open(path,newline='') as csvfile:
+    with open(path, newline="") as csvfile:
         if not icao:
             rand = True
-        if len(icao) != 3 and len(icao) != 4: # Get a random airport
+        if len(icao) != 3 and len(icao) != 4:  # Get a random airport
             print(len(icao))
             rand = True
-        reader = csv.reader(csvfile,delimiter=" ")
+        reader = csv.reader(csvfile, delimiter=" ")
 
         choice = random.randint(0, 4240)
         index = 0
-        airfield = "EGLL" # Failsafe in case the airport wasn't found
+        airfield = "EGLL"  # Failsafe in case the airport wasn't found
 
         # ICAO is the 0th item, IATA is the 1st (0b index)
         for row in reader:
-            if rand == True:
-                if index -1 != choice:
+            if rand is True:
+                if index - 1 != choice:
                     continue
-            line = row[0].split(',')
+            line = row[0].split(",")
             iata = line[1]
             gps = line[0]
             if iata == icao or gps == icao:
@@ -192,17 +195,18 @@ def generateAirport(icao: Optional[str] = None) -> str:
             index = index + 1
 
         return airfield
-        
+
         # The airport wasn't found
+
 
 def generateETE(ete: Optional[str] = None) -> str:
     """
     Checks that the ETE provided is valid and if not generates one
     """
-    if ete != None:
+    if ete is not None:
         while len(ete) != 4:
             ete = "0" + ete
-        match = re.search(r"^(?!0000)[0-9]{4}$",ete)
+        match = re.search(r"^(?!0000)[0-9]{4}$", ete)
         if match:
             return ete
     ete = str(random.randint(0, 999))

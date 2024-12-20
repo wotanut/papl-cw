@@ -1,17 +1,22 @@
 import logging
 import os
-from contextlib import asynccontextmanager
 from random import randint
-from typing import Annotated, Optional, Union
+from typing import Annotated, Optional
 
 import requests
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException
-from sqlmodel import Session, SQLModel, create_engine, exists
+from sqlmodel import Session
 
-from db import *
-from models.flight import (Flight, generateAirport, generateCallsign,
-                           generateETE, getFltNmbr, getICAO)
+from db import get_session, init_db
+from models.flight import (
+    Flight,
+    generateAirport,
+    generateCallsign,
+    generateETE,
+    getFltNmbr,
+    getICAO,
+)
 from models.message import Message
 
 # Database
@@ -91,7 +96,7 @@ async def init(flight: Optional[Flight], session: SessionDep):
     errors = []
     entry = ""
 
-    exists = Session.exec(exists().where(Flight.id == flight.id))
+    exists = Session.get(Flight, flight.id)
     if exists:
         errors.append("Callsign in use")
         raise HTTPException(status_code=401, detail="Callsign in use")
@@ -135,7 +140,7 @@ async def sendADC(flight: Flight):
     """
     probaility = randint(0, 100)
     content = ""
-    if probaility % 4 == 0 or flight.ADCReq == True:
+    if probaility % 4 == 0 or flight.ADCReq is True:
         content = (
             f"ADC Required for {probaility} minutes delay. Send via company tablet"
         )
