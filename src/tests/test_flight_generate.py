@@ -51,7 +51,7 @@ class TestAirport:
             re.search(r"[A-Z]{4}", generateAirport("KEGL")) is not None
         )  # Test airport does not exist
         assert (
-            re.search(r"[A-Z]{4}", generateAirport()) is not None
+            re.search(r"[A-Z]{4}", generateAirport("")) is not None
         )  # Test no airport provided
 
 
@@ -74,6 +74,7 @@ class TestCallsign:
             )
             is not None
         )  # Invalid callsign, bad airline
+        # FIXME - Test case randomly breaks
         assert (
             re.search(
                 rf"^[A-Z]{{3}}{getFltNmbr(flights[0])}$",
