@@ -21,7 +21,7 @@ def format_checker(flight: Flight):
     assert (
         re.search(r"^[A-Z]{3}[1-9][0-9]{0,3}[A-Z]?$", flight.id) is not None
     )  # Callsign
-    assert flight.stage == FlightStage.PreDep.value
+    assert flight.stage.value == FlightStage.PreDep.value
     assert re.search(r"[A-Z]{4}", flight.dep) is not None
     assert re.search(r"[A-Z]{4}", flight.dest) is not None
     assert re.search(r"[A-Z]{4}", flight.altn) is not None
@@ -31,22 +31,16 @@ def format_checker(flight: Flight):
 def test_no_flight():
     with Session(engine) as session:
         resetDB(session)
-        flight = {
-            "id": "BAW15K",
-            "stage": FlightStage.PreDep.value,
-            "dep": "EGLL",
-            "dest": "KJFK",
-            "altn": "KBOS",
-            "ete": "0015",
-        }
-        response = client.get(
+        response = client.post(
             "/init/request",
         )
         assert response.status_code == 200
+        assert response.json()["success"] is True
         # Should've been inserted
 
         statement = select(Flight)
         results = session.exec(statement)
+        assert results is not None
         index = 0
         # Make sure something got inserted. Will check format shortly
         for result in results:
