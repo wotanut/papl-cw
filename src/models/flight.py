@@ -39,6 +39,8 @@ class Flight(SQLModel, table=True):
     @flightStage
     """
 
+    __table_args__ = {"extend_existing": True}
+
     id: str = Field(
         primary_key=True,
         unique=True,
