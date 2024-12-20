@@ -3,7 +3,8 @@ from fastapi.testclient import TestClient
 from sqlmodel import Session, select
 
 from ..app import app
-from ..db import *
+from ..db import engine, resetDB
+from ..models.flight import Flight
 from ..models.Types import FlightStage
 
 client = TestClient(app)
@@ -64,7 +65,7 @@ def test_bad_stage():
 
             statement = select(Flight).where(Flight.id == flight["id"])
             results = session.exec(statement)
-            assert results == None
+            assert results is None
 
 
 def test_no_dep():
@@ -88,7 +89,7 @@ def test_no_dep():
 
             statement = select(Flight).where(Flight.id == flight["id"])
             results = session.exec(statement)
-            assert results == None
+            assert results is None
 
 
 def test_malformatted_dep():
@@ -113,7 +114,7 @@ def test_malformatted_dep():
 
             statement = select(Flight).where(Flight.id == flight["id"])
             results = session.exec(statement)
-            assert results == None
+            assert results is None
 
 
 def test_lowercase_dep():
@@ -173,7 +174,7 @@ def test_malformed_ete():
 
             statement = select(Flight).where(Flight.id == flight["id"])
             results = session.exec(statement)
-            assert results == None
+            assert results is None
 
 
 def test_negative_ete():
@@ -198,4 +199,4 @@ def test_negative_ete():
 
             statement = select(Flight).where(Flight.id == flight["id"])
             results = session.exec(statement)
-            assert results == None
+            assert results is None
