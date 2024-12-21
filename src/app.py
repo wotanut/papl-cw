@@ -99,7 +99,7 @@ async def init(session: SessionDep, flight: Optional[Flight] = None):
     errors = []
     entry = ""
     if flight:
-        exists = Session.get(Flight, flight.id)
+        exists = session.get(Flight, flight.id)
         if exists:
             errors.append("Callsign in use")
             raise HTTPException(status_code=401, detail="Callsign in use")
@@ -116,7 +116,10 @@ async def init(session: SessionDep, flight: Optional[Flight] = None):
             generateAirport(flight.altn),
         )  # TODO - Better error validation
         ete = generateETE(flight.ete)
-        adcReq = flight.ADCReq | random.choice([True, False])
+        try:
+            adcReq = flight.ADCReq
+        except Exception:
+            adcReq = random.choice([True, False])
     else:
         cs = generateCallsign()
         dep, dest, altn = generateAirport(), generateAirport(), generateAirport()
