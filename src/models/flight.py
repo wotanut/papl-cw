@@ -176,7 +176,6 @@ def generateAirport(icao: Optional[str] = None) -> str:
         if (
             icao is not None and len(icao) != 3 and len(icao) != 4
         ):  # Get a random airport
-            print(len(icao))
             rand = True
         reader = csv.reader(csvfile, delimiter=" ")
 
@@ -192,13 +191,13 @@ def generateAirport(icao: Optional[str] = None) -> str:
             line = row[0].split(",")
             iata = line[1]
             gps = line[0]
-            if iata == icao or gps == icao:
-                return gps
+            if iata == icao.upper() or gps == icao.upper():
+                return gps.upper()
             if index - 1 == choice:
                 airfield = gps
             index = index + 1
 
-        return airfield
+        return airfield.upper()
 
         # The airport wasn't found
 
