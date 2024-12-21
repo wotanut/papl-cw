@@ -207,7 +207,7 @@ def generateETE(ete: Optional[str] = None) -> str:
     Checks that the ETE provided is valid and if not generates one
     """
     if ete is not None:
-        while len(ete) != 4:
+        while len(ete) < 4:
             ete = "0" + ete
         match = re.search(r"^(?!0000)[0-9]{4}$", ete)
         if match:
