@@ -1,5 +1,17 @@
-from sqlmodel import Field, Session, SQLModel, create_engine, select, Column, Enum, CheckConstraint
-from .flightStage import FlightStage
+import csv
+import json
+import os
+import random
+import re
+from typing import Dict, List, Optional
+
+from dotenv import load_dotenv
+from sqlmodel import CheckConstraint, Column, Enum, Field, SQLModel
+
+from .Types import FlightStage
+
+load_dotenv()
+
 
 class Flight(SQLModel, table=True):
     """
@@ -26,11 +38,181 @@ class Flight(SQLModel, table=True):
     --------
     @flightStage
     """
-    id: str = Field(primary_key=True, unique=True,max_length=7,min_length=7 ,description="Can be a string of 7 digits as all callsigns are unique") #NOTE - ID can be a string as all callsigns will be unique
-    stage: FlightStage = Field(sa_column=Column(Enum(FlightStage)), default="PreDep")
-    dep: str = Field(max_length=4,min_length=4,nullable=False,sa_column_args=CheckConstraint(r"^[A-Z]{4}$"))
-    dest: str = Field(max_length=4,min_length=4,nullable=False,sa_column_args=CheckConstraint(r"^[A-Z]{4}$"))
-    altn: str = Field(max_length=4,min_length=4,nullable=False,sa_column_args=CheckConstraint(r"^[A-Z]{4}$"))
-    ete: str = Field(max_length=4,min_length=4,nullable=False,sa_column_args=CheckConstraint(r"^[0-9]{4}$"))
-    ADCReq: bool | None = Field(default=None, nullable=True) # ADC is a type of message
-    #TODO: FK to Messages and FlightAware
+
+    __table_args__ = {"extend_existing": True}
+
+    id: str = Field(
+        primary_key=True,
+        unique=True,
+        max_length=7,
+        min_length=7,
+        description="Can be a string of 7 digits as all callsigns are unique",
+    )  # NOTE - ID can be a string as all callsigns will be unique
+    stage: FlightStage = Field(
+        sa_column=Column(Enum(FlightStage)), default=FlightStage.PreDep.value
+    )
+    dep: str = Field(
+        max_length=4,
+        min_length=4,
+        nullable=False,
+        sa_column_args=CheckConstraint(r"^[A-Z]{4}$"),
+    )
+    dest: str = Field(
+        max_length=4,
+        min_length=4,
+        nullable=False,
+        sa_column_args=CheckConstraint(r"^[A-Z]{4}$"),
+    )
+    altn: str = Field(
+        max_length=4,
+        min_length=4,
+        nullable=False,
+        sa_column_args=CheckConstraint(r"^[A-Z]{4}$"),
+    )
+    ete: str = Field(
+        max_length=4,
+        min_length=4,
+        nullable=False,
+        sa_column_args=CheckConstraint(r"^[0-9]{4}$"),
+    )
+    ADCReq: bool | None = Field(default=None, nullable=True)  # ADC is a type of message
+    # TODO: FK to Messages and FlightAware
+
+
+# class __Flight(Flight):
+#     id: str
+#     filedFL: str = Field(max_length=5, sa_column_args=CheckConstraint(r"^FL[0-9]{3}%"))
+#     currentFL: str = Field(
+#         max_length=5, sa_column_args=CheckConstraint(r"^FL[1-9]{3}%")
+#     )
+# NOTE - This would be where FL's will be stored as well as messages so that they're not accesible over the API and can't be accessed from initial set
+# TODO: Add filedFL and currentFL
+
+
+def getICAO(flight: Flight):
+    """
+    Get's the ICAO Code of an airline
+    """
+    return flight.id[:3]  # :3
+
+
+def getFltNmbr(flight: Flight):
+    """
+    Get's the flight number of a flight
+    """
+    return flight.id[3:]
+
+
+def generateCallsign(airline: Optional[str] = None, fltnmb: Optional[str] = None):
+    """
+    Generates a callsign from either a given airline icao or a flight number. If neither are provided generates one for both.
+
+    WARNING:
+        Does not check to see if the callsign is in use
+
+    Returns:
+    - Callsign: Str - A callsign for use
+    """
+    # Won't use a regex here so that someoen doesn't try and use XK234 as a valid callsign
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    airlines: List[Dict] = []
+    callsign = ""
+    with open(os.path.join(os.path.dirname(__file__), "airlines.json")) as f:
+        airlines = json.load(f)
+        f.close()
+    if airline:
+        # Check to see if it's a valid airline
+        shouldChange = False
+        for line in airlines:
+            for key, value in line.items():
+                if airline == value and key == "IATA":
+                    # Change it to be an ICAO code instead
+                    shouldChange = True
+                elif shouldChange is True or (airline == value and key == "ICAO"):
+                    callsign = (
+                        callsign + value.upper()
+                    )  # Adds the airline to the callsign
+                    break
+    if callsign == "" or not airline:
+        # pick a random airline
+        callsign = random.choice(airlines).get("ICAO")
+    shouldChange = False  # Reset the variable so it can be used for the fltnmbr
+    if fltnmb:
+        # pass it through a regex for flight numbers
+        nmbr = re.search(r"^[1-9][0-9]{0,3}[A-Z]?$", fltnmb)
+        if nmbr:  # A match was found
+            callsign = callsign + fltnmb
+        else:
+            shouldChange = True
+    if not fltnmb or shouldChange:
+        nmbr = random.randint(0, 9999)
+        strnmbr = str(nmbr)
+        done = False
+        for number in strnmbr:
+            if number == "0":
+                number = random.choice(alphabet)
+                done = True
+                callsign = callsign + number
+            elif not done:
+                callsign = callsign + number
+        # TODO - Differentiate between America (15k, 2K etc.. and 1534)
+    return callsign
+
+
+def generateAirport(icao: Optional[str] = None) -> str:
+    """
+    Checks that the airport exists, if it doesn't, a random ICAO will be retruned.
+    If an IATA code is provided, an IACO one will be returned (EG LHR provided EGLL returned)
+
+    Returns:
+    - Bool if unsuccesful (for whatever reason)
+    - The ICAO code of the airport specified if not
+    """
+    rand = False
+    path = os.path.join(os.path.dirname(__file__), "airports.csv")
+    with open(path, newline="") as csvfile:
+        if not icao:
+            rand = True
+        if (
+            icao is not None and len(icao) != 3 and len(icao) != 4
+        ):  # Get a random airport
+            rand = True
+        reader = csv.reader(csvfile, delimiter=" ")
+
+        choice = random.randint(0, 4240)
+        index = 0
+        airfield = "EGLL"  # Failsafe in case the airport wasn't found
+
+        # ICAO is the 0th item, IATA is the 1st (0b index)
+        for row in reader:
+            if rand is True:
+                if index - 1 != choice:
+                    continue
+            line = row[0].split(",")
+            iata = line[1]
+            gps = line[0]
+            if iata == icao.upper() or gps == icao.upper():
+                return gps.upper()
+            if index - 1 == choice:
+                airfield = gps
+            index = index + 1
+
+        return airfield.upper()
+
+        # The airport wasn't found
+
+
+def generateETE(ete: Optional[str] = None) -> str:
+    """
+    Checks that the ETE provided is valid and if not generates one
+    """
+    if ete is not None:
+        while len(ete) < 4:
+            ete = "0" + ete
+        match = re.search(r"^(?!0000)[0-9]{4}$", ete)
+        if match:
+            return ete
+    ete = str(random.randint(0, 999))
+    while len(ete) != 4:
+        ete = "0" + ete
+    return ete

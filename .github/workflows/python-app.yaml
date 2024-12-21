@@ -39,4 +39,6 @@ jobs:
         working-directory: ./src
         run: |
           PYTHONPATH=. pytest
+        env:
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
 

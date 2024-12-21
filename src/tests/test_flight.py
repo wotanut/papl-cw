@@ -1,30 +1,32 @@
+import pytest
 from fastapi.testclient import TestClient
 from sqlmodel import Session, select
-import pytest
 
 from ..app import app
-from ..db import *
-from ..models.flightStage import FlightStage
+from ..db import engine, resetDB
+from ..models.flight import Flight
+from ..models.Types import FlightStage
 
 client = TestClient(app)
+
 
 def test_good_flight_init():
     with Session(engine) as session:
         resetDB(session)
-        flight ={
-                "id" : "BAW15K",
-                "stage" : FlightStage.PreDep.value,
-                "dep" : "EGLL",
-                "dest" : "KJFK",
-                "altn" : "KBOS",
-                "ete" : "0015"
-            }
+        flight = {
+            "id": "BAW15K",
+            "stage": FlightStage.PreDep.value,
+            "dep": "EGLL",
+            "dest": "KJFK",
+            "altn": "KBOS",
+            "ete": "0015",
+        }
         response = client.post(
-            '/flight/init', 
+            "/flight/init",
             json=flight,
         )
         assert response.status_code == 200
-        # Should've been inserted
+        # Should've been inserted
 
         statement = select(Flight).where(Flight.id == flight["id"])
         results = session.exec(statement)
@@ -40,105 +42,111 @@ def test_good_flight_init():
         assert index == 1
         resetDB(session)
 
+
 def test_bad_stage():
     with Session(engine) as session:
         resetDB(session)
-        flight ={
-                "id" : "BAW15K",
-                "stage" : "e",
-                "dep" : "EGLL",
-                "dest" : "KJFK",
-                "altn" : "KBOS",
-                "ete" : "0015"
-            }# Invalid because stage can not be e
+        invalid_flight = {
+            "id": "BAW15K",
+            "stage": "e",
+            "dep": "EGLL",
+            "dest": "KJFK",
+            "altn": "KBOS",
+            "ete": "0015",
+        }  # Invalid because stage can not be e
         with pytest.raises(Exception):
             response = client.post(
-                '/flight/init', 
-                json=flight,
+                "/flight/init",
+                json=invalid_flight,
             )
             assert response.status_code == 400
-            
-            # Should'nt have been inserted
 
-            statement = select(Flight).where(Flight.id == flight["id"])
+            # Should'nt have been inserted
+
+            statement = select(Flight).where(Flight.id == invalid_flight["id"])
             results = session.exec(statement)
-            assert results == None
+            assert results is None
+
 
 def test_no_dep():
     with Session(engine) as session:
         resetDB(session)
-        flight ={
-                "id" : "BAW15K",
-                "stage" : "e",
-                "dest" : "KJFK",
-                "altn" : "KBOS",
-                "ete" : "0015"
-            }# Invalid because no departure
+        invalid_flight = {
+            "id": "BAW15K",
+            "stage": "e",
+            "dest": "KJFK",
+            "altn": "KBOS",
+            "ete": "0015",
+        }  # Invalid because no departure
         with pytest.raises(Exception):
             response = client.post(
-                '/flight/init', 
-                json=flight,
+                "/flight/init",
+                json=invalid_flight,
             )
             assert response.status_code == 400
-            
-            # Should'nt have been inserted
 
-            statement = select(Flight).where(Flight.id == flight["id"])
+            # Should'nt have been inserted
+
+            statement = select(Flight).where(Flight.id == invalid_flight["id"])
             results = session.exec(statement)
-            assert results == None
+            assert results is None
+
 
 def test_malformatted_dep():
     with Session(engine) as session:
         resetDB(session)
-        flight ={
-                "id" : "BAW15K",
-                "stage" : "e",
-                "dep" : "EGLLL",
-                "dest" : "KJFK",
-                "altn" : "KBOS",
-                "ete" : "0015"
-            }# One extra L on departure
+        invalid_flight = {
+            "id": "BAW15K",
+            "stage": "e",
+            "dep": "EGLLL",
+            "dest": "KJFK",
+            "altn": "KBOS",
+            "ete": "0015",
+        }  # One extra L on departure
         with pytest.raises(Exception):
             response = client.post(
-                '/flight/init', 
-                json=flight,
+                "/flight/init",
+                json=invalid_flight,
             )
             assert response.status_code == 400
-            
-            # Should'nt have been inserted
 
-            statement = select(Flight).where(Flight.id == flight["id"])
+            # Should'nt have been inserted
+
+            statement = select(Flight).where(Flight.id == invalid_flight["id"])
             results = session.exec(statement)
-            assert results == None
+            assert results is None
+
 
 def test_lowercase_dep():
     with Session(engine) as session:
         resetDB(session)
-        flight ={
-                "id" : "BAW15K",
-                "stage" : FlightStage.PreDep.value,
-                "dep" : "egll",
-                "dest" : "KJFK",
-                "altn" : "KBOS",
-                "ete" : "0015"
-            }# One extra L on departure
+        valid_flight = {
+            "id": "BAW15K",
+            "stage": FlightStage.PreDep.value,
+            "dep": "egll",
+            "dest": "KJFK",
+            "altn": "KBOS",
+            "ete": "0015",
+        }  # One extra L on departure
         response = client.post(
-            '/flight/init', 
-            json=flight,
+            "/flight/init",
+            json=valid_flight,
         )
         assert response.status_code == 200
 
-        statement = select(Flight).where(Flight.id == flight["id"])
+        statement = select(Flight).where(Flight.id == valid_flight["id"])
         results = session.exec(statement)
         index = 0
         for result in results:
-            assert result.id == flight["id"]
-            assert result.stage.value == flight["stage"]
-            assert result.dep == flight["dep"] #NOTE - Not testing for upper here because we're directly checking the DB
+            assert result.id == valid_flight["id"]
+            assert result.stage.value == valid_flight["stage"]
+            assert (
+                result.dep == valid_flight["dep"]
+            )  # NOTE - Not testing for upper here because we're directly checking the DB
             # If / when I make an endpoint for it I WILL just call that and that should return upper
-            assert result.dest == flight["dest"]
-            assert result.altn == flight["altn"]
-            assert result.ete == flight["ete"]
+            assert result.dest == valid_flight["dest"]
+            assert result.altn == valid_flight["altn"]
+            assert result.ete == valid_flight["ete"]
             index += 1
         assert index == 1
         resetDB(session)
@@ -147,47 +155,48 @@ def test_lowercase_dep():
 def test_malformed_ete():
     with Session(engine) as session:
         resetDB(session)
-        flight ={
-                "id" : "BAW15K",
-                "stage" : "e",
-                "dep" : "EGLLL",
-                "dest" : "KJFK",
-                "altn" : "KBOS",
-                "ete" : "0015A"
-            }# One extra L on departure
+        invalid_flight = {
+            "id": "BAW15K",
+            "stage": "e",
+            "dep": "EGLLL",
+            "dest": "KJFK",
+            "altn": "KBOS",
+            "ete": "0015A",
+        }  # One extra L on departure
         with pytest.raises(Exception):
             response = client.post(
-                '/flight/init', 
-                json=flight,
+                "/flight/init",
+                json=invalid_flight,
             )
             assert response.status_code == 400
-            
-            # Should'nt have been inserted
 
-            statement = select(Flight).where(Flight.id == flight["id"])
+            # Should'nt have been inserted
+
+            statement = select(Flight).where(Flight.id == invalid_flight["id"])
             results = session.exec(statement)
-            assert results == None
-            
+            assert results is None
+
+
 def test_negative_ete():
     with Session(engine) as session:
         resetDB(session)
-        flight ={
-                "id" : "BAW15K",
-                "stage" : "e",
-                "dep" : "EGLLL",
-                "dest" : "KJFK",
-                "altn" : "KBOS",
-                "ete" : "-0115"
-            }# One extra L on departure
+        invalid_flight = {
+            "id": "BAW15K",
+            "stage": "e",
+            "dep": "EGLLL",
+            "dest": "KJFK",
+            "altn": "KBOS",
+            "ete": "-0115",
+        }  # One extra L on departure
         with pytest.raises(Exception):
             response = client.post(
-                '/flight/init', 
-                json=flight,
+                "/flight/init",
+                json=invalid_flight,
             )
             assert response.status_code == 400
-            
-            # Should'nt have been inserted
 
-            statement = select(Flight).where(Flight.id == flight["id"])
+            # Should'nt have been inserted
+
+            statement = select(Flight).where(Flight.id == invalid_flight["id"])
             results = session.exec(statement)
-            assert results == None
+            assert results is None
