@@ -77,8 +77,8 @@ async def metar(icao: str):
 #     """
 
 
-@app.post("/init/request")
-async def init(session: SessionDep, flight: Optional[Flight] = None):
+@app.post("/init/request", response_model=Flight)
+async def init(session: SessionDep, flight: Optional[Flight] = None) -> Flight:
     """
     Generates a random flight for the aircraft. Normally this would send the aircraft registration but as that has no significance to a schedule
     (at least at this time) that's been left out. If no flight is supplied then a random one will be generated and returned. If an incorrect paramter
@@ -139,7 +139,7 @@ async def init(session: SessionDep, flight: Optional[Flight] = None):
 
     session.add(newFlight)
     session.commit()
-    return {"success": True, flight: newFlight, entry: entry}
+    return newFlight
 
 
 @app.get("/msg/adc")
