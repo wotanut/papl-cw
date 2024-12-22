@@ -9,7 +9,7 @@ class About extends StatefulWidget {
 }
 
 class _AboutState extends State<About> {
-  final borderRadius = BorderRadius.circular(200); // Image border
+  final borderRadius = BorderRadius.circular(40); // Image border
 
   @override
   Widget build(BuildContext context) {
@@ -28,65 +28,76 @@ class _AboutState extends State<About> {
             "About",
           ),
         ),
-        body: Column(
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8), // Border width
-                  decoration: BoxDecoration(
-                      color: Colors.red, borderRadius: borderRadius),
-                  child: ClipRRect(
-                    borderRadius: borderRadius,
-                    child: SizedBox.fromSize(
-                      size: const Size.fromRadius(100), // Image radius
-                      child: Image.asset(
-                        'assets/images/me.png',
-                        fit: BoxFit.cover,
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      padding: const EdgeInsets.all(5), // Border width
+                      decoration: BoxDecoration(
+                          color: Colors.blueAccent, borderRadius: borderRadius),
+                      child: ClipRRect(
+                        borderRadius: borderRadius,
+                        child: SizedBox.fromSize(
+                          size: const Size.fromRadius(50), // Image radius
+                          child: Image.asset(
+                            'assets/images/me.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const Flexible(
-                    child: Text(
-                        "Hi, i'm Sam, a second year Computer Science student at the University of Portsmouth.")),
-              ],
-            ),
-            const Divider(),
-            // const Text(
-            //     "I decided to make this project as a challenge to myself for a few reasons:"),
-            // Expanded(
-            //     child: ListView(
-            //   children: const [
-            //     Text("- To test my understanding of the A320 MCDU"),
-            //     Text(
-            //         "- To learn more about the TELEX protocol and why it is used over CPDLC"),
-            //     Text("- I found the original coursework too easy"),
-            //   ],
-            // )),
-            // const Divider(),
-            Card(
-                child: SocialCard(
-              svg: 'assets/images/svg/GitHub.svg',
-              title: 'GitHub',
-              subtitle: "@wotanut",
-              url: Uri.https("sambot.dev", '/github'),
-            )),
-            Card(
-                child: SocialCard(
-              svg: 'assets/images/svg/LinkedIn.svg',
-              title: 'LinkedIn',
-              subtitle: "Sam Blewitt",
-              url: Uri.https("linkedin.com", '/in/sam-blewitt'),
-            )),
-            Card(
-                child: SocialCard(
-              svg: 'assets/images/svg/web.svg',
-              title: 'Website',
-              subtitle: "sambot.dev",
-              url: Uri.https("sambot.dev", '/'),
-            )),
-          ],
+                  const Flexible(
+                      child: Text(
+                    "Hi, i'm Sam, a second year Computer Science student at the University of Portsmouth.",
+                  )),
+                ],
+              ),
+              const Divider(),
+              // const Text(
+              //     "I decided to make this project as a challenge to myself for a few reasons:"),
+              // Expanded(
+              //     child: ListView(
+              //   children: const [
+              //     Text("- To test my understanding of the A320 MCDU"),
+              //     Text(
+              //         "- To learn more about the TELEX protocol and why it is used over CPDLC"),
+              //     Text("- I found the original coursework too easy"),
+              //   ],
+              // )),
+              // const Divider(),
+              const Text(
+                "Socials",
+                style: TextStyle(fontSize: 25),
+              ),
+              Card(
+                  child: SocialCard(
+                svg: 'assets/images/svg/GitHub.svg',
+                title: 'GitHub',
+                subtitle: "@wotanut",
+                url: Uri.https("sambot.dev", '/github'),
+              )),
+              Card(
+                  child: SocialCard(
+                svg: 'assets/images/svg/LinkedIn.svg',
+                title: 'LinkedIn',
+                subtitle: "Sam Blewitt",
+                url: Uri.https("linkedin.com", '/in/sam-blewitt'),
+              )),
+              Card(
+                  child: SocialCard(
+                svg: 'assets/images/svg/web.svg',
+                title: 'Website',
+                subtitle: "sambot.dev",
+                url: Uri.https("sambot.dev", '/'),
+              )),
+            ],
+          ),
         ));
   }
 }
