@@ -10,6 +10,12 @@ class About extends StatefulWidget {
 
 class _AboutState extends State<About> {
   final borderRadius = BorderRadius.circular(40); // Image border
+  final int age = DateTime.now().year - 2005;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +58,17 @@ class _AboutState extends State<About> {
                       ),
                     ),
                   ),
-                  const Flexible(
-                      child: Text(
-                    "Hi, i'm Sam, a second year Computer Science student at the University of Portsmouth.",
-                  )),
+                  Flexible(
+                      child: Text.rich(TextSpan(children: [
+                    TextSpan(
+                        text:
+                            "Hi, i'm Sam, a $age year old, second year Computer Science student at the "),
+                    const TextSpan(
+                        text: "University of Portsmouth",
+                        style: TextStyle(
+                            backgroundColor: Color.fromARGB(255, 60, 2, 60))),
+                    const TextSpan(text: ".") // This is annoying
+                  ]))),
                 ],
               ),
               const Divider(),
