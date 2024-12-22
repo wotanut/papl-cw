@@ -74,15 +74,11 @@ class _AboutState extends State<About> {
               const Divider(),
               // const Text(
               //     "I decided to make this project as a challenge to myself for a few reasons:"),
-              // Expanded(
-              //     child: ListView(
-              //   children: const [
-              //     Text("- To test my understanding of the A320 MCDU"),
-              //     Text(
-              //         "- To learn more about the TELEX protocol and why it is used over CPDLC"),
-              //     Text("- I found the original coursework too easy"),
-              //   ],
-              // )),
+              // const ListTile(
+              //     title: Text("To test my understanding of the A320 MCDU")),
+              // const Text(
+              //     "- To learn more about the TELEX protocol and why it is used over CPDLC"),
+              // const Text("- I found the original coursework too easy"),
               // const Divider(),
               const Text(
                 "Socials",
