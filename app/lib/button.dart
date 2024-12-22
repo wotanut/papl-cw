@@ -31,8 +31,8 @@ class _mcduEntryBTNState extends State<mcduEntryBTN> {
     return Container(
         decoration: BoxDecoration(border: Border.all(color: Colors.cyan)),
         child: TextButton(
-          child: Text(actualTitle),
           onPressed: widget.callback,
+          child: Text(actualTitle),
         ));
   }
 }
