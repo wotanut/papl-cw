@@ -1,5 +1,6 @@
 import 'package:app/button.dart';
 import 'package:app/mcduPage.dart';
+import 'package:app/pages/dlk.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -82,44 +83,51 @@ class _MyHomePageState extends State<MyHomePage> {
           "MCDU MENU",
         ),
       ),
-      body: const Center(
+      body: Center(
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
           child: Mcdupage(slkButtons: [
+        // mcduEntryBTN(
+        //   title: "FMGC",
+        //   slk: 1,
+        // ),
+        // mcduEntryBTN(),
         mcduEntryBTN(
-          isRightSide: true,
-          title: "FMGC",
-          slk: 1,
-        ),
-        mcduEntryBTN(),
-        mcduEntryBTN(
-          isRightSide: true,
+          callback: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const DlkPage()),
+            );
+            print("Navigated");
+          },
           title: "ATSU",
           slk: 2,
         ),
-        mcduEntryBTN(
-          title: "OPTS",
-          slk: 5,
-        ),
-        mcduEntryBTN(
-          title: "ABOUT",
-          slk: 6,
-        ),
-        mcduEntryBTN(),
-        mcduEntryBTN(),
-        mcduEntryBTN(),
-        mcduEntryBTN(),
-        mcduEntryBTN(),
-        mcduEntryBTN(),
-        mcduEntryBTN(
-          title: "OPTS",
-          slk: 5,
-        ),
-        mcduEntryBTN(),
-        mcduEntryBTN(
-          title: "ABOUT",
-          slk: 6,
-        )
+        // mcduEntryBTN(
+        //   isRightSide: true,
+        //   title: "OPTS",
+        //   slk: 5,
+        // ),
+        // mcduEntryBTN(
+        //   isRightSide: true,
+        //   title: "ABOUT",
+        //   slk: 6,
+        // ),
+        // mcduEntryBTN(),
+        // mcduEntryBTN(),
+        // mcduEntryBTN(),
+        // mcduEntryBTN(),
+        // mcduEntryBTN(),
+        // mcduEntryBTN(),
+        // mcduEntryBTN(
+        //   title: "OPTS",
+        //   slk: 5,
+        // ),
+        // mcduEntryBTN(),
+        // mcduEntryBTN(
+        //   title: "ABOUT",
+        //   slk: 6,
+        // )
       ])),
     );
   }
