@@ -36,6 +36,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   url_launcher: ^6.3.1 # For opening the cards in my about me section, wanted to get extra marks and look like a smartass
+  flutter_svg: ^2.0.16
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +61,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/me.png
+    - assets/images/LogosLinkedinIcon.svg
+    - assets/images/PajamasGithub.svg
 
   # To add assets to your application, add an assets section, like this:
   # assets:
