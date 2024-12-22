@@ -1,3 +1,4 @@
+import 'package:app/button.dart';
 import 'package:app/components/Social.dart';
 import 'package:flutter/material.dart';
 
@@ -105,6 +106,17 @@ class _AboutState extends State<About> {
                 subtitle: "sambot.dev",
                 url: Uri.https("sambot.dev", '/'),
               )),
+              Container(
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: mcduEntryBTN(
+                      title: "Back",
+                      callback: () {
+                        Navigator.pop(context);
+                      }),
+                ),
+              ),
             ],
           ),
         ));
