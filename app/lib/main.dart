@@ -1,5 +1,6 @@
 import 'package:app/button.dart';
 import 'package:app/mcduPage.dart';
+import 'package:app/pages/about.dart';
 import 'package:app/pages/dlk.dart';
 import 'package:flutter/material.dart';
 
@@ -98,10 +99,20 @@ class _MyHomePageState extends State<MyHomePage> {
               context,
               MaterialPageRoute(builder: (context) => const DlkPage()),
             );
-            print("Navigated");
           },
           title: "ATSU",
           slk: 2,
+        ),
+        mcduEntryBTN(
+          callback: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const About()),
+            );
+          },
+          title: "About",
+          slk: 6,
+          isRightSide: true,
         ),
         // mcduEntryBTN(
         //   isRightSide: true,
