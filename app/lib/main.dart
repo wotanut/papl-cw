@@ -17,25 +17,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo', //TODO: Name the app
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0x000228d5),
-            surface: const Color(
-                0x000228d5)), // Background colour (background was depricated)
         useMaterial3: true,
-        textTheme: const TextTheme().copyWith(
-          bodySmall: const TextStyle(color: Colors.white),
-          bodyMedium: const TextStyle(color: Colors.white),
-          bodyLarge: const TextStyle(color: Colors.white),
-          labelSmall: const TextStyle(color: Colors.white),
-          labelMedium: const TextStyle(color: Colors.white),
-          labelLarge: const TextStyle(color: Colors.white),
-          displaySmall: const TextStyle(color: Colors.white),
-          displayMedium: const TextStyle(color: Colors.white),
-          displayLarge: const TextStyle(color: Colors.white),
-          titleLarge: const TextStyle(color: Colors.white),
-          titleMedium: const TextStyle(color: Colors.white),
-          titleSmall: const TextStyle(color: Colors.white),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(1, 20, 21, 37),
+          brightness: Brightness.dark,
         ),
+        // FIXME - Add textscheme
       ),
       home: const MyHomePage(title: 'MCDU MENU'),
     );
