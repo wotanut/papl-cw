@@ -1,3 +1,4 @@
+import 'package:app/button.dart';
 import 'package:flutter/material.dart';
 
 class FltInit extends StatefulWidget {
@@ -22,12 +23,73 @@ class _FltInitState extends State<FltInit> {
           // FIXME: make button to push on DDU
           actions: const [Icon(Icons.arrow_circle_up_sharp)],
           title: const Text(
-            "ATSU DATALINK",
+            "AOC FLT INIT",
           ),
         ),
-        body: const Center(
-            // Center is a layout widget. It takes a single child and positions it
-            // in the middle of the parent.
-            child: Text("Init Req function goes here")));
+        body: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [Text("FLT NO"), Text("BAW15K")],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [Text("UTC"), Text("1123")],
+                  )
+                ],
+              ),
+              Container(
+                alignment: Alignment.topLeft,
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [Text("DEP"), Text("LSZH")],
+                ),
+              ),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [Text("DEST"), Text("EGLL")],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [Text("DATE"), Text("12/22/2024")],
+                  )
+                ],
+              ),
+              Container(
+                alignment: Alignment.topLeft,
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [Text("ALTN"), Text("EKCH")],
+                ),
+              ),
+              Container(
+                alignment: Alignment.topLeft,
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [Text("ETE"), Text("0054")],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  mcduEntryBTN(
+                      title: "AOC MENU",
+                      callback: () {
+                        Navigator.pop(context);
+                      }),
+                  const Text("INIT DATA REQ *")
+                ],
+              ),
+            ],
+          ),
+        ));
   }
 }

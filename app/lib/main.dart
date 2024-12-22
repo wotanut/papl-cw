@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
               MaterialPageRoute(builder: (context) => const About()),
             );
           },
-          title: "About",
+          title: "ABOUT",
           slk: 6,
           isRightSide: true,
         ),
