@@ -67,17 +67,24 @@ class _AboutState extends State<About> {
             // const Divider(),
             Card(
                 child: SocialCard(
-              svg: 'assets/images/PajamasGithub.svg',
+              svg: 'assets/images/svg/GitHub.svg',
               title: 'GitHub',
               subtitle: "@wotanut",
               url: Uri.https("sambot.dev", '/github'),
             )),
             Card(
                 child: SocialCard(
-              svg: 'assets/images/LogosLinkedinIcon.svg',
-              title: 'GitHub',
-              subtitle: "@wotanut",
-              url: Uri.https("sambot.dev", '/github'),
+              svg: 'assets/images/svg/LinkedIn.svg',
+              title: 'LinkedIn',
+              subtitle: "Sam Blewitt",
+              url: Uri.https("linkedin.com", '/in/sam-blewitt'),
+            )),
+            Card(
+                child: SocialCard(
+              svg: 'assets/images/svg/web.svg',
+              title: 'Website',
+              subtitle: "sambot.dev",
+              url: Uri.https("sambot.dev", '/'),
             )),
           ],
         ));
