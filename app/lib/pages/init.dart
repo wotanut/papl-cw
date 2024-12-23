@@ -91,7 +91,11 @@ class _FltInitState extends State<FltInit> {
                       callback: () {
                         Navigator.pop(context);
                       }),
-                  const Text("INIT DATA REQ *")
+                  TextButton(
+                      child: const Text("INIT DATA REQ *"),
+                      onPressed: () {
+                        print("pressed");
+                      }),
                 ],
               ),
               Container(
