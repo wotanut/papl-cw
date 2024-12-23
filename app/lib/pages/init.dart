@@ -1,5 +1,6 @@
 import 'package:app/button.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class FltInit extends StatefulWidget {
   const FltInit({super.key});
@@ -94,7 +95,8 @@ class _FltInitState extends State<FltInit> {
                   TextButton(
                       child: const Text("INIT DATA REQ *"),
                       onPressed: () {
-                        print("pressed");
+                        http.get(Uri.parse(
+                            'https://jsonplaceholder.typicode.com/albums/1'));
                       }),
                 ],
               ),
