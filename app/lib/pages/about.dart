@@ -30,6 +30,7 @@ class _AboutState extends State<About> {
         appBar: AppBar(
           centerTitle: true, // For anroid, defualt on iOS
           // FIXME: make button to push on DDU
+          // TODO: Add how to enter data (click the bottom)
           actions: const [Icon(Icons.arrow_circle_up_sharp)],
           title: const Text(
             "About",

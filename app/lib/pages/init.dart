@@ -9,6 +9,12 @@ class FltInit extends StatefulWidget {
 }
 
 class _FltInitState extends State<FltInit> {
+  String scratchpad = "";
+
+  void _changeSPADEntry() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -27,17 +33,17 @@ class _FltInitState extends State<FltInit> {
           ),
         ),
         body: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [Text("FLT NO"), Text("BAW15K")],
+                    children: [const Text("FLT NO"), Text(scratchpad)],
                   ),
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [Text("UTC"), Text("1123")],
                   )
@@ -88,6 +94,15 @@ class _FltInitState extends State<FltInit> {
                   const Text("INIT DATA REQ *")
                 ],
               ),
+              Container(
+                alignment: Alignment.bottomCenter,
+                child: TextField(
+                  onSubmitted: (value) {
+                    scratchpad = value;
+                    _changeSPADEntry();
+                  },
+                ),
+              )
             ],
           ),
         ));
