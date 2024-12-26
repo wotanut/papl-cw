@@ -3,11 +3,14 @@ services:
     image: mysql
     restart: always
     environment:
-      - MYSQL_RANDOM_ROOT_PASSWORD
-      - MYSQL_ROOT_HOST='127.0.0.1'
-      - MYSQL_USER=Nadim
-      - MYSQL_PASSWORD=../db_password.txt
-      - MYSQL_DATABASE=papl
+      MYSQL_RANDOM_ROOT_PASSWORD: true
+      MYSQL_USER: Nadim
+      MYSQL_PASSWORD: ../db_password.txt
+      MYSQL_DATABASE: papl
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-papl:/var/lib/mysql
     healthcheck:
             test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
             timeout: 20s
@@ -23,4 +26,5 @@ services:
         condition: service_healthy
     links: 
       - db:db
-
+volumes:
+  db-papl:
