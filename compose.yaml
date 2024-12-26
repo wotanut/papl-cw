@@ -4,7 +4,8 @@ services:
     restart: always
     environment:
       MYSQL_USER: Nadim
-      MYSQL_ROOT_PASSWORD: ../db_password.txt
+      MYSQL_PASSWORD: ../db_password.txt
+      MYSQL_DATABASE: "papl"
     healthcheck:
             test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
             timeout: 20s
