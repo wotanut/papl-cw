@@ -5,6 +5,10 @@ services:
     environment:
       MYSQL_USER: Nadim
       MYSQL_ROOT_PASSWORD: ../db_password.txt
+    healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            timeout: 20s
+            retries: 10
   web:
     build: .
     env_file:
