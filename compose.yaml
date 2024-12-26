@@ -3,7 +3,7 @@ services:
     image: mysql
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=../db_password.txt
+      - MYSQL_RANDOM_ROOT_PASSWORD
       - MYSQL_ROOT_HOST='127.0.0.1'
       - MYSQL_USER=Nadim
       - MYSQL_PASSWORD=../db_password.txt
