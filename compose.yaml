@@ -1,13 +1,14 @@
 services:
-  web:
-    build: .
-    env_file:
-      - path: ../papl.env
-    ports:
-      - "8000:5000"
   db:
     image: mysql
     restart: always
     environment:
       MYSQL_USER: Nadim
       MYSQL_ROOT_PASSWORD: ../db_password.txt
+  web:
+    build: .
+    env_file:
+      - path: ../papl.env
+    ports:
+      - "8000:5000"
+
