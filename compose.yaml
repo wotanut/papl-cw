@@ -1,4 +1,29 @@
 services:
+  reverse-proxy:
+      # The official v3 Traefik docker image
+      image: traefik:v3.2
+      # Enables the web UI and tells Traefik to listen to docker
+      command:
+        - "--providers.docker"
+        - "--providers.docker.exposedbydefault=false"
+        - "--entryPoints.websecure.address=:443"
+        - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+        - "--certificatesresolvers.myresolver.acme.email=sam@sambot.dev"
+        - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+        - "--entrypoints.web.address=:80"
+        - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+        - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+        - "api.insecure=true"
+      ports:
+        # The HTTP port
+        - "80:80"
+        # The Web UI (enabled by --api.insecure=true)
+        - "8080:8080"
+        # HTTPS
+        - "443:443"
+      volumes:
+        # So that Traefik can listen to the Docker events
+        - /var/run/docker.sock:/var/run/docker.sock
   db:
     image: mysql
     restart: always
@@ -20,7 +45,7 @@ services:
     env_file:
       - path: ../papl.env
     ports:
-      - "8000:5000"
+      - "8000:8000"
     depends_on:
       db:
         condition: service_healthy
