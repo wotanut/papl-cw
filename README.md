@@ -17,8 +17,8 @@ Ensure you have Flutter installed. Follow the [official Flutter installation gui
    ```bash
    flutter run
    ```
-
-> **Note:**  
+[!CAUTION]
+> [!Note]:  
 > - By default, the app connects to https://api.sambot.dev as its backend.  
 > - To use a local backend, configuration changes may be required (currently untested).  
 
