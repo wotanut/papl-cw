@@ -3,4 +3,4 @@ WORKDIR /src
 COPY src/requirements.txt /src/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /src/requirements.txt
 COPY ./src /src
-CMD ["uvicorn", "app:app", "--port", "80", "--proxy-headers"]
+CMD ["uvicorn", "app:app","--host","0.0.0.0", "--port", "8000", "--proxy-headers"]
