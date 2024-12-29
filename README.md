@@ -30,6 +30,7 @@ Ensure you have Flutter installed. Follow the [official Flutter installation gui
 2. Place the following files just outside the workspace folder:  
    - `papl.env`: Use `.env.example` as a template.  
    - `db_password.txt`: Contains the MySQL database password in plaintext.  
+   - `dns.env`: Use [This](https://github.com/carpe/docker-letsencrypt-dns/blob/master/compose/.env) as an example and see [This](https://letsencrypt.org/docs/challenge-types/#dns-01-challenge) as to why this is neccesary. If you're not running behind a domain, you can ignore this file but you'll need to remove the `letsencrypt` service from the `docker-compose.yml` file.
 
 3. Run the following command from the root directory:  
    ```bash
