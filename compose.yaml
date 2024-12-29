@@ -2,7 +2,7 @@ services:
   letsencrypt:
     image: adferrand/letsencrypt-dns
     container_name: "letsencrypt-dns"
-    env_file: .env
+    env_file: ../dns.env
     volumes:
       - "$ROOT/domains.conf:/etc/letsencrypt/domains.conf"
       - "$ROOT/:/etc/letsencrypt"
