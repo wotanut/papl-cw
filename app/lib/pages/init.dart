@@ -1,11 +1,7 @@
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:app/button.dart';
+import 'package:app/controllers/flight.dart';
+import 'package:app/models/Flight.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-import '../globals.dart' as globals;
 
 class FltInit extends StatefulWidget {
   const FltInit({super.key});
@@ -109,16 +105,12 @@ class _FltInitState extends State<FltInit> {
                       TextButton(
                           child: const Text("INIT DATA REQ *"),
                           onPressed: () {
-                            http.post(
-                                Uri.parse('${globals.apiURL}/init/request'),
-                                body: jsonEncode(<String, String>{
-                                  "id": callsign,
-                                  "dest": dest,
-                                  "dep": departure,
-                                  "altn": altn,
-                                  "ete": "ete",
-                                  "ADCReq": Random().nextBool().toString()
-                                }));
+                            Future<Flight?> flt = createFlight(
+                                callsign, dest, departure, altn, ete);
+
+                            if (flt == null) {
+                              print("null");
+                            }
                           }),
                     ],
                   ),

@@ -2,6 +2,8 @@ import 'package:app/button.dart';
 import 'package:app/components/Social.dart';
 import 'package:flutter/material.dart';
 
+import '../globals.dart' as globals;
+
 class About extends StatefulWidget {
   const About({super.key});
 
@@ -107,6 +109,8 @@ class _AboutState extends State<About> {
                 subtitle: "sambot.dev",
                 url: Uri.https("sambot.dev", '/'),
               )),
+              const Spacer(),
+              Text(globals.appVersion),
               Container(
                 alignment: Alignment.bottomLeft,
                 child: Padding(
