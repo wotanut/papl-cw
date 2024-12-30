@@ -80,6 +80,12 @@ class _MyHomePageState extends State<MyHomePage> {
         //   slk: 1,
         // ),
         // mcduEntryBTN(),
+        // mcduEntryBTN(
+        //   callback: () {},
+        //   title: "FMGC",
+        //   slk: 1,
+        //   isDisabled: true,
+        // ),
         mcduEntryBTN(
           callback: () {
             Navigator.push(
@@ -101,6 +107,12 @@ class _MyHomePageState extends State<MyHomePage> {
           slk: 6,
           isRightSide: true,
         ),
+        // mcduEntryBTN(
+        //   callback: () {},
+        //   title: "OPTS",
+        //   slk: 6,
+        //   isRightSide: true,
+        // ),
         // mcduEntryBTN(
         //   isRightSide: true,
         //   title: "OPTS",

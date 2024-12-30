@@ -33,6 +33,12 @@ class _DlkPageState extends State<DlkPage> {
           // in the middle of the parent.
           child: Mcdupage(slkButtons: [
         mcduEntryBTN(
+          callback: () {},
+          title: "ATC MENU",
+          slk: 1,
+          isDisabled: true,
+        ),
+        mcduEntryBTN(
           callback: () {
             Navigator.push(
               context,

@@ -5,6 +5,7 @@ class mcduEntryBTN extends StatefulWidget {
   final bool isRightSide;
   final String title;
   final VoidCallback callback;
+  final bool isDisabled;
   // FIXME- Add link to page
 
   const mcduEntryBTN(
@@ -12,6 +13,7 @@ class mcduEntryBTN extends StatefulWidget {
       this.slk = 1,
       this.isRightSide = false,
       this.title = "Test",
+      this.isDisabled = false,
       required this.callback});
 
   @override
@@ -32,6 +34,16 @@ class _mcduEntryBTNState extends State<mcduEntryBTN> {
         decoration: BoxDecoration(border: Border.all(color: Colors.cyan)),
         child: TextButton(
           onPressed: widget.callback,
+          style: ButtonStyle(
+            foregroundColor: WidgetStateProperty.resolveWith<Color>(
+              (Set<WidgetState> states) {
+                if (widget.isDisabled) {
+                  return Colors.grey.shade700;
+                }
+                return Colors.grey.shade100;
+              },
+            ),
+          ),
           child: Text(actualTitle),
         ));
   }

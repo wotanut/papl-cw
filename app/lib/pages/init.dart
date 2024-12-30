@@ -13,6 +13,7 @@ class FltInit extends StatefulWidget {
 class _FltInitState extends State<FltInit> {
   String scratchpad = "";
   String callsign = "", departure = "", dest = "", altn = "", ete = "";
+  DateTime time = DateTime.now();
 
   void _changeSPADEntry() {
     setState(() {});
@@ -54,9 +55,14 @@ class _FltInitState extends State<FltInit> {
                           children: [const Text("FLT NO"), Text(callsign)],
                         ),
                       ),
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [Text("UTC"), Text("1123")],
+                        children: [
+                          const Text("UTC"),
+                          Text(time.hour.toString() +
+                              time.minute
+                                  .toString()) // FIXME - Make update every minute
+                        ],
                       )
                     ],
                   ),
@@ -74,9 +80,12 @@ class _FltInitState extends State<FltInit> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [const Text("DEST"), Text(dest)],
                       ),
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [Text("DATE"), Text("12/22/2024")],
+                        children: [
+                          const Text("DATE"),
+                          Text("${time.day}/${time.month}/${time.year}")
+                        ],
                       )
                     ],
                   ),
