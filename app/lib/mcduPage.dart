@@ -33,7 +33,6 @@ class _McdupageState extends State<Mcdupage> {
                 widget.slkButtons[i + 1],
               ],
             )
-            )
         ],
       ),
       // TODO - Add Text Entry Box / Error Box here
