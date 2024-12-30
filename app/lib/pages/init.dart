@@ -2,6 +2,8 @@ import 'package:app/button.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../globals.dart' as globals;
+
 class FltInit extends StatefulWidget {
   const FltInit({super.key});
 
@@ -11,6 +13,7 @@ class FltInit extends StatefulWidget {
 
 class _FltInitState extends State<FltInit> {
   String scratchpad = "";
+  String fltNO = "", dep = "", dest = "", altn = "", ete = "";
 
   void _changeSPADEntry() {
     setState(() {});
@@ -42,9 +45,15 @@ class _FltInitState extends State<FltInit> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [const Text("FLT NO"), Text(scratchpad)],
+                      GestureDetector(
+                        onTap: () {
+                          fltNO = scratchpad;
+                          setState(() {}); //NOTE - Needed to update the UI
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [const Text("FLT NO"), Text(fltNO)],
+                        ),
                       ),
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -97,8 +106,7 @@ class _FltInitState extends State<FltInit> {
                       TextButton(
                           child: const Text("INIT DATA REQ *"),
                           onPressed: () {
-                            http.get(Uri.parse(
-                                'https://jsonplaceholder.typicode.com/albums/1'));
+                            http.get(Uri.parse('${globals.apiURL}/init/req'));
                           }),
                     ],
                   ),
@@ -109,6 +117,7 @@ class _FltInitState extends State<FltInit> {
                 child: TextField(
                   onSubmitted: (value) {
                     scratchpad = value;
+                    print("updated scratchpad value");
                     _changeSPADEntry();
                   },
                 ),
