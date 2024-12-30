@@ -1,7 +1,7 @@
-import 'package:app/button.dart';
-import 'package:app/mcduPage.dart';
+import 'package:app/components/button.dart';
+import 'package:app/components/mcduPage.dart';
+import 'package:app/menus/dlkMenu.dart';
 import 'package:app/pages/about.dart';
-import 'package:app/pages/dlk.dart';
 import 'package:flutter/material.dart';
 
 void main() {

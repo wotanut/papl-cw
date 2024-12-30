@@ -1,4 +1,4 @@
-import 'package:app/button.dart';
+import 'package:app/components/button.dart';
 import 'package:flutter/material.dart';
 
 // NOTE - This is used as a template for 99% of pages, not all of them though. Such as the about page, pages with text input or pages that don't conform to the standard page

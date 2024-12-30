@@ -1,4 +1,4 @@
-import 'package:app/button.dart';
+import 'package:app/components/button.dart';
 import 'package:app/controllers/flight.dart';
 import 'package:app/models/Flight.dart';
 import 'package:flutter/material.dart';

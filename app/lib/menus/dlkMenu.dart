@@ -1,16 +1,16 @@
-import 'package:app/button.dart';
-import 'package:app/mcduPage.dart';
-import 'package:app/pages/init.dart';
+import 'package:app/components/button.dart';
+import 'package:app/components/mcduPage.dart';
+import 'package:app/menus/aocMenu.dart';
 import 'package:flutter/material.dart';
 
-class AocMenu extends StatefulWidget {
-  const AocMenu({super.key});
+class DlkPage extends StatefulWidget {
+  const DlkPage({super.key});
 
   @override
-  State<AocMenu> createState() => _AocMenuState();
+  State<DlkPage> createState() => _DlkPageState();
 }
 
-class _AocMenuState extends State<AocMenu> {
+class _DlkPageState extends State<DlkPage> {
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -33,13 +33,19 @@ class _AocMenuState extends State<AocMenu> {
           // in the middle of the parent.
           child: Mcdupage(slkButtons: [
         mcduEntryBTN(
+          callback: () {},
+          title: "ATC MENU",
+          slk: 1,
+          isDisabled: true,
+        ),
+        mcduEntryBTN(
           callback: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const FltInit()),
+              MaterialPageRoute(builder: (context) => const AocMenu()),
             );
           },
-          title: "FLT INIT",
+          title: "AOC MENU",
           slk: 1,
           isRightSide: true,
         ),

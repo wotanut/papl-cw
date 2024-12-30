@@ -1,5 +1,5 @@
-import 'package:app/button.dart';
-import 'package:app/components/Social.dart';
+import 'package:app/components/button.dart';
+import 'package:app/components/social.dart';
 import 'package:flutter/material.dart';
 
 import '../globals.dart' as globals;
@@ -37,6 +37,8 @@ class _AboutState extends State<About> {
           title: const Text(
             "About",
           ),
+          automaticallyImplyLeading: false, // REMOVES THE BACK BAR
+          // did this for consistency with the rest of the mcdu
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -76,14 +78,16 @@ class _AboutState extends State<About> {
                 ],
               ),
               const Divider(),
-              // const Text(
-              //     "I decided to make this project as a challenge to myself for a few reasons:"),
-              // const ListTile(
-              //     title: Text("To test my understanding of the A320 MCDU")),
-              // const Text(
-              //     "- To learn more about the TELEX protocol and why it is used over CPDLC"),
-              // const Text("- I found the original coursework too easy"),
-              // const Divider(),
+              const Text(
+                "Notes",
+                style: TextStyle(fontSize: 25),
+              ),
+              const Text.rich(TextSpan(children: [
+                TextSpan(
+                    text:
+                        "This app does NOT hold your hand. You are expected to understand how to use the MCDU on the A320. There is a scratchpad at the bottom of all pages that required text inputs. You should click this first, enter your data, press submit, and then tap the area you want to insert your data to, as if you had select keys (slk) on the side of your device. "),
+              ])),
+              const Divider(),
               const Text(
                 "Socials",
                 style: TextStyle(fontSize: 25),
@@ -104,13 +108,13 @@ class _AboutState extends State<About> {
               )),
               Card(
                   child: SocialCard(
+                whiteIcon: true,
                 svg: 'assets/images/svg/web.svg',
                 title: 'Website',
                 subtitle: "sambot.dev",
                 url: Uri.https("sambot.dev", '/'),
               )),
               const Spacer(),
-              Text(globals.appVersion),
               Container(
                 alignment: Alignment.bottomLeft,
                 child: Padding(
@@ -122,6 +126,7 @@ class _AboutState extends State<About> {
                       }),
                 ),
               ),
+              Text(globals.appVersion),
             ],
           ),
         ));
