@@ -1,5 +1,7 @@
-import 'package:app/button.dart';
-import 'package:app/mcduPage.dart';
+import 'package:app/components/button.dart';
+import 'package:app/components/mcduPage.dart';
+import 'package:app/menus/dlkMenu.dart';
+import 'package:app/pages/about.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,25 +17,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo', //TODO: Name the app
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0x000228d5),
-            surface: const Color(
-                0x000228d5)), // Background colour (background was depricated)
         useMaterial3: true,
-        textTheme: const TextTheme().copyWith(
-          bodySmall: const TextStyle(color: Colors.white),
-          bodyMedium: const TextStyle(color: Colors.white),
-          bodyLarge: const TextStyle(color: Colors.white),
-          labelSmall: const TextStyle(color: Colors.white),
-          labelMedium: const TextStyle(color: Colors.white),
-          labelLarge: const TextStyle(color: Colors.white),
-          displaySmall: const TextStyle(color: Colors.white),
-          displayMedium: const TextStyle(color: Colors.white),
-          displayLarge: const TextStyle(color: Colors.white),
-          titleLarge: const TextStyle(color: Colors.white),
-          titleMedium: const TextStyle(color: Colors.white),
-          titleSmall: const TextStyle(color: Colors.white),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(1, 20, 21, 37),
+          brightness: Brightness.dark,
         ),
+        // FIXME - Add textscheme
       ),
       home: const MyHomePage(title: 'MCDU MENU'),
     );
@@ -82,44 +71,73 @@ class _MyHomePageState extends State<MyHomePage> {
           "MCDU MENU",
         ),
       ),
-      body: const Center(
+      body: Center(
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
           child: Mcdupage(slkButtons: [
+        // mcduEntryBTN(
+        //   title: "FMGC",
+        //   slk: 1,
+        // ),
+        // mcduEntryBTN(),
+        // mcduEntryBTN(
+        //   callback: () {},
+        //   title: "FMGC",
+        //   slk: 1,
+        //   isDisabled: true,
+        // ),
         mcduEntryBTN(
-          isRightSide: true,
-          title: "FMGC",
-          slk: 1,
-        ),
-        mcduEntryBTN(),
-        mcduEntryBTN(
-          isRightSide: true,
+          callback: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const DlkPage()),
+            );
+          },
           title: "ATSU",
           slk: 2,
         ),
         mcduEntryBTN(
-          title: "OPTS",
-          slk: 5,
-        ),
-        mcduEntryBTN(
+          callback: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const About()),
+            );
+          },
           title: "ABOUT",
           slk: 6,
+          isRightSide: true,
         ),
-        mcduEntryBTN(),
-        mcduEntryBTN(),
-        mcduEntryBTN(),
-        mcduEntryBTN(),
-        mcduEntryBTN(),
-        mcduEntryBTN(),
-        mcduEntryBTN(
-          title: "OPTS",
-          slk: 5,
-        ),
-        mcduEntryBTN(),
-        mcduEntryBTN(
-          title: "ABOUT",
-          slk: 6,
-        )
+        // mcduEntryBTN(
+        //   callback: () {},
+        //   title: "OPTS",
+        //   slk: 6,
+        //   isRightSide: true,
+        // ),
+        // mcduEntryBTN(
+        //   isRightSide: true,
+        //   title: "OPTS",
+        //   slk: 5,
+        // ),
+        // mcduEntryBTN(
+        //   isRightSide: true,
+        //   title: "ABOUT",
+        //   slk: 6,
+        // ),
+        // mcduEntryBTN(),
+        // mcduEntryBTN(),
+        // mcduEntryBTN(),
+        // mcduEntryBTN(),
+        // mcduEntryBTN(),
+        // mcduEntryBTN(),
+        // mcduEntryBTN(
+        //   title: "OPTS",
+        //   slk: 5,
+        // ),
+        // mcduEntryBTN(),
+        // mcduEntryBTN(
+        //   title: "ABOUT",
+        //   slk: 6,
+        // )
       ])),
     );
   }
