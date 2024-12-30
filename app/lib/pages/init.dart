@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:app/button.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +16,7 @@ class FltInit extends StatefulWidget {
 
 class _FltInitState extends State<FltInit> {
   String scratchpad = "";
-  String fltNO = "", dep = "", dest = "", altn = "", ete = "";
+  String callsign = "", departure = "", dest = "", altn = "", ete = "";
 
   void _changeSPADEntry() {
     setState(() {});
@@ -47,12 +50,12 @@ class _FltInitState extends State<FltInit> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          fltNO = scratchpad;
+                          callsign = scratchpad;
                           setState(() {}); //NOTE - Needed to update the UI
                         },
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [const Text("FLT NO"), Text(fltNO)],
+                          children: [const Text("FLT NO"), Text(callsign)],
                         ),
                       ),
                       const Column(
@@ -63,19 +66,19 @@ class _FltInitState extends State<FltInit> {
                   ),
                   Container(
                     alignment: Alignment.topLeft,
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [Text("DEP"), Text("LSZH")],
+                      children: [const Text("DEP"), Text(departure)],
                     ),
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [Text("DEST"), Text("EGLL")],
+                        children: [const Text("DEST"), Text(dest)],
                       ),
-                      Column(
+                      const Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [Text("DATE"), Text("12/22/2024")],
                       )
@@ -83,16 +86,16 @@ class _FltInitState extends State<FltInit> {
                   ),
                   Container(
                     alignment: Alignment.topLeft,
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [Text("ALTN"), Text("EKCH")],
+                      children: [const Text("ALTN"), Text(altn)],
                     ),
                   ),
                   Container(
                     alignment: Alignment.topLeft,
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [Text("ETE"), Text("0054")],
+                      children: [const Text("ETE"), Text(ete)],
                     ),
                   ),
                   Row(
@@ -106,7 +109,16 @@ class _FltInitState extends State<FltInit> {
                       TextButton(
                           child: const Text("INIT DATA REQ *"),
                           onPressed: () {
-                            http.get(Uri.parse('${globals.apiURL}/init/req'));
+                            http.post(
+                                Uri.parse('${globals.apiURL}/init/request'),
+                                body: jsonEncode(<String, String>{
+                                  "id": callsign,
+                                  "dest": dest,
+                                  "dep": departure,
+                                  "altn": altn,
+                                  "ete": "ete",
+                                  "ADCReq": Random().nextBool().toString()
+                                }));
                           }),
                     ],
                   ),
