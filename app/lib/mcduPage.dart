@@ -30,7 +30,7 @@ class _McdupageState extends State<Mcdupage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 widget.slkButtons[i],
-                widget.slkButtons[i + 1],
+                // widget.slkButtons[i + 1],
               ],
             )
         ],
