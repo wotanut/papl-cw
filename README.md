@@ -9,7 +9,8 @@ This is a monolithic repository structured as follows:
 The frontend is primarily built for iOS and Android but can also run on macOS (via iPhone mirroring or emulators), Windows, and Linux (via Android emulators). While the web version *should* work, it hasn't been thoroughly tested.  
 
 ### Prerequisites  
-Ensure you have Flutter installed. Follow the [official Flutter installation guide](https://flutter.dev/docs/get-started/install) for setup instructions.  
+- Ensure you have Flutter installed. Follow the [official Flutter installation guide](https://flutter.dev/docs/get-started/install) for setup instructions.
+- Ensure you have docker installed. Follow the [official Docker installation guide](https://docs.docker.com/get-docker/) for setup instructions.
 
 ### Running the Frontend  
 1. Navigate to the `/app` directory.  
@@ -17,10 +18,10 @@ Ensure you have Flutter installed. Follow the [official Flutter installation gui
    ```bash
    flutter run
    ```
-[!CAUTION]
-> [!Note]:  
+
+> [!NOTE]  
 > - By default, the app connects to https://api.sambot.dev as its backend.  
-> - To use a local backend, configuration changes may be required (currently untested).  
+> - To use a local backend, edit the `apiUrl` variable in `lib/globals.dart`
 
 # Backend Deployment  
 
@@ -30,7 +31,10 @@ Ensure you have Flutter installed. Follow the [official Flutter installation gui
 2. Place the following files just outside the workspace folder:  
    - `papl.env`: Use `.env.example` as a template.  
    - `db_password.txt`: Contains the MySQL database password in plaintext.  
-   - `dns.env`: Use [This](https://github.com/carpe/docker-letsencrypt-dns/blob/master/compose/.env) as an example and see [This](https://letsencrypt.org/docs/challenge-types/#dns-01-challenge) as to why this is neccesary. If you're not running behind a domain, you can ignore this file but you'll need to remove the `letsencrypt` service from the `docker-compose.yml` file.
+   - `~/caddy_config/Caddyfile`: Use `Caddyfile.example` as a template, ONLY if you're using Caddy as a reverse proxy. Some key things to note:
+      - Replace `example.com` with your domain name.
+      - Replace `CLOUDFLARE_API` with your Cloudflare API key.
+      - Oh yeah, this only works if you're using Cloudflare as your DNS provider. If you're not, you'll have to change the DNS provider in the Caddyfile.
 
 3. Run the following command from the root directory:  
    ```bash
