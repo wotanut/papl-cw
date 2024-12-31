@@ -1,3 +1,4 @@
 .coverage
 papl.env
 dns.env
+.pytest_cache

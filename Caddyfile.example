@@ -1,0 +1,8 @@
+example.com {
+    tls {
+        dns cloudflare {CLOUDFLARE_API}
+    }
+    reverse_proxy web:3000 {
+      flush_interval -1
+    }
+}

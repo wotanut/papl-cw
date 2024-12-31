@@ -1,4 +1,17 @@
 services:
+  caddy:
+    image: caddy:cloudflare
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: caddy-dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - caddy_data:/data
+      - ~/caddy_config:/config
+      - ~/caddy_config/Caddyfile:/etc/caddy/Caddyfile
   db:
     image: mysql
     restart: always
