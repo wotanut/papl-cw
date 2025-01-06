@@ -1,14 +1,14 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:app/models/Flight.dart';
 import 'package:http/http.dart' as http;
 
 import '../globals.dart' as globals;
 
-Future<Flight?> createFlight(String callsign, String dest, String departure,
+Future<Flight> createFlight(String callsign, String dest, String departure,
     String altn, String ete) async {
   final response = await http.post(
+    headers: {'Content-Type': 'application/json'},
     Uri.parse(
       '${globals.apiURL}/init/request',
     ),
@@ -18,12 +18,12 @@ Future<Flight?> createFlight(String callsign, String dest, String departure,
       "dep": departure,
       "altn": altn,
       "ete": ete,
-      "ADCReq": Random().nextBool().toString()
+      // "ADCReq": Random().nextBool().toString()
     }),
   );
 
   if (response.statusCode != 200) {
-    return null;
+    return Future.error('Error ${response.statusCode}');
   } else {
     // Flight model succesfully created
     return Flight.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
