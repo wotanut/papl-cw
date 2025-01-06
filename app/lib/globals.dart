@@ -5,6 +5,6 @@ library globals;
 // Seemed like a smart way to think of the future
 
 String apiURL =
-    "http://10.0.0.233"; // FIXME - Change to api.sambot.dev // NOTE - Your computers ip address, not localhost, see https://stackoverflow.com/questions/55785581/socketexception-os-error-connection-refused-errno-111-in-flutter-using-djan
+    "https://api.sambot.dev"; // NOTE - Your computers ip address, not localhost, see https://stackoverflow.com/questions/55785581/socketexception-os-error-connection-refused-errno-111-in-flutter-using-djan
 String appVersion =
-    "0.0.1-alpha"; //NOTE - Follows the Major Minor Path semantic versioning https://semver.org/
+    "0.0.1-alpha+1"; //NOTE - Follows the Major Minor Path semantic versioning https://semver.org/

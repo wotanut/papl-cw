@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 import '../globals.dart' as globals;
 
-Future<Flight?> createFlight(String callsign, String dest, String departure,
+Future<Flight> createFlight(String callsign, String dest, String departure,
     String altn, String ete) async {
   final response = await http.post(
     Uri.parse(
@@ -23,7 +23,7 @@ Future<Flight?> createFlight(String callsign, String dest, String departure,
   );
 
   if (response.statusCode != 200) {
-    return null;
+    return Future.error('Error ${response.statusCode}');
   } else {
     // Flight model succesfully created
     return Flight.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
