@@ -5,6 +5,7 @@ from random import randint
 from typing import Annotated, Optional
 
 import requests
+import uvicorn
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.encoders import jsonable_encoder
@@ -176,3 +177,7 @@ async def atis(icao: str):
 @app.get("/version")
 async def version():
     return {"version": "0.0.2+1-alpha"}
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port="8000", log_level="info", proxy_headers=True)
