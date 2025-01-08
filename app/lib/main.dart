@@ -1,5 +1,6 @@
 import 'package:app/components/button.dart';
 import 'package:app/components/mcduPage.dart';
+import 'package:app/components/slk.dart';
 import 'package:app/menus/dlkMenu.dart';
 import 'package:app/pages/about.dart';
 import 'package:flutter/material.dart';
@@ -57,82 +58,55 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true, // For anroid, defualt on iOS
-        // FIXME: make button to push on DDU
-        actions: const [Icon(Icons.arrow_circle_up_sharp)],
-        title: const Text(
-          "MCDU MENU",
+        appBar: AppBar(
+          centerTitle: true, // For anroid, defualt on iOS
+          // FIXME: make button to push on DDU
+          actions: const [Icon(Icons.arrow_circle_up_sharp)],
+          title: const Text(
+            "MCDU MENU",
+          ),
         ),
-      ),
-      body: Center(
+        body: Center(
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
-          child: Mcdupage(slkButtons: [
-        // mcduEntryBTN(
-        //   title: "FMGC",
-        //   slk: 1,
-        // ),
-        // mcduEntryBTN(),
-        // mcduEntryBTN(
-        //   callback: () {},
-        //   title: "FMGC",
-        //   slk: 1,
-        //   isDisabled: true,
-        // ),
-        mcduEntryBTN(
-          callback: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const DlkPage()),
-            );
-          },
-          title: "ATSU",
-          slk: 2,
-        ),
-        mcduEntryBTN(
-          callback: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const About()),
-            );
-          },
-          title: "ABOUT",
-          slk: 6,
-          isRightSide: true,
-        ),
-        // mcduEntryBTN(
-        //   callback: () {},
-        //   title: "OPTS",
-        //   slk: 6,
-        //   isRightSide: true,
-        // ),
-        // mcduEntryBTN(
-        //   isRightSide: true,
-        //   title: "OPTS",
-        //   slk: 5,
-        // ),
-        // mcduEntryBTN(
-        //   isRightSide: true,
-        //   title: "ABOUT",
-        //   slk: 6,
-        // ),
-        // mcduEntryBTN(),
-        // mcduEntryBTN(),
-        // mcduEntryBTN(),
-        // mcduEntryBTN(),
-        // mcduEntryBTN(),
-        // mcduEntryBTN(),
-        // mcduEntryBTN(
-        //   title: "OPTS",
-        //   slk: 5,
-        // ),
-        // mcduEntryBTN(),
-        // mcduEntryBTN(
-        //   title: "ABOUT",
-        //   slk: 6,
-        // )
-      ])),
-    );
+          child: Mcdupage(
+            slkButtons: [
+              Slk(
+                // mcduEntryBTN(
+                //   title: "FMGC",
+                //   slk: 1,
+                // ),
+                // mcduEntryBTN(),
+                // mcduEntryBTN(
+                //   callback: () {},
+                //   title: "FMGC",
+                //   slk: 1,
+                //   isDisabled: true,
+                // ),
+                leftKey: mcduEntryBTN(
+                  callback: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const DlkPage()),
+                    );
+                  },
+                  title: "ATSU",
+                  slk: 2,
+                ),
+                rightKey: mcduEntryBTN(
+                  callback: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const About()),
+                    );
+                  },
+                  title: "ABOUT",
+                  slk: 6,
+                  isRightSide: true,
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }

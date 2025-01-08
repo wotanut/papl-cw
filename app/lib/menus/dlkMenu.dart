@@ -1,5 +1,6 @@
 import 'package:app/components/button.dart';
 import 'package:app/components/mcduPage.dart';
+import 'package:app/components/slk.dart';
 import 'package:app/menus/aocMenu.dart';
 import 'package:flutter/material.dart';
 
@@ -28,59 +29,27 @@ class _DlkPageState extends State<DlkPage> {
           "ATSU DATALINK",
         ),
       ),
-      body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: Mcdupage(slkButtons: [
-        mcduEntryBTN(
-          callback: () {},
-          title: "ATC MENU",
-          slk: 1,
-          isDisabled: true,
-        ),
-        mcduEntryBTN(
-          callback: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const AocMenu()),
-            );
-          },
-          title: "AOC MENU",
-          slk: 1,
-          isRightSide: true,
-        ),
-        // mcduEntryBTN(),
-        // mcduEntryBTN(
-        //   isRightSide: true,
-        //   title: "AOC MENU",
-        //   slk: 2,
-        // ),
-        //   mcduEntryBTN(
-        //     isRightSide: true,
-        //     title: "OPTS",
-        //     slk: 5,
-        //   ),
-        //   mcduEntryBTN(
-        //     isRightSide: true,
-        //     title: "ABOUT",
-        //     slk: 6,
-        //   ),
-        //   mcduEntryBTN(),
-        //   mcduEntryBTN(),
-        //   mcduEntryBTN(),
-        //   mcduEntryBTN(),
-        //   mcduEntryBTN(),
-        //   mcduEntryBTN(),
-        //   mcduEntryBTN(
-        //     title: "OPTS",
-        //     slk: 5,
-        //   ),
-        //   mcduEntryBTN(),
-        //   mcduEntryBTN(
-        //     title: "ABOUT",
-        //     slk: 6,
-        //   )
-      ])),
+      body: Mcdupage(slkButtons: [
+        Slk(
+          leftKey: mcduEntryBTN(
+            callback: () {},
+            title: "ATC MENU",
+            slk: 1,
+            isDisabled: true,
+          ),
+          rightKey: mcduEntryBTN(
+            callback: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AocMenu()),
+              );
+            },
+            title: "AOC MENU",
+            slk: 1,
+            isRightSide: true,
+          ),
+        )
+      ]),
     );
   }
 }

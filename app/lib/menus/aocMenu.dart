@@ -1,5 +1,6 @@
 import 'package:app/components/button.dart';
 import 'package:app/components/mcduPage.dart';
+import 'package:app/components/slk.dart';
 import 'package:app/pages/init.dart';
 import 'package:flutter/material.dart';
 
@@ -20,61 +21,29 @@ class _AocMenuState extends State<AocMenu> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true, // For anroid, defualt on iOS
-        // FIXME: make button to push on DDU
-        actions: const [Icon(Icons.arrow_circle_up_sharp)],
-        title: const Text(
-          "ATSU DATALINK",
+        appBar: AppBar(
+          centerTitle: true, // For anroid, defualt on iOS
+          // FIXME: make button to push on DDU
+          actions: const [Icon(Icons.arrow_circle_up_sharp)],
+          title: const Text(
+            "ATSU DATALINK",
+          ),
         ),
-      ),
-      body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: Mcdupage(slkButtons: [
-        mcduEntryBTN(
-          callback: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const FltInit()),
-            );
-          },
-          title: "FLT INIT",
-          slk: 1,
-          isRightSide: true,
-        ),
-        // mcduEntryBTN(),
-        // mcduEntryBTN(
-        //   isRightSide: true,
-        //   title: "AOC MENU",
-        //   slk: 2,
-        // ),
-        //   mcduEntryBTN(
-        //     isRightSide: true,
-        //     title: "OPTS",
-        //     slk: 5,
-        //   ),
-        //   mcduEntryBTN(
-        //     isRightSide: true,
-        //     title: "ABOUT",
-        //     slk: 6,
-        //   ),
-        //   mcduEntryBTN(),
-        //   mcduEntryBTN(),
-        //   mcduEntryBTN(),
-        //   mcduEntryBTN(),
-        //   mcduEntryBTN(),
-        //   mcduEntryBTN(),
-        //   mcduEntryBTN(
-        //     title: "OPTS",
-        //     slk: 5,
-        //   ),
-        //   mcduEntryBTN(),
-        //   mcduEntryBTN(
-        //     title: "ABOUT",
-        //     slk: 6,
-        //   )
-      ])),
-    );
+        body: Mcdupage(slkButtons: [
+          Slk(
+            leftKey: null,
+            rightKey: mcduEntryBTN(
+              callback: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const FltInit()),
+                );
+              },
+              title: "FLT INIT",
+              slk: 1,
+              isRightSide: true,
+            ),
+          ),
+        ]));
   }
 }
