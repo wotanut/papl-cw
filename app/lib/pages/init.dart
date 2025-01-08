@@ -92,7 +92,10 @@ class _FltInitState extends State<FltInit> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   const Text("FLT NO"),
-                                  Text(callsign)
+                                  Text(callsign.isNotEmpty
+                                      ? callsign
+                                      : (snapshot.data?.callsign ??
+                                          "Failed to load callsign"))
                                 ],
                               ),
                             ),
@@ -111,7 +114,13 @@ class _FltInitState extends State<FltInit> {
                           alignment: Alignment.topLeft,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [const Text("DEP"), Text(departure)],
+                            children: [
+                              const Text("DEP"),
+                              Text(departure.isNotEmpty
+                                  ? departure
+                                  : (snapshot.data?.dep ??
+                                      "Failed to load Departure"))
+                            ],
                           ),
                         ),
                         Row(
@@ -119,7 +128,13 @@ class _FltInitState extends State<FltInit> {
                           children: [
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [const Text("DEST"), Text(dest)],
+                              children: [
+                                const Text("DEST"),
+                                Text(dest.isNotEmpty
+                                    ? dest
+                                    : (snapshot.data?.dest ??
+                                        "Failed to load Destination"))
+                              ],
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
@@ -134,14 +149,26 @@ class _FltInitState extends State<FltInit> {
                           alignment: Alignment.topLeft,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [const Text("ALTN"), Text(altn)],
+                            children: [
+                              const Text("ALTN"),
+                              Text(altn.isNotEmpty
+                                  ? altn
+                                  : (snapshot.data?.altn ??
+                                      "Failed to load Alternate"))
+                            ],
                           ),
                         ),
                         Container(
                           alignment: Alignment.topLeft,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [const Text("ETE"), Text(ete)],
+                            children: [
+                              const Text("ETE"),
+                              Text(ete.isNotEmpty
+                                  ? ete
+                                  : (snapshot.data?.ete ??
+                                      "Failed to load ete"))
+                            ],
                           ),
                         ),
                         Row(
