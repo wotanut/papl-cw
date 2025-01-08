@@ -7,6 +7,7 @@ from typing import Annotated, Optional
 import requests
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.encoders import jsonable_encoder
 from sqlmodel import Session
 
 from db import get_session, init_db
@@ -96,6 +97,7 @@ async def init(session: SessionDep, flight: Optional[Flight] = None) -> Flight:
     - entry: If there is an entry for the scratchpad to display
     - flight: The updated flight object (mainly for error validation)
     """
+    logger.info("function called")
     errors = []
     entry = ""
     if flight:
@@ -103,7 +105,6 @@ async def init(session: SessionDep, flight: Optional[Flight] = None) -> Flight:
         if exists:
             errors.append("Callsign in use")
             raise HTTPException(status_code=401, detail="Callsign in use")
-
         try:
             airline, nmbr = getICAO(flight), getFltNmbr(flight)
             cs = generateCallsign(airline, nmbr)
@@ -126,7 +127,6 @@ async def init(session: SessionDep, flight: Optional[Flight] = None) -> Flight:
         ete = generateETE()
         adcReq = random.choice([True, False])
 
-    print(cs)
     newFlight = Flight(
         id=cs,
         stage=FlightStage.PreDep.value,
@@ -137,9 +137,12 @@ async def init(session: SessionDep, flight: Optional[Flight] = None) -> Flight:
         ADCReq=adcReq,
     )
 
+    logger.debug(newFlight)
+
     session.add(newFlight)
     session.commit()
-    return newFlight
+    session.refresh(newFlight)
+    return jsonable_encoder(newFlight)
 
 
 @app.get("/msg/adc")
