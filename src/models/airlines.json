@@ -45,11 +45,7 @@
     "ICAO": "AIC",
     "Airline": "Air India Ltd."
   },
-  {
-    "IATA": "AJ",
-    "ICAO": "",
-    "Airline": "Aztec Worldwide Airlines Inc."
-  },
+  
   {
     "IATA": "AK",
     "ICAO": "AXM",
@@ -66,11 +62,7 @@
     "ICAO": "WSN",
     "Airline": "Advanced Air"
   },
-  {
-    "IATA": "AO",
-    "ICAO": "",
-    "Airline": "Air One Aviation Pvt Ltd."
-  },
+  
   {
     "IATA": "AP",
     "ICAO": "LAV",
@@ -309,11 +301,7 @@
     "ICAO": "CCA",
     "Airline": "Air China Ltd."
   },
-  {
-    "IATA": "CB",
-    "ICAO": "",
-    "Airline": "Trans Caribbean Air"
-  },
+  
   {
     "IATA": "CC",
     "ICAO": "ABD",
@@ -365,21 +353,11 @@
     "ICAO": "CMP",
     "Airline": "Copa Airlines"
   },
-  {
-    "IATA": "CM*",
-    "ICAO": "",
-    "Airline": "PSI AIR 2007"
-  },
+  
   {
     "IATA": "CN",
     "ICAO": "GDC",
     "Airline": "Grand China Air Co., Ltd."
-  },
-
-  {
-    "IATA": "CQ",
-    "ICAO": "",
-    "Airline": "Charterlines"
   },
   {
     "IATA": "CU",
@@ -408,11 +386,7 @@
     "ICAO": "CSN",
     "Airline": "China Southern Airlines"
   },
-  {
-    "IATA": "C2",
-    "ICAO": "",
-    "Airline": "CEIBA Intercontinental S.A."
-  },
+  
   {
     "IATA": "C3",
     "ICAO": "TDR",
@@ -443,11 +417,7 @@
     "ICAO": "RUS",
     "Airline": "Cirrus Airlines"
   },
-  {
-    "IATA": "DB",
-    "ICAO": "",
-    "Airline": "Maleth-Aero Aoc Limited"
-  },
+  
   {
     "IATA": "DD",
     "ICAO": "NOK",
@@ -458,21 +428,13 @@
     "ICAO": "CFG",
     "Airline": "Condor Flugdienst"
   },
-  {
-    "IATA": "DF",
-    "ICAO": "",
-    "Airline": "Condor Berlin GmbH"
-  },
+  
   {
     "IATA": "DG",
     "ICAO": "SRQ",
     "Airline": "Cebgo"
   },
-  {
-    "IATA": "DI",
-    "ICAO": "",
-    "Airline": "Norwegian Air UK"
-  },
+  
   {
     "IATA": "DK",
     "ICAO": "VKG",
@@ -548,11 +510,7 @@
     "ICAO": "DAO",
     "Airline": "Daallo Airlines (United Arab Emirates)"
   },
-  {
-    "IATA": "D4",
-    "ICAO": "",
-    "Airline": "Airline GEO SKY"
-  },
+  
   {
     "IATA": "D5",
     "ICAO": "DAE",
@@ -718,11 +676,7 @@
     "ICAO": "LZB",
     "Airline": "Bulgaria Air"
   },
-  {
-    "IATA": "FC",
-    "ICAO": "",
-    "Airline": "Link Airways"
-  },
+  
 
   {
     "IATA": "FD",
@@ -774,11 +728,7 @@
     "ICAO": "FTZ",
     "Airline": "Fastjet Tanzania"
   },
-  {
-    "IATA": "FP",
-    "ICAO": "",
-    "Airline": "Pelican Airlines"
-  },
+  
   {
     "IATA": "FR",
     "ICAO": "RYR",
@@ -856,16 +806,8 @@
     "ICAO": "ABX",
     "Airline": "Airborne Express"
   },
-  {
-    "IATA": "GC",
-    "ICAO": "",
-    "Airline": "Global Feeder Services, LLC"
-  },
-  {
-    "IATA": "GD",
-    "ICAO": "",
-    "Airline": "Aviair"
-  },
+  
+  
   {
     "IATA": "GE",
     "ICAO": "TNA",
@@ -1061,11 +1003,7 @@
     "ICAO": "HHN",
     "Airline": "Hahn Air lines"
   },
-  {
-    "IATA": "HT",
-    "ICAO": "",
-    "Airline": "Tianjin Air Cargo"
-  },
+  
   {
     "IATA": "HU",
     "ICAO": "CHH",
@@ -1449,11 +1387,7 @@
     "ICAO": "NCA",
     "Airline": "Nippon Cargo Airlines"
   },
-  {
-    "IATA": "K3",
-    "ICAO": "",
-    "Airline": "SAC (K) Limited"
-  },
+  
   {
     "IATA": "K4",
     "ICAO": "CKS",
@@ -1502,11 +1436,7 @@
     "ICAO": "LIA",
     "Airline": "LIAT Airlines"
   },
-  {
-    "IATA": "LJ",
-    "ICAO": "",
-    "Airline": "Jin Air"
-  },
+  
   {
     "IATA": "LK",
     "ICAO": "KGZ",
@@ -1718,11 +1648,7 @@
     "Airline": "Breeze Airways"
   },
 
-  {
-    "IATA": "M2",
-    "ICAO": "",
-    "Airline": "Sunrise Airlines Inc."
-  },
+  
   {
     "IATA": "M3",
     "ICAO": "TUS",
@@ -1748,21 +1674,13 @@
     "ICAO": "MAA",
     "Airline": "Masair"
   },
-  {
-    "IATA": "M9",
-    "ICAO": "",
-    "Airline": "Motor-Sich JSC"
-  },
+  
   {
     "IATA": "NC",
     "ICAO": "NAC",
     "Airline": "Northern Air Cargo"
   },
-  {
-    "IATA": "ND",
-    "ICAO": "",
-    "Airline": "Nordica Airline"
-  },
+  
   {
     "IATA": "NE",
     "ICAO": "NMA",
@@ -1978,11 +1896,7 @@
     "ICAO": "AAR",
     "Airline": "Asiana Airlines"
   },
-  {
-    "IATA": "O2",
-    "ICAO": "",
-    "Airline": "Hopscotch Air"
-  },
+  
   {
     "IATA": "O3",
     "ICAO": "CSS",
@@ -2030,11 +1944,7 @@
     "ICAO": "PAQ",
     "Airline": "Pacific Air Express Australia Pty Limited."
   },
-  {
-    "IATA": "PF",
-    "ICAO": "",
-    "Airline": "Air Sial"
-  },
+  
   {
     "IATA": "PF",
     "ICAO": "PRI",
@@ -2178,11 +2088,7 @@
     "Airline": "Bamboo Airways"
   },
 
-  {
-    "IATA": "QJ",
-    "ICAO": "",
-    "Airline": "Jet Airways Inc."
-  },
+  
   {
     "IATA": "QK",
     "ICAO": "JZA",
@@ -2284,21 +2190,13 @@
     "ICAO": "LKH",
     "Airline": "Small Planet Airlines"
   },
-  {
-    "IATA": "RF",
-    "ICAO": "",
-    "Airline": "Erofey Airline"
-  },
+  
   {
     "IATA": "RG",
     "ICAO": "RJD",
     "Airline": "Rotana Jet"
   },
-  {
-    "IATA": "RH",
-    "ICAO": "",
-    "Airline": "Hong Kong Air Cargo Carrier Limited"
-  },
+  
   {
     "IATA": "RI",
     "ICAO": "MDL",
@@ -2355,11 +2253,7 @@
     "ICAO": "CJX",
     "Airline": "Jiangxi Air"
   },
-  {
-    "IATA": "R1",
-    "ICAO": "",
-    "Airline": "Zapways"
-  },
+  
   {
     "IATA": "R2",
     "ICAO": "ORB",
@@ -2410,11 +2304,7 @@
     "ICAO": "MOD",
     "Airline": "SpiceJet Ltd."
   },
-  {
-    "IATA": "SH",
-    "ICAO": "",
-    "Airline": "Sharp Airlines"
-  },
+  
   {
     "IATA": "SJ",
     "ICAO": "SJY",
@@ -2467,11 +2357,7 @@
     "Airline": "Saudi Arabian Airlines"
   },
 
-  {
-    "IATA": "SX",
-    "ICAO": "",
-    "Airline": "Skywagon Corporation"
-  },
+  
   {
     "IATA": "SY",
     "ICAO": "SCX",
@@ -2504,21 +2390,13 @@
     "Airline": "Sounds Air"
   },
 
-  {
-    "IATA": "S9*",
-    "ICAO": "",
-    "Airline": "Air Company LLC Silk Road Cargo"
-  },
+  
   {
     "IATA": "TA",
     "ICAO": "TAI",
     "Airline": "Avianca El Salvador"
   },
-  {
-    "IATA": "TA*",
-    "ICAO": "",
-    "Airline": "Transafrican Air"
-  },
+  
   {
     "IATA": "TB",
     "ICAO": "JAF",
@@ -2651,11 +2529,7 @@
     "ICAO": "TIW",
     "Airline": "Transcarga Int’l Airways, C.A."
   },
-  {
-    "IATA": "T8*",
-    "ICAO": "",
-    "Airline": "Terra Avia"
-  },
+  
   {
     "IATA": "T9",
     "ICAO": "VTU",
@@ -2807,11 +2681,7 @@
     "Airline": "Fly Armenia Airways"
   },
 
-  {
-    "IATA": "VG",
-    "ICAO": "",
-    "Airline": "Vipper"
-  },
+  
   {
     "IATA": "VI",
     "ICAO": "VDA",
@@ -2935,11 +2805,7 @@
     "ICAO": "ISV",
     "Airline": "Avianca Honduras"
   },
-  {
-    "IATA": "WD",
-    "ICAO": "",
-    "Airline": "Wat Phnom Airlines"
-  },
+  
 
   {
     "IATA": "WE*",
@@ -3011,16 +2877,8 @@
     "ICAO": "CWU",
     "Airline": "Wuhan Airline"
   },
-  {
-    "IATA": "WW",
-    "ICAO": "",
-    "Airline": "Rutas Aereas de Venezuela RAV S.A."
-  },
-  {
-    "IATA": "WW*",
-    "ICAO": "",
-    "Airline": "MJets"
-  },
+  
+  
   {
     "IATA": "WX",
     "ICAO": "BCY",
@@ -3066,21 +2924,13 @@
     "ICAO": "CJT",
     "Airline": "Cargojet Airways"
   },
-  {
-    "IATA": "XB",
-    "ICAO": "",
-    "Airline": "International Air Transport Association (IATA)"
-  },
+  
   {
     "IATA": "XC",
     "ICAO": "CAI",
     "Airline": "Corendon Airlines"
   },
-  {
-    "IATA": "XD",
-    "ICAO": "",
-    "Airline": "SATO"
-  },
+  
   {
     "IATA": "XE",
     "ICAO": "JSX",
@@ -3128,21 +2978,13 @@
     "ICAO": "TUI",
     "Airline": "TUIfly GmbH"
   },
-  {
-    "IATA": "X4",
-    "ICAO": "",
-    "Airline": "Air Excursion, LLC"
-  },
+  
   {
     "IATA": "X7",
     "ICAO": "CHG",
     "Airline": "Challenge Airlines BE"
   },
-  {
-    "IATA": "X8",
-    "ICAO": "",
-    "Airline": "Airmax"
-  },
+  
 
   {
     "IATA": "YC",
@@ -3159,11 +3001,7 @@
     "ICAO": "HYT",
     "Airline": "YTO Cargo Airlines"
   },
-  {
-    "IATA": "YH",
-    "ICAO": "",
-    "Airline": "Sunsplash Aviation, LLC."
-  },
+  
   {
     "IATA": "YK",
     "ICAO": "AVJ",
@@ -3367,11 +3205,7 @@
     "ICAO": "UDN",
     "Airline": "Dniproavia - Joint Stock Aviation Co."
   },
-  {
-    "IATA": "Z7",
-    "ICAO": "",
-    "Airline": "Amaszonas Uruguay"
-  },
+  
   {
     "IATA": "Z8",
     "ICAO": "AZN",
@@ -3382,11 +3216,7 @@
     "ICAO": "PJZ",
     "Airline": "Premium Jet AG"
   },
-  {
-    "IATA": "1S",
-    "ICAO": "",
-    "Airline": "Sabre"
-  },
+  
   {
     "IATA": "2B",
     "ICAO": "AWT",
@@ -3407,11 +3237,7 @@
     "ICAO": "AGU",
     "Airline": "JSC Angara Airlines"
   },
-  {
-    "IATA": "2H",
-    "ICAO": "",
-    "Airline": "Thalys International"
-  },
+  
   {
     "IATA": "2I",
     "ICAO": "SRU",
@@ -3447,11 +3273,7 @@
     "ICAO": "GAP",
     "Airline": "Air Philippines Corporation"
   },
-  {
-    "IATA": "2Q",
-    "ICAO": "",
-    "Airline": "Air Cargo Carriers"
-  },
+  
   {
     "IATA": "2S",
     "ICAO": "STW",
@@ -3472,11 +3294,7 @@
     "ICAO": "MYU",
     "Airline": "My Indo Airlines"
   },
-  {
-    "IATA": "3A*",
-    "ICAO": "",
-    "Airline": "Chu Kong Passenger Transport"
-  },
+  
   {
     "IATA": "3B",
     "ICAO": "BCV",
@@ -3512,11 +3330,7 @@
     "ICAO": "JSA",
     "Airline": "Jetstar Asia Airways"
   },
-  {
-    "IATA": "3L",
-    "ICAO": "",
-    "Airline": "Air Arabia Abu Dhabi"
-  },
+  
   {
     "IATA": "3M",
     "ICAO": "GFT",
@@ -3567,11 +3381,7 @@
     "ICAO": "MWI",
     "Airline": "Malawian Airlines"
   },
-  {
-    "IATA": "3X",
-    "ICAO": "",
-    "Airline": "Premier Trans Aire Inc."
-  },
+  
   {
     "IATA": "4B",
     "ICAO": "BTQ",
@@ -3649,11 +3459,7 @@
     "ICAO": "AJK",
     "Airline": "Allied Air Ltd."
   },
-  {
-    "IATA": "4X",
-    "ICAO": "",
-    "Airline": "Mercury Air Cargo Inc."
-  },
+  
   {
     "IATA": "4Y",
     "ICAO": "OCN",
@@ -3664,11 +3470,7 @@
     "ICAO": "LNK",
     "Airline": "SA Airlink"
   },
-  {
-    "IATA": "5A",
-    "ICAO": "",
-    "Airline": "Alpine Aviation Inc."
-  },
+  
   {
     "IATA": "5B",
     "ICAO": "BSX",
@@ -3684,11 +3486,7 @@
     "ICAO": "SLI",
     "Airline": "Aerolitoral S.A. de C.V."
   },
-  {
-    "IATA": "5F",
-    "ICAO": "",
-    "Airline": "Fly One S.R.L."
-  },
+  
   {
     "IATA": "5H",
     "ICAO": "FFV",
@@ -3891,11 +3689,6 @@
     "IATA": "7T",
     "ICAO": "RTM",
     "Airline": "DHL Ecuador"
-  },
-  {
-    "IATA": "7U",
-    "ICAO": "",
-    "Airline": "Commercial Aviation Services, LLC."
   },
   {
     "IATA": "7V",
