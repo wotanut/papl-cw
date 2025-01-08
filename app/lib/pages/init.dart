@@ -94,8 +94,7 @@ class _FltInitState extends State<FltInit> {
                                   const Text("FLT NO"),
                                   Text(callsign.isNotEmpty
                                       ? callsign
-                                      : (snapshot.data?.callsign ??
-                                          "Failed to load callsign"))
+                                      : (snapshot.data?.callsign ?? ""))
                                 ],
                               ),
                             ),
@@ -118,8 +117,7 @@ class _FltInitState extends State<FltInit> {
                               const Text("DEP"),
                               Text(departure.isNotEmpty
                                   ? departure
-                                  : (snapshot.data?.dep ??
-                                      "Failed to load Departure"))
+                                  : (snapshot.data?.dep ?? ""))
                             ],
                           ),
                         ),
@@ -132,8 +130,7 @@ class _FltInitState extends State<FltInit> {
                                 const Text("DEST"),
                                 Text(dest.isNotEmpty
                                     ? dest
-                                    : (snapshot.data?.dest ??
-                                        "Failed to load Destination"))
+                                    : (snapshot.data?.dest ?? ""))
                               ],
                             ),
                             Column(
@@ -153,8 +150,7 @@ class _FltInitState extends State<FltInit> {
                               const Text("ALTN"),
                               Text(altn.isNotEmpty
                                   ? altn
-                                  : (snapshot.data?.altn ??
-                                      "Failed to load Alternate"))
+                                  : (snapshot.data?.altn ?? ""))
                             ],
                           ),
                         ),
@@ -166,8 +162,7 @@ class _FltInitState extends State<FltInit> {
                               const Text("ETE"),
                               Text(ete.isNotEmpty
                                   ? ete
-                                  : (snapshot.data?.ete ??
-                                      "Failed to load ete"))
+                                  : (snapshot.data?.ete ?? ""))
                             ],
                           ),
                         ),

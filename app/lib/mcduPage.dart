@@ -17,30 +17,9 @@ class _McdupageState extends State<Mcdupage> {
   Widget build(BuildContext context) {
     List<Widget> rows = [];
 
-    // first iteration - Generate all of the explicitly defined select keys
-    for (int i = 0; i < 6; i++) {
-      if (widget.slkButtons[i].slk == i) {}
-    }
     return Container(
       color: Colors.amber,
       child: Expanded(child: Column(children: rows)),
     );
-
-    // return Container(
-    //   child: Column(
-    //     children: [
-    //       for (int i = 0; i < widget.slkButtons.length; i += 2)
-    //         Row(
-    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //           children: [
-    //             widget.slkButtons[i],
-    //             const Spacer(),
-    //             widget.slkButtons[i + 1],
-    //           ],
-    //         )
-    //     ],
-    //   ),
-    //   // TODO - Add Text Entry Box / Error Box here
-    // );
   }
 }

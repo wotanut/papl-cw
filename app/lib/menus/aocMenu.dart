@@ -40,7 +40,6 @@ class _AocMenuState extends State<AocMenu> {
                 );
               },
               title: "FLT INIT",
-              slk: 1,
               isRightSide: true,
             ),
           ),

@@ -31,10 +31,10 @@ class _DlkPageState extends State<DlkPage> {
       ),
       body: Mcdupage(slkButtons: [
         Slk(
+          slk: 1,
           leftKey: mcduEntryBTN(
             callback: () {},
             title: "ATC MENU",
-            slk: 1,
             isDisabled: true,
           ),
           rightKey: mcduEntryBTN(
@@ -45,7 +45,6 @@ class _DlkPageState extends State<DlkPage> {
               );
             },
             title: "AOC MENU",
-            slk: 1,
             isRightSide: true,
           ),
         )

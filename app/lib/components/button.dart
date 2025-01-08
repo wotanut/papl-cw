@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class mcduEntryBTN extends StatefulWidget {
-  final int slk; // slk = Select Key
   final bool isRightSide;
   final String title;
   final VoidCallback callback;
@@ -10,7 +9,6 @@ class mcduEntryBTN extends StatefulWidget {
 
   const mcduEntryBTN(
       {super.key,
-      this.slk = 1,
       this.isRightSide = false,
       this.title = "Test",
       this.isDisabled = false,

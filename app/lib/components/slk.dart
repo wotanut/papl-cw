@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 class Slk extends StatefulWidget {
   final Widget? leftKey;
   final Widget? rightKey;
+  final int slk;
 
-  const Slk({super.key, required this.leftKey, required this.rightKey});
+  const Slk(
+      {super.key, this.slk = 1, required this.leftKey, required this.rightKey});
 
   @override
   State<Slk> createState() => _SlkState();

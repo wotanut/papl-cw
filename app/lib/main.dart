@@ -72,17 +72,8 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Mcdupage(
             slkButtons: [
               Slk(
-                // mcduEntryBTN(
-                //   title: "FMGC",
-                //   slk: 1,
-                // ),
-                // mcduEntryBTN(),
-                // mcduEntryBTN(
-                //   callback: () {},
-                //   title: "FMGC",
-                //   slk: 1,
-                //   isDisabled: true,
-                // ),
+                slk: 2,
+                rightKey: null,
                 leftKey: mcduEntryBTN(
                   callback: () {
                     Navigator.push(
@@ -91,20 +82,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     );
                   },
                   title: "ATSU",
-                  slk: 2,
                 ),
-                rightKey: mcduEntryBTN(
-                  callback: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const About()),
-                    );
-                  },
-                  title: "ABOUT",
+              ),
+              Slk(
                   slk: 6,
-                  isRightSide: true,
-                ),
-              )
+                  leftKey: null,
+                  rightKey: mcduEntryBTN(
+                    callback: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const About()),
+                      );
+                    },
+                    title: "ABOUT",
+                    isRightSide: true,
+                  ))
             ],
           ),
         ));
