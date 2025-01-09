@@ -29,17 +29,12 @@ class _AocMenuState extends State<AocMenu> {
             "ATSU DATALINK",
           ),
         ),
-        body: Mcdupage(slkButtons: [
+        body: const Mcdupage(slkButtons: [
           Slk(
             slk: 1,
             rightKey: null,
             leftKey: mcduEntryBTN(
-              callback: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const FltInit()),
-                );
-              },
+              nextPage: FltInit(),
               title: "FLT INIT",
             ),
           ),

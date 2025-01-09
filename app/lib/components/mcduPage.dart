@@ -13,20 +13,33 @@ class Mcdupage extends StatefulWidget {
 }
 
 class _McdupageState extends State<Mcdupage> {
+  late List<Slk> sortedSLK;
+
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    sortedSLK = List<Slk>.from(widget
+        .slkButtons); // Creates an exact copy so that the whole page can be const
     // Step 1 Sort the select keys
-    widget.slkButtons.sort((a, b) => a.slk.compareTo(b.slk));
+    sortedSLK.sort((a, b) => a.slk.compareTo(b.slk));
+    _fill();
+  }
+
+  void _fill() {
     // Step 2, loop through each slk, check its value and compare it to the loop. It should be equal. If it isn't insert an empty slk
     for (var i = 1; i < 6; i++) {
-      if (widget.slkButtons.length < i) {
+      if (sortedSLK.length < i) {
         // Do nothing, there's no point rendering a select key when there would be nothing below it
-      } else if (widget.slkButtons[i - 1].slk != i) {
-        widget.slkButtons.insert(i - 1,
+      } else if (sortedSLK[i - 1].slk != i) {
+        sortedSLK.insert(i - 1,
             const Slk(leftKey: null, rightKey: null)); // Insert an empty slk
       }
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8.0),
       child: Column(

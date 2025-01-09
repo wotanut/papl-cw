@@ -29,21 +29,14 @@ class _DlkPageState extends State<DlkPage> {
           "ATSU DATALINK",
         ),
       ),
-      body: Mcdupage(slkButtons: [
+      body: const Mcdupage(slkButtons: [
         Slk(
           slk: 1,
           leftKey: mcduEntryBTN(
-            callback: () {},
             title: "ATC MENU",
-            isDisabled: true,
           ),
           rightKey: mcduEntryBTN(
-            callback: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AocMenu()),
-              );
-            },
+            nextPage: AocMenu(),
             title: "AOC MENU",
             isRightSide: true,
           ),

@@ -1,5 +1,6 @@
 import 'package:app/components/button.dart';
 import 'package:app/components/social.dart';
+import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 
 import '../globals.dart' as globals;
@@ -117,13 +118,12 @@ class _AboutState extends State<About> {
               const Spacer(),
               Container(
                 alignment: Alignment.bottomLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: mcduEntryBTN(
-                      title: "Back",
-                      callback: () {
-                        Navigator.pop(context);
-                      }),
+                    title: "Back",
+                    previousPage: MyApp(),
+                  ),
                 ),
               ),
               Text(globals.appVersion),

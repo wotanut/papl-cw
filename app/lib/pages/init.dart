@@ -4,6 +4,7 @@ import 'package:app/components/button.dart';
 import 'package:app/components/mcduPage.dart';
 import 'package:app/components/slk.dart';
 import 'package:app/controllers/flight.dart';
+import 'package:app/menus/aocMenu.dart';
 import 'package:app/models/Flight.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -160,11 +161,10 @@ class _FltInitState extends State<FltInit> {
                         rightKey: null),
                     Slk(
                       slk: 6,
-                      leftKey: mcduEntryBTN(
-                          title: "AOC MENU",
-                          callback: () {
-                            Navigator.pop(context);
-                          }),
+                      leftKey: const mcduEntryBTN(
+                        title: "AOC MENU",
+                        previousPage: AocMenu(),
+                      ),
                       rightKey:
                           snapshot.connectionState == ConnectionState.waiting
                               ? const CircularProgressIndicator.adaptive()

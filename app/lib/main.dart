@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
             "MCDU MENU",
           ),
         ),
-        body: Center(
+        body: const Center(
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
           child: Mcdupage(
@@ -75,21 +75,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 slk: 1,
                 rightKey: null,
                 leftKey: mcduEntryBTN(
-                  callback: () {},
                   title: "FMGC",
-                  isDisabled: true,
                 ),
               ),
               Slk(
                 slk: 2,
                 rightKey: null,
                 leftKey: mcduEntryBTN(
-                  callback: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const DlkPage()),
-                    );
-                  },
+                  nextPage: DlkPage(),
                   title: "ATSU",
                 ),
               ),
@@ -97,12 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   slk: 6,
                   leftKey: null,
                   rightKey: mcduEntryBTN(
-                    callback: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const About()),
-                      );
-                    },
+                    nextPage: About(),
                     title: "ABOUT",
                     isRightSide: true,
                   ))
