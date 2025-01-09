@@ -21,8 +21,14 @@ class _SlkState extends State<Slk> {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          widget.leftKey ?? const SizedBox.shrink(),
-          widget.rightKey ?? const SizedBox.shrink(),
+          SizedBox(
+            height: MediaQuery.sizeOf(context).height / 8,
+            child: widget.leftKey ?? const SizedBox.shrink(),
+          ),
+          SizedBox(
+            height: MediaQuery.sizeOf(context).height / 8,
+            child: widget.rightKey ?? const SizedBox.shrink(),
+          ),
         ],
       );
     }
@@ -32,7 +38,9 @@ class _SlkState extends State<Slk> {
       return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
+            height: MediaQuery.sizeOf(context).height /
+                8, // While only 6 select keys, it's a division by 8 to take into account for thins like the title, the scratchpad, the safe area etc..
             child: widget.leftKey,
           ),
         ],
@@ -44,7 +52,8 @@ class _SlkState extends State<Slk> {
       return Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Container(
+          SizedBox(
+            height: MediaQuery.sizeOf(context).height / 8,
             child: widget.rightKey,
           ),
         ],
