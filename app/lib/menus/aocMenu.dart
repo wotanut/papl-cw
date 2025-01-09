@@ -31,8 +31,9 @@ class _AocMenuState extends State<AocMenu> {
         ),
         body: Mcdupage(slkButtons: [
           Slk(
-            leftKey: null,
-            rightKey: mcduEntryBTN(
+            slk: 1,
+            rightKey: null,
+            leftKey: mcduEntryBTN(
               callback: () {
                 Navigator.push(
                   context,
@@ -40,7 +41,6 @@ class _AocMenuState extends State<AocMenu> {
                 );
               },
               title: "FLT INIT",
-              isRightSide: true,
             ),
           ),
         ]));
