@@ -5,7 +5,6 @@ class mcduEntryBTN extends StatefulWidget {
   final String title;
   final Widget? nextPage;
   final Widget? previousPage;
-  // FIXME- Add link to page
 
   const mcduEntryBTN(
       {super.key,

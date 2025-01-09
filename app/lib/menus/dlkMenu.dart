@@ -23,7 +23,6 @@ class _DlkPageState extends State<DlkPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true, // For anroid, defualt on iOS
-        // FIXME: make button to push on DDU
         actions: const [Icon(Icons.arrow_circle_up_sharp)],
         title: const Text(
           "ATSU DATALINK",
