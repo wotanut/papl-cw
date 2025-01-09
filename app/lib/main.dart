@@ -72,6 +72,15 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Mcdupage(
             slkButtons: [
               Slk(
+                slk: 1,
+                rightKey: null,
+                leftKey: mcduEntryBTN(
+                  callback: () {},
+                  title: "FMGC",
+                  isDisabled: true,
+                ),
+              ),
+              Slk(
                 slk: 2,
                 rightKey: null,
                 leftKey: mcduEntryBTN(

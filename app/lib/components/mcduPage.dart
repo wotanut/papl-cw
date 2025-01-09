@@ -15,9 +15,23 @@ class Mcdupage extends StatefulWidget {
 class _McdupageState extends State<Mcdupage> {
   @override
   Widget build(BuildContext context) {
+    // Step 1 Sort the select keys
+    widget.slkButtons.sort((a, b) => a.slk.compareTo(b.slk));
+    // Step 2, loop through each slk, check its value and compare it to the loop. It should be equal. If it isn't insert an empty slk
+    for (var i = 1; i < 6; i++) {
+      if (widget.slkButtons.length < i) {
+        // Do nothing, there's no point rendering a select key when there would be nothing below it
+      } else if (widget.slkButtons[i - 1].slk != i) {
+        widget.slkButtons.insert(i - 1,
+            const Slk(leftKey: null, rightKey: null)); // Insert an empty slk
+      }
+    }
+
     return Container(
       padding: const EdgeInsets.all(8.0),
-      child: Column(children: widget.slkButtons),
+      child: Column(
+        children: [...widget.slkButtons],
+      ),
     );
   }
 }

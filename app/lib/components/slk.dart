@@ -59,6 +59,14 @@ class _SlkState extends State<Slk> {
         ],
       );
     }
-    return const Text("Failed to load select key");
+
+    // If Neither
+    return Row(
+      children: [
+        SizedBox(
+          height: MediaQuery.sizeOf(context).height / 8,
+        ),
+      ],
+    );
   }
 }
