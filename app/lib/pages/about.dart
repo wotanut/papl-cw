@@ -118,7 +118,7 @@ class _AboutState extends State<About> {
                 alignment: Alignment.bottomLeft,
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: mcduEntryBTN(
+                  child: MCDUEntryBTN(
                     title: "Back",
                     previousPage: MyApp(),
                   ),

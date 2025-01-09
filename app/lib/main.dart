@@ -1,7 +1,7 @@
 import 'package:app/components/button.dart';
-import 'package:app/components/mcduPage.dart';
+import 'package:app/components/mcdu_page.dart';
 import 'package:app/components/slk.dart';
-import 'package:app/menus/dlkMenu.dart';
+import 'package:app/menus/dlk_menu.dart';
 import 'package:app/pages/about.dart';
 import 'package:flutter/material.dart';
 
@@ -62,14 +62,14 @@ class _MyHomePageState extends State<MyHomePage> {
               Slk(
                 slk: 1,
                 rightKey: null,
-                leftKey: mcduEntryBTN(
+                leftKey: MCDUEntryBTN(
                   title: "FMGC",
                 ),
               ),
               Slk(
                 slk: 2,
                 rightKey: null,
-                leftKey: mcduEntryBTN(
+                leftKey: MCDUEntryBTN(
                   nextPage: DlkPage(),
                   title: "ATSU",
                 ),
@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Slk(
                   slk: 6,
                   leftKey: null,
-                  rightKey: mcduEntryBTN(
+                  rightKey: MCDUEntryBTN(
                     nextPage: About(),
                     title: "ABOUT",
                     isRightSide: true,

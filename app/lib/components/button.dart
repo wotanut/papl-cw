@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class mcduEntryBTN extends StatefulWidget {
+class MCDUEntryBTN extends StatefulWidget {
   final bool isRightSide;
   final String title;
   final Widget? nextPage;
   final Widget? previousPage;
 
-  const mcduEntryBTN(
+  const MCDUEntryBTN(
       {super.key,
       this.isRightSide = false,
       required this.title,
@@ -14,10 +14,10 @@ class mcduEntryBTN extends StatefulWidget {
       this.previousPage});
 
   @override
-  State<mcduEntryBTN> createState() => _mcduEntryBTNState();
+  State<MCDUEntryBTN> createState() => _MCDUEntryBTNState();
 }
 
-class _mcduEntryBTNState extends State<mcduEntryBTN> {
+class _MCDUEntryBTNState extends State<MCDUEntryBTN> {
   @override
   Widget build(BuildContext context) {
     bool isDisabled = false;

@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:app/components/button.dart';
-import 'package:app/components/mcduPage.dart';
+import 'package:app/components/mcdu_page.dart';
 import 'package:app/components/slk.dart';
 import 'package:app/controllers/flight.dart';
-import 'package:app/menus/aocMenu.dart';
+import 'package:app/menus/aoc_menu.dart';
 import 'package:app/models/Flight.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -67,7 +67,10 @@ class _FltInitState extends State<FltInit> {
                         } else {
                           throw 'Could not launch $url';
                         }
-                        Navigator.pop(context, 'Report');
+                        if (context.mounted) {
+                          // https://stackoverflow.com/questions/68871880/do-not-use-buildcontexts-across-async-gaps
+                          Navigator.pop(context, 'Report');
+                        }
                       },
                       child: const Text('Report'),
                     ),
@@ -160,7 +163,7 @@ class _FltInitState extends State<FltInit> {
                         rightKey: null),
                     Slk(
                       slk: 6,
-                      leftKey: const mcduEntryBTN(
+                      leftKey: const MCDUEntryBTN(
                         title: "AOC MENU",
                         previousPage: AocMenu(),
                       ),

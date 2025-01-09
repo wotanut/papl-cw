@@ -1,7 +1,7 @@
 import 'package:app/components/button.dart';
-import 'package:app/components/mcduPage.dart';
+import 'package:app/components/mcdu_page.dart';
 import 'package:app/components/slk.dart';
-import 'package:app/menus/aocMenu.dart';
+import 'package:app/menus/aoc_menu.dart';
 import 'package:flutter/material.dart';
 
 class DlkPage extends StatefulWidget {
@@ -31,10 +31,10 @@ class _DlkPageState extends State<DlkPage> {
       body: const Mcdupage(slkButtons: [
         Slk(
           slk: 1,
-          leftKey: mcduEntryBTN(
+          leftKey: MCDUEntryBTN(
             title: "ATC MENU",
           ),
-          rightKey: mcduEntryBTN(
+          rightKey: MCDUEntryBTN(
             nextPage: AocMenu(),
             title: "AOC MENU",
             isRightSide: true,

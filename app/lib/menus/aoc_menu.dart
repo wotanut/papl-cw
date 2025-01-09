@@ -1,5 +1,5 @@
 import 'package:app/components/button.dart';
-import 'package:app/components/mcduPage.dart';
+import 'package:app/components/mcdu_page.dart';
 import 'package:app/components/slk.dart';
 import 'package:app/pages/init.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +32,7 @@ class _AocMenuState extends State<AocMenu> {
           Slk(
             slk: 1,
             rightKey: null,
-            leftKey: mcduEntryBTN(
+            leftKey: MCDUEntryBTN(
               nextPage: FltInit(),
               title: "FLT INIT",
             ),
