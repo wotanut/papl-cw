@@ -28,21 +28,19 @@ class _mcduEntryBTNState extends State<mcduEntryBTN> {
       actualTitle = "< ${widget.title}";
     }
 
-    return Container(
-        decoration: BoxDecoration(border: Border.all(color: Colors.cyan)),
-        child: TextButton(
-          onPressed: widget.callback,
-          style: ButtonStyle(
-            foregroundColor: WidgetStateProperty.resolveWith<Color>(
-              (Set<WidgetState> states) {
-                if (widget.isDisabled) {
-                  return Colors.grey.shade700;
-                }
-                return Colors.grey.shade100;
-              },
-            ),
-          ),
-          child: Text(actualTitle),
-        ));
+    return TextButton(
+      onPressed: widget.callback,
+      style: ButtonStyle(
+        foregroundColor: WidgetStateProperty.resolveWith<Color>(
+          (Set<WidgetState> states) {
+            if (widget.isDisabled) {
+              return Colors.grey.shade700;
+            }
+            return Colors.grey.shade100;
+          },
+        ),
+      ),
+      child: Text(actualTitle),
+    );
   }
 }
