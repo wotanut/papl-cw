@@ -44,7 +44,7 @@ class _FltInitState extends State<FltInit> {
             future: _futureFlight,
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                return AlertDialog(
+                return AlertDialog.adaptive(
                   icon: const Icon(Icons.warning),
                   iconColor: Colors.red,
                   shadowColor: Colors.amberAccent,
@@ -65,9 +65,9 @@ class _FltInitState extends State<FltInit> {
                         } else {
                           throw 'Could not launch $url'; //  #FIXME - alert dialog
                         }
-                        Navigator.pop(context, 'Report on discord');
+                        Navigator.pop(context, 'Report');
                       },
-                      child: const Text('Report on discord'),
+                      child: const Text('Report'),
                     ),
                   ],
                 );
@@ -176,7 +176,7 @@ class _FltInitState extends State<FltInit> {
                                 }),
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting)
-                              const CircularProgressIndicator()
+                              const CircularProgressIndicator.adaptive()
                             else
                               TextButton(
                                   child: const Text("INIT DATA REQ *"),
