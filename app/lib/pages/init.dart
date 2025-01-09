@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:app/components/button.dart';
+import 'package:app/components/mcduPage.dart';
+import 'package:app/components/slk.dart';
 import 'package:app/controllers/flight.dart';
 import 'package:app/models/Flight.dart';
 import 'package:flutter/material.dart';
@@ -73,112 +75,100 @@ class _FltInitState extends State<FltInit> {
                 );
               }
 
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Stack(
-                  children: [
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              return Stack(children: [
+                Mcdupage(
+                  slkButtons: [
+                    Slk(
+                        slk: 1,
+                        leftKey: GestureDetector(
+                          onTap: () {
+                            callsign = scratchpad;
+                            setState(() {}); //NOTE - Needed to update the UI
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              const Text("FLT NO"),
+                              Text(callsign.isNotEmpty
+                                  ? callsign
+                                  : (snapshot.data?.callsign ?? ""))
+                            ],
+                          ),
+                        ),
+                        rightKey: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                callsign = scratchpad;
-                                setState(
-                                    () {}); //NOTE - Needed to update the UI
-                              },
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  const Text("FLT NO"),
-                                  Text(callsign.isNotEmpty
-                                      ? callsign
-                                      : (snapshot.data?.callsign ?? ""))
-                                ],
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                const Text("UTC"),
-                                Text(time.hour.toString() +
-                                    time.minute
-                                        .toString()) // FIXME - Make update every minute
-                              ],
-                            )
+                            const Text("UTC"),
+                            Text(time.hour.toString() +
+                                time.minute
+                                    .toString()) // FIXME - Make update every minute
+                          ],
+                        )),
+                    Slk(
+                        slk: 2,
+                        leftKey: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            const Text("DEP"),
+                            Text(departure.isNotEmpty
+                                ? departure
+                                : (snapshot.data?.dep ?? ""))
                           ],
                         ),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              const Text("DEP"),
-                              Text(departure.isNotEmpty
-                                  ? departure
-                                  : (snapshot.data?.dep ?? ""))
-                            ],
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        rightKey: null),
+                    Slk(
+                        slk: 3,
+                        leftKey: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                const Text("DEST"),
-                                Text(dest.isNotEmpty
-                                    ? dest
-                                    : (snapshot.data?.dest ?? ""))
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                const Text("DATE"),
-                                Text("${time.day}/${time.month}/${time.year}")
-                              ],
-                            )
+                            const Text("DEST"),
+                            Text(dest.isNotEmpty
+                                ? dest
+                                : (snapshot.data?.dest ?? ""))
                           ],
                         ),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              const Text("ALTN"),
-                              Text(altn.isNotEmpty
-                                  ? altn
-                                  : (snapshot.data?.altn ?? ""))
-                            ],
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              const Text("ETE"),
-                              Text(ete.isNotEmpty
-                                  ? ete
-                                  : (snapshot.data?.ete ?? ""))
-                            ],
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        rightKey: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            mcduEntryBTN(
-                                title: "AOC MENU",
-                                callback: () {
-                                  Navigator.pop(context);
-                                }),
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting)
-                              const CircularProgressIndicator.adaptive()
-                            else
-                              TextButton(
+                            const Text("DATE"),
+                            Text("${time.day}/${time.month}/${time.year}")
+                          ],
+                        )),
+                    Slk(
+                        slk: 4,
+                        leftKey: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            const Text("ALTN"),
+                            Text(altn.isNotEmpty
+                                ? altn
+                                : (snapshot.data?.altn ?? ""))
+                          ],
+                        ),
+                        rightKey: null),
+                    Slk(
+                        slk: 5,
+                        leftKey: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            const Text("ETE"),
+                            Text(ete.isNotEmpty
+                                ? ete
+                                : (snapshot.data?.ete ?? ""))
+                          ],
+                        ),
+                        rightKey: null),
+                    Slk(
+                      slk: 6,
+                      leftKey: mcduEntryBTN(
+                          title: "AOC MENU",
+                          callback: () {
+                            Navigator.pop(context);
+                          }),
+                      rightKey:
+                          snapshot.connectionState == ConnectionState.waiting
+                              ? const CircularProgressIndicator.adaptive()
+                              : TextButton(
                                   child: const Text("INIT DATA REQ *"),
                                   onPressed: () {
                                     setState(() {
@@ -186,22 +176,19 @@ class _FltInitState extends State<FltInit> {
                                           callsign, dest, departure, altn, ete);
                                     });
                                   }),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Container(
-                      alignment: Alignment.bottomCenter,
-                      child: TextField(
-                        onSubmitted: (value) {
-                          scratchpad = value;
-                          _changeSPADEntry();
-                        },
-                      ),
                     )
                   ],
                 ),
-              );
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  child: TextField(
+                    onSubmitted: (value) {
+                      scratchpad = value;
+                      _changeSPADEntry();
+                    },
+                  ),
+                )
+              ]);
             }));
   }
 
@@ -221,35 +208,3 @@ class _FltInitState extends State<FltInit> {
         });
   }
 }
-
-// class ErrorWidget extends StatelessWidget {
-//   const ErrorWidget({
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return AlertDialog(
-//       title: const Text('An error occured whilst initialising the flight'),
-//       content: Text('${snapshot.error}'),
-//       actions: [
-//         TextButton(
-//           onPressed: () => Navigator.pop(context, 'Ok'),
-//           child: const Text('Ok'),
-//         ),
-//         TextButton(
-//           onPressed: () async {
-//             Uri url = Uri.https("sambot.dev", '/discord');
-//             if (await canLaunchUrl(url)) {
-//               await launchUrl(url);
-//             } else {
-//               throw 'Could not launch $url'; //  #FIXME - alert dialog
-//             }
-//             Navigator.pop(context, 'Report on discord');
-//           },
-//           child: const Text('Report on discord'),
-//         ),
-//       ],
-//     );
-//   }
-// }
