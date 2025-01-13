@@ -1,5 +1,6 @@
 import 'package:app/components/button.dart';
 import 'package:app/components/social.dart';
+import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 
 import '../globals.dart' as globals;
@@ -31,8 +32,6 @@ class _AboutState extends State<About> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true, // For anroid, defualt on iOS
-          // FIXME: make button to push on DDU
-          // TODO: Add how to enter data (click the bottom)
           actions: const [Icon(Icons.arrow_circle_up_sharp)],
           title: const Text(
             "About",
@@ -117,13 +116,12 @@ class _AboutState extends State<About> {
               const Spacer(),
               Container(
                 alignment: Alignment.bottomLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: mcduEntryBTN(
-                      title: "Back",
-                      callback: () {
-                        Navigator.pop(context);
-                      }),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: MCDUEntryBTN(
+                    title: "Back",
+                    previousPage: MyApp(),
+                  ),
                 ),
               ),
               Text(globals.appVersion),

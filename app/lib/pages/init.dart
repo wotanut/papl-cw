@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:app/components/button.dart';
+import 'package:app/components/mcdu_page.dart';
+import 'package:app/components/slk.dart';
 import 'package:app/controllers/flight.dart';
+import 'package:app/menus/aoc_menu.dart';
 import 'package:app/models/Flight.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -34,7 +37,6 @@ class _FltInitState extends State<FltInit> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true, // For anroid, defualt on iOS
-          // FIXME: make button to push on DDU
           actions: const [Icon(Icons.arrow_circle_up_sharp)],
           title: const Text(
             "AOC FLT INIT",
@@ -44,7 +46,7 @@ class _FltInitState extends State<FltInit> {
             future: _futureFlight,
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                return AlertDialog(
+                return AlertDialog.adaptive(
                   icon: const Icon(Icons.warning),
                   iconColor: Colors.red,
                   shadowColor: Colors.amberAccent,
@@ -63,100 +65,112 @@ class _FltInitState extends State<FltInit> {
                         if (await canLaunchUrl(url)) {
                           await launchUrl(url);
                         } else {
-                          throw 'Could not launch $url'; //  #FIXME - alert dialog
+                          throw 'Could not launch $url';
                         }
-                        Navigator.pop(context, 'Report on discord');
+                        if (context.mounted) {
+                          // https://stackoverflow.com/questions/68871880/do-not-use-buildcontexts-across-async-gaps
+                          Navigator.pop(context, 'Report');
+                        }
                       },
-                      child: const Text('Report on discord'),
+                      child: const Text('Report'),
                     ),
                   ],
                 );
               }
 
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Stack(
-                  children: [
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              return Stack(children: [
+                Mcdupage(
+                  slkButtons: [
+                    Slk(
+                        slk: 1,
+                        leftKey: GestureDetector(
+                          onTap: () {
+                            callsign = scratchpad;
+                            setState(() {}); //NOTE - Needed to update the UI
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              const Text("FLT NO"),
+                              Text(callsign.isNotEmpty
+                                  ? callsign
+                                  : (snapshot.data?.callsign ?? ""))
+                            ],
+                          ),
+                        ),
+                        rightKey: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                callsign = scratchpad;
-                                setState(
-                                    () {}); //NOTE - Needed to update the UI
-                              },
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  const Text("FLT NO"),
-                                  Text(callsign)
-                                ],
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                const Text("UTC"),
-                                Text(time.hour.toString() +
-                                    time.minute
-                                        .toString()) // FIXME - Make update every minute
-                              ],
-                            )
+                            const Text("UTC"),
+                            Text(time.hour.toString() +
+                                time.minute
+                                    .toString()) // FIXME - Make update every minute
+                          ],
+                        )),
+                    Slk(
+                        slk: 2,
+                        leftKey: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            const Text("DEP"),
+                            Text(departure.isNotEmpty
+                                ? departure
+                                : (snapshot.data?.dep ?? ""))
                           ],
                         ),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [const Text("DEP"), Text(departure)],
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        rightKey: null),
+                    Slk(
+                        slk: 3,
+                        leftKey: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [const Text("DEST"), Text(dest)],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                const Text("DATE"),
-                                Text("${time.day}/${time.month}/${time.year}")
-                              ],
-                            )
+                            const Text("DEST"),
+                            Text(dest.isNotEmpty
+                                ? dest
+                                : (snapshot.data?.dest ?? ""))
                           ],
                         ),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [const Text("ALTN"), Text(altn)],
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [const Text("ETE"), Text(ete)],
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        rightKey: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            mcduEntryBTN(
-                                title: "AOC MENU",
-                                callback: () {
-                                  Navigator.pop(context);
-                                }),
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting)
-                              const CircularProgressIndicator()
-                            else
-                              TextButton(
+                            const Text("DATE"),
+                            Text("${time.day}/${time.month}/${time.year}")
+                          ],
+                        )),
+                    Slk(
+                        slk: 4,
+                        leftKey: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            const Text("ALTN"),
+                            Text(altn.isNotEmpty
+                                ? altn
+                                : (snapshot.data?.altn ?? ""))
+                          ],
+                        ),
+                        rightKey: null),
+                    Slk(
+                        slk: 5,
+                        leftKey: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            const Text("ETE"),
+                            Text(ete.isNotEmpty
+                                ? ete
+                                : (snapshot.data?.ete ?? ""))
+                          ],
+                        ),
+                        rightKey: null),
+                    Slk(
+                      slk: 6,
+                      leftKey: const MCDUEntryBTN(
+                        title: "AOC MENU",
+                        previousPage: AocMenu(),
+                      ),
+                      rightKey:
+                          snapshot.connectionState == ConnectionState.waiting
+                              ? const CircularProgressIndicator.adaptive()
+                              : TextButton(
                                   child: const Text("INIT DATA REQ *"),
                                   onPressed: () {
                                     setState(() {
@@ -164,22 +178,19 @@ class _FltInitState extends State<FltInit> {
                                           callsign, dest, departure, altn, ete);
                                     });
                                   }),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Container(
-                      alignment: Alignment.bottomCenter,
-                      child: TextField(
-                        onSubmitted: (value) {
-                          scratchpad = value;
-                          _changeSPADEntry();
-                        },
-                      ),
                     )
                   ],
                 ),
-              );
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  child: TextField(
+                    onSubmitted: (value) {
+                      scratchpad = value;
+                      _changeSPADEntry();
+                    },
+                  ),
+                )
+              ]);
             }));
   }
 
@@ -199,35 +210,3 @@ class _FltInitState extends State<FltInit> {
         });
   }
 }
-
-// class ErrorWidget extends StatelessWidget {
-//   const ErrorWidget({
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return AlertDialog(
-//       title: const Text('An error occured whilst initialising the flight'),
-//       content: Text('${snapshot.error}'),
-//       actions: [
-//         TextButton(
-//           onPressed: () => Navigator.pop(context, 'Ok'),
-//           child: const Text('Ok'),
-//         ),
-//         TextButton(
-//           onPressed: () async {
-//             Uri url = Uri.https("sambot.dev", '/discord');
-//             if (await canLaunchUrl(url)) {
-//               await launchUrl(url);
-//             } else {
-//               throw 'Could not launch $url'; //  #FIXME - alert dialog
-//             }
-//             Navigator.pop(context, 'Report on discord');
-//           },
-//           child: const Text('Report on discord'),
-//         ),
-//       ],
-//     );
-//   }
-// }

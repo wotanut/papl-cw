@@ -179,27 +179,29 @@ def generateAirport(icao: Optional[str] = None) -> str:
             rand = True
         reader = csv.reader(csvfile, delimiter=" ")
 
-        choice = random.randint(0, 4240)
+        choice = random.randint(
+            0, 4240
+        )  # Number of lines in the csv, without having to loop through it
         index = 0
         airfield = "EGLL"  # Failsafe in case the airport wasn't found
 
         # ICAO is the 0th item, IATA is the 1st (0b index)
         for row in reader:
+            index = index + 1
             if rand is True:
+                print(index - 1, choice)
                 if index - 1 != choice:
                     continue
             line = row[0].split(",")
-            iata = line[1]
             gps = line[0]
+            iata = line[1]
+            if index - 1 == choice:
+                return gps.upper()
             if iata == icao.upper() or gps == icao.upper():
                 return gps.upper()
-            if index - 1 == choice:
-                airfield = gps
-            index = index + 1
+        print("failsafe")
 
-        return airfield.upper()
-
-        # The airport wasn't found
+        return airfield.upper()  # The airport wasn't found - failsafe
 
 
 def generateETE(ete: Optional[str] = None) -> str:

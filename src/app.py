@@ -141,11 +141,13 @@ async def init(session: SessionDep, flight: Optional[Flight] = None) -> Flight:
 
     session.add(newFlight)
     session.commit()
-    session.refresh(
-        newFlight
-    )  # Otherwise the ORM won't have an idea that the new flight has been committed
+    session.refresh(newFlight)
     return jsonable_encoder(newFlight)
 
+
+@app.get("/test")
+async def test():
+    return generateAirport()
 
 @app.get("/msg/adc")
 async def sendADC(flight: Flight):
@@ -177,7 +179,7 @@ async def atis(icao: str):
 
 @app.get("/version")
 async def version():
-    return {"version": "0.0.2+2-alpha"}
+    return {"version": "0.0.2+3-alpha"}
 
 
 if __name__ == "__main__":

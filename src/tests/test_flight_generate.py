@@ -54,6 +54,12 @@ class TestAirport:
             re.search(r"[A-Z]{4}", generateAirport("")) is not None
         )  # Test no airport provided
 
+        # Test to see that it doesn't just generate heathrow with no provided data
+        previous = []
+        for i in range(0, 500):
+            previous.append(generateAirport())
+        assert previous.count("EGLL") != 500
+
 
 class TestCallsign:
     def test_valid_callsign(self):
