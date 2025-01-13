@@ -146,6 +146,11 @@ async def init(session: SessionDep, flight: Optional[Flight] = None) -> Flight:
     return jsonable_encoder(newFlight)
 
 
+@app.get("/test")
+async def test():
+    return generateAirport()
+
+
 @app.get("/msg/adc")
 async def sendADC(flight: Flight):
     """
