@@ -1,6 +1,7 @@
 import logging
 import os
 import random
+from contextlib import asynccontextmanager
 from random import randint
 from typing import Annotated, Optional
 
@@ -33,19 +34,16 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 
 SessionDep = Annotated[Session, Depends(get_session)]
 
-# @asynccontextmanager
-# async def lifespan(app: FastAPI):
-#     logger.debug("Startup")
-#     await init_db()
 
-# app = FastAPI(lifespan=lifespan)
-app = FastAPI()
-
-
-@app.on_event("startup")
-async def startup_event():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     logger.debug("Starting Up")
     init_db()
+    yield
+    logger.debug("Shutting Down")
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 @app.get("/")
