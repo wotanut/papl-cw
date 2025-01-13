@@ -1,6 +1,7 @@
 import logging
 import os
 import random
+from contextlib import asynccontextmanager
 from random import randint
 from typing import Annotated, Optional
 
@@ -23,29 +24,27 @@ from models.flight import (
 from models.message import Message
 from models.Types import FlightStage
 
-# Database
+# Logger
 
 logger = logging.getLogger("uvicorn.error")
 logger.setLevel(logging.DEBUG)
 
+# Databse
 load_dotenv()
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
 SessionDep = Annotated[Session, Depends(get_session)]
 
-# @asynccontextmanager
-# async def lifespan(app: FastAPI):
-#     logger.debug("Startup")
-#     await init_db()
 
-# app = FastAPI(lifespan=lifespan)
-app = FastAPI()
-
-
-@app.on_event("startup")
-async def startup_event():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     logger.debug("Starting Up")
     init_db()
+    yield
+    logger.debug("Shutting Down")
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 @app.get("/")
@@ -72,13 +71,6 @@ async def metar(icao: str):
     return {"metar": req.text}
 
 
-# @app.get("/wx/{icao}")
-# async def wx(icao: str):
-#     """
-#     Get's the weather from Vatsim
-#     """
-
-
 @app.post("/init/request", response_model=Flight)
 async def init(session: SessionDep, flight: Optional[Flight] = None) -> Flight:
     """
@@ -102,27 +94,34 @@ async def init(session: SessionDep, flight: Optional[Flight] = None) -> Flight:
     errors = []
     entry = ""
     if flight:
+        # If a flight was provided
         exists = session.get(Flight, flight.id)
         if exists:
+            # Check if the callsign already exists
             errors.append("Callsign in use")
             raise HTTPException(status_code=401, detail="Callsign in use")
         try:
+            # Generate a new flight
             airline, nmbr = getICAO(flight), getFltNmbr(flight)
             cs = generateCallsign(airline, nmbr)
         except Exception as e:
+            # Callsign was invalid
             errors.append(e)
             entry = "Invalid Callsign"
+        # Make a dep dest and altn for the flight as well as an ete
+        # If it's already provided and correct it'll pass
         dep, dest, altn = (
             generateAirport(flight.dep),
             generateAirport(flight.dest),
             generateAirport(flight.altn),
-        )  # TODO - Better error validation
+        )
         ete = generateETE(flight.ete)
         try:
             adcReq = flight.ADCReq
         except Exception:
             adcReq = random.choice([True, False])
     else:
+        # If no flight was provided, generate a new one
         cs = generateCallsign()
         dep, dest, altn = generateAirport(), generateAirport(), generateAirport()
         ete = generateETE()
@@ -149,7 +148,6 @@ async def init(session: SessionDep, flight: Optional[Flight] = None) -> Flight:
 @app.get("/test")
 async def test():
     return generateAirport()
-
 
 @app.get("/msg/adc")
 async def sendADC(flight: Flight):
@@ -181,7 +179,7 @@ async def atis(icao: str):
 
 @app.get("/version")
 async def version():
-    return {"version": "0.0.2+1-alpha"}
+    return {"version": "0.0.2+3-alpha"}
 
 
 if __name__ == "__main__":
