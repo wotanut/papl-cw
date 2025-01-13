@@ -9,10 +9,12 @@ load_dotenv()
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
 engine = create_engine(DATABASE_URL, echo=True)
-# WARNING: Remove before committing
 
 
 def init_db():
+    """
+    Creates all the tables required for the database
+    """
     SQLModel.metadata.create_all(engine)
 
 
