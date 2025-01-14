@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:app/models/Flight.dart';
+import 'package:app/models/flight.dart';
 import 'package:http/http.dart' as http;
 
 import '../globals.dart' as globals;

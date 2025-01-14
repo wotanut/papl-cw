@@ -21,22 +21,54 @@ class _AocMenuState extends State<AocMenu> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true, // For anroid, defualt on iOS
-          actions: const [Icon(Icons.arrow_circle_up_sharp)],
-          title: const Text(
-            "ATSU DATALINK",
+      appBar: AppBar(
+        centerTitle: true, // For anroid, defualt on iOS
+        actions: const [Icon(Icons.arrow_circle_up_sharp)],
+        title: const Text(
+          "ATSU DATALINK",
+        ),
+      ),
+      body: const Mcdupage(slkButtons: [
+        Slk(
+          slk: 1,
+          rightKey: MCDUEntryBTN(
+            title: "WX",
+            isRightSide: true,
+          ),
+          leftKey: MCDUEntryBTN(
+            nextPage: FltInit(),
+            title: "FLT INIT",
           ),
         ),
-        body: const Mcdupage(slkButtons: [
-          Slk(
-            slk: 1,
-            rightKey: null,
-            leftKey: MCDUEntryBTN(
-              nextPage: FltInit(),
-              title: "FLT INIT",
-            ),
+        Slk(
+          leftKey: MCDUEntryBTN(title: "ATC REQ"),
+          rightKey: MCDUEntryBTN(
+            title: "ATIS",
+            isRightSide: true,
           ),
-        ]));
+        ),
+        Slk(
+          leftKey: null,
+          rightKey: MCDUEntryBTN(
+            title: "DIVERSION",
+            isRightSide: true,
+          ),
+        ),
+        Slk(
+          rightKey: MCDUEntryBTN(
+            title: "ADC DELAY",
+            isRightSide: true,
+          ),
+          leftKey: MCDUEntryBTN(title: "FREE TEXT"),
+        ),
+        Slk(
+          leftKey: MCDUEntryBTN(title: "ARR MSG"),
+          rightKey: MCDUEntryBTN(
+            title: "RCVD MSGS",
+            isRightSide: true,
+          ),
+        )
+      ]),
+    );
   }
 }

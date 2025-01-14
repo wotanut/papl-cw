@@ -5,7 +5,7 @@ import 'package:app/components/mcdu_page.dart';
 import 'package:app/components/slk.dart';
 import 'package:app/controllers/flight.dart';
 import 'package:app/menus/aoc_menu.dart';
-import 'package:app/models/Flight.dart';
+import 'package:app/models/flight.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
