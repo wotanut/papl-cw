@@ -3,6 +3,7 @@ import 'package:app/components/mcdu_page.dart';
 import 'package:app/components/slk.dart';
 import 'package:app/menus/dlk_menu.dart';
 import 'package:app/pages/about.dart';
+import 'package:app/pages/opts.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -80,6 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 rightKey: MCDUEntryBTN(
                   title: "OPTS",
                   isRightSide: true,
+                  nextPage: Opts(),
                 ),
               ),
               Slk(
