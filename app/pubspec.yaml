@@ -38,6 +38,7 @@ dependencies:
   url_launcher: ^6.3.1 # For opening the cards in my about me section, wanted to get extra marks and look like a smartass
   flutter_svg: ^2.0.16
   http: ^1.2.2
+  localstore: ^1.4.0
 
 dev_dependencies:
   flutter_test:
