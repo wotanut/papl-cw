@@ -75,13 +75,22 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Slk(
-                  slk: 6,
-                  leftKey: null,
-                  rightKey: MCDUEntryBTN(
-                    nextPage: About(),
-                    title: "ABOUT",
-                    isRightSide: true,
-                  ))
+                slk: 5,
+                leftKey: null,
+                rightKey: MCDUEntryBTN(
+                  title: "OPTS",
+                  isRightSide: true,
+                ),
+              ),
+              Slk(
+                slk: 6,
+                leftKey: null,
+                rightKey: MCDUEntryBTN(
+                  nextPage: About(),
+                  title: "ABOUT",
+                  isRightSide: true,
+                ),
+              )
             ],
           ),
         ));

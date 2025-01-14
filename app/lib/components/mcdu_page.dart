@@ -30,19 +30,28 @@ class _McdupageState extends State<Mcdupage> {
     for (var i = 1; i < 6; i++) {
       if (sortedSLK.length < i) {
         // Do nothing, there's no point rendering a select key when there would be nothing below it
-      } else if (sortedSLK[i - 1].slk != i) {
-        sortedSLK.insert(i - 1,
-            const Slk(leftKey: null, rightKey: null)); // Insert an empty slk
+      } else if ((sortedSLK[i - 1].rightKey == null &&
+              sortedSLK[i - 1].leftKey == null) ||
+          sortedSLK[i - 1].slk != i) {
+        sortedSLK.insert(
+          i - 1,
+          const Slk(
+            leftKey: null,
+            rightKey: null,
+            slk: 2,
+          ),
+        ); // Insert an empty slk
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    print("Building sortedSLK: $sortedSLK");
     return Container(
       padding: const EdgeInsets.all(8.0),
       child: Column(
-        children: [...widget.slkButtons],
+        children: [...sortedSLK],
       ),
     );
   }

@@ -41,6 +41,7 @@ class _AocMenuState extends State<AocMenu> {
           ),
         ),
         Slk(
+          slk: 2,
           leftKey: MCDUEntryBTN(title: "ATC REQ"),
           rightKey: MCDUEntryBTN(
             title: "ATIS",
@@ -48,6 +49,7 @@ class _AocMenuState extends State<AocMenu> {
           ),
         ),
         Slk(
+          slk: 3,
           leftKey: null,
           rightKey: MCDUEntryBTN(
             title: "DIVERSION",
@@ -55,6 +57,7 @@ class _AocMenuState extends State<AocMenu> {
           ),
         ),
         Slk(
+          slk: 4,
           rightKey: MCDUEntryBTN(
             title: "ADC DELAY",
             isRightSide: true,
@@ -62,6 +65,7 @@ class _AocMenuState extends State<AocMenu> {
           leftKey: MCDUEntryBTN(title: "FREE TEXT"),
         ),
         Slk(
+          slk: 5,
           leftKey: MCDUEntryBTN(title: "ARR MSG"),
           rightKey: MCDUEntryBTN(
             title: "RCVD MSGS",
