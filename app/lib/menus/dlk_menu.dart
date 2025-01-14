@@ -39,7 +39,22 @@ class _DlkPageState extends State<DlkPage> {
             title: "AOC MENU",
             isRightSide: true,
           ),
-        )
+        ),
+        Slk(
+          slk: 5,
+          leftKey: null,
+          rightKey: MCDUEntryBTN(
+            title: "DATALINK STATUS",
+            isRightSide: true,
+          ),
+        ),
+        Slk(
+            slk: 6,
+            leftKey: null,
+            rightKey: MCDUEntryBTN(
+              title: "COMM MENU",
+              isRightSide: true,
+            ))
       ]),
     );
   }
