@@ -2,17 +2,16 @@ import 'package:app/components/button.dart';
 import 'package:app/components/mcdu_page.dart';
 import 'package:app/components/slk.dart';
 import 'package:app/menus/aoc_menu.dart';
-import 'package:app/menus/atc_menu.dart';
 import 'package:flutter/material.dart';
 
-class DlkPage extends StatefulWidget {
-  const DlkPage({super.key});
+class AtcMenu extends StatefulWidget {
+  const AtcMenu({super.key});
 
   @override
-  State<DlkPage> createState() => _DlkPageState();
+  State<AtcMenu> createState() => _AtcMenuState();
 }
 
-class _DlkPageState extends State<DlkPage> {
+class _AtcMenuState extends State<AtcMenu> {
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -26,37 +25,34 @@ class _DlkPageState extends State<DlkPage> {
         centerTitle: true, // For anroid, defualt on iOS
         actions: const [Icon(Icons.arrow_circle_up_sharp)],
         title: const Text(
-          "ATSU DATALINK",
+          "ATC MENU",
         ),
       ),
       body: const Mcdupage(slkButtons: [
         Slk(
           slk: 1,
+          rightKey: null,
           leftKey: MCDUEntryBTN(
-            title: "ATC MENU",
-            nextPage: AtcMenu(),
-          ),
-          rightKey: MCDUEntryBTN(
-            nextPage: AocMenu(),
-            title: "AOC MENU",
-            isRightSide: true,
+            title: "REQUEST",
           ),
         ),
         Slk(
-          slk: 5,
-          leftKey: null,
+          slk: 4,
           rightKey: MCDUEntryBTN(
-            title: "DATALINK STATUS",
+            title: "REPORTS",
             isRightSide: true,
           ),
+          leftKey: MCDUEntryBTN(title: "MSG RECORD"),
         ),
+        Slk(slk: 5, leftKey: MCDUEntryBTN(title: "CONNECTION"), rightKey: null),
         Slk(
-            slk: 6,
-            leftKey: null,
-            rightKey: MCDUEntryBTN(
-              title: "COMM MENU",
-              isRightSide: true,
-            ))
+          slk: 6,
+          leftKey: MCDUEntryBTN(
+            title: "ATSU RETURN",
+            previousPage: AocMenu(),
+          ),
+          rightKey: null,
+        )
       ]),
     );
   }
