@@ -1,19 +1,16 @@
 import 'package:app/components/button.dart';
 import 'package:app/components/mcdu_page.dart';
 import 'package:app/components/slk.dart';
-import 'package:app/menus/aoc_menu.dart';
-import 'package:app/menus/atc_menu.dart';
-import 'package:app/menus/comm_menu.dart';
 import 'package:flutter/material.dart';
 
-class DlkPage extends StatefulWidget {
-  const DlkPage({super.key});
+class CommPage extends StatefulWidget {
+  const CommPage({super.key});
 
   @override
-  State<DlkPage> createState() => _DlkPageState();
+  State<CommPage> createState() => _CommPageState();
 }
 
-class _DlkPageState extends State<DlkPage> {
+class _CommPageState extends State<CommPage> {
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -27,18 +24,21 @@ class _DlkPageState extends State<DlkPage> {
         centerTitle: true, // For anroid, defualt on iOS
         actions: const [Icon(Icons.arrow_circle_up_sharp)],
         title: const Text(
-          "ATSU DATALINK",
+          "COMM MENU",
         ),
       ),
       body: const Mcdupage(slkButtons: [
         Slk(
           slk: 1,
           leftKey: MCDUEntryBTN(
-            title: "ATC MENU",
-            nextPage: AtcMenu(),
+            title: "REQUEST",
           ),
+          rightKey: null,
+        ),
+        Slk(
+          slk: 4,
+          leftKey: null,
           rightKey: MCDUEntryBTN(
-            nextPage: AocMenu(),
             title: "AOC MENU",
             isRightSide: true,
           ),
@@ -47,19 +47,17 @@ class _DlkPageState extends State<DlkPage> {
           slk: 5,
           leftKey: null,
           rightKey: MCDUEntryBTN(
-            title: "DATALINK STATUS",
+            title: "DATALKINK STATUS",
             isRightSide: true,
           ),
         ),
         Slk(
-          slk: 6,
-          leftKey: null,
-          rightKey: MCDUEntryBTN(
-            title: "COMM MENU",
-            isRightSide: true,
-            nextPage: CommPage(),
-          ),
-        )
+            slk: 6,
+            leftKey: null,
+            rightKey: MCDUEntryBTN(
+              title: "COMM MENU",
+              isRightSide: true,
+            ))
       ]),
     );
   }
