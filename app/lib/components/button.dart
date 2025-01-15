@@ -50,11 +50,8 @@ class _MCDUEntryBTNState extends State<MCDUEntryBTN> {
     if (widget.isRightSide) {
       actualTitle = "${widget.title} >";
     } else if (!widget.isRightSide && actualTitle != "< ATSU (SEL)") {
-      print("updating widget wrongly ${widget.title}");
       actualTitle = "< ${widget.title}";
     }
-
-    print("updating widget wrongly ${widget.title}");
 
     if (widget.nextPage == null && widget.previousPage == null) {
       isDisabled = true;
@@ -88,7 +85,6 @@ class _MCDUEntryBTNState extends State<MCDUEntryBTN> {
     return TextButton(
       onPressed: () {
         if (widget.title == "ATSU") {
-          print("Setting actual title");
           setState(() {
             actualTitle = "< ATSU (SEL)";
             callback();
