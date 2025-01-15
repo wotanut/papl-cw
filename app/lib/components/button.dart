@@ -33,7 +33,11 @@ class _MCDUEntryBTNState extends State<MCDUEntryBTN> {
   Future<void> _loadPreferences() async {
     prefs = await SharedPreferences.getInstance();
     setState(() {
-      realsiticTimings = prefs!.getBool('timings') ?? false;
+      if (widget.unTimed) {
+        realsiticTimings = false;
+      } else {
+        realsiticTimings = prefs!.getBool('timings') ?? false;
+      }
     });
   }
 

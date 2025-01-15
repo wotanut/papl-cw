@@ -80,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
               leftKey: null,
               rightKey: MCDUEntryBTN(
                 title: "OPTS",
+                unTimed: true,
                 isRightSide: true,
                 nextPage: Opts(),
               ),
@@ -90,6 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
               rightKey: MCDUEntryBTN(
                 nextPage: About(),
                 title: "ABOUT",
+                unTimed: true,
                 isRightSide: true,
               ),
             )
