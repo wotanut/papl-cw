@@ -49,53 +49,54 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true, // For anroid, defualt on iOS
-          actions: const [Icon(Icons.arrow_circle_up_sharp)],
-          title: const Text(
-            "MCDU MENU",
-          ),
+      appBar: AppBar(
+        centerTitle: true, // For anroid, defualt on iOS
+        actions: const [Icon(Icons.arrow_circle_up_sharp)],
+        title: const Text(
+          "MCDU MENU",
         ),
-        body: const Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: Mcdupage(
-            slkButtons: [
-              Slk(
-                slk: 1,
-                rightKey: null,
-                leftKey: MCDUEntryBTN(
-                  title: "FMGC",
-                ),
+      ),
+      body: const Center(
+        // Center is a layout widget. It takes a single child and positions it
+        // in the middle of the parent.
+        child: Mcdupage(
+          slkButtons: [
+            Slk(
+              slk: 1,
+              rightKey: null,
+              leftKey: MCDUEntryBTN(
+                title: "FMGC",
               ),
-              Slk(
-                slk: 2,
-                rightKey: null,
-                leftKey: MCDUEntryBTN(
-                  nextPage: DlkPage(),
-                  title: "ATSU",
-                ),
+            ),
+            Slk(
+              slk: 2,
+              rightKey: null,
+              leftKey: MCDUEntryBTN(
+                nextPage: DlkPage(),
+                title: "ATSU",
               ),
-              Slk(
-                slk: 5,
-                leftKey: null,
-                rightKey: MCDUEntryBTN(
-                  title: "OPTS",
-                  isRightSide: true,
-                  nextPage: Opts(),
-                ),
+            ),
+            Slk(
+              slk: 5,
+              leftKey: null,
+              rightKey: MCDUEntryBTN(
+                title: "OPTS",
+                isRightSide: true,
+                nextPage: Opts(),
               ),
-              Slk(
-                slk: 6,
-                leftKey: null,
-                rightKey: MCDUEntryBTN(
-                  nextPage: About(),
-                  title: "ABOUT",
-                  isRightSide: true,
-                ),
-              )
-            ],
-          ),
-        ));
+            ),
+            Slk(
+              slk: 6,
+              leftKey: null,
+              rightKey: MCDUEntryBTN(
+                nextPage: About(),
+                title: "ABOUT",
+                isRightSide: true,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

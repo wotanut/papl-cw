@@ -1,3 +1,5 @@
+import 'package:app/components/button.dart';
+import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:localstore/localstore.dart';
 
@@ -46,6 +48,15 @@ class _OptsState extends State<Opts> {
                     // final id = db.collection('settings').doc().id;
                     // db.collection('settings').doc(id).set({'timings': true});
                   },
+                ),
+              ],
+            ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                MCDUEntryBTN(
+                  title: "SAVE AND EXIT",
+                  previousPage: MyHomePage(title: "MCDU MENU"),
                 ),
               ],
             )
