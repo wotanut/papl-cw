@@ -24,9 +24,12 @@ class _MCDUEntryBTNState extends State<MCDUEntryBTN> {
   bool realsiticTimings = false;
   late SharedPreferences? prefs;
   late var actualTitle = widget.title;
+  late int renderCounter =
+      0; // Required to remove the SEL the next time the page is rendered
 
   @override
   void initState() {
+    renderCounter++;
     super.initState();
     _loadPreferences();
   }
@@ -49,7 +52,7 @@ class _MCDUEntryBTNState extends State<MCDUEntryBTN> {
 
     if (widget.isRightSide) {
       actualTitle = "${widget.title} >";
-    } else if (!widget.isRightSide && actualTitle != "< ATSU (SEL)") {
+    } else if (!widget.isRightSide) {
       actualTitle = "< ${widget.title}";
     }
 
@@ -84,10 +87,10 @@ class _MCDUEntryBTNState extends State<MCDUEntryBTN> {
 
     return TextButton(
       onPressed: () {
+        callback();
         if (widget.title == "ATSU") {
           setState(() {
             actualTitle = "< ATSU (SEL)";
-            callback();
           });
         }
       },

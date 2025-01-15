@@ -5,6 +5,7 @@ import 'package:app/menus/dlk_menu.dart';
 import 'package:app/pages/about.dart';
 import 'package:app/pages/opts.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +25,10 @@ class MyApp extends StatelessWidget {
           seedColor: const Color.fromARGB(1, 20, 21, 37),
           brightness: Brightness.dark,
         ),
+        textTheme: GoogleFonts.b612MonoTextTheme(ThemeData.dark().textTheme),
       ),
+      // Supposedly, this is the closest theme you can get to the actual font of the MCDU, as it's propriatary
+      // I did consider utilising the same font that the FBW uses but wasn't able to find a download for it
       home: const MyHomePage(title: 'MCDU MENU'),
     );
   }

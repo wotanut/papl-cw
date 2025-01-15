@@ -4,9 +4,11 @@ This is a monolithic repository structured as follows:
 - **app/**: Contains all Flutter-related files for the frontend.  
 - **src/**: Contains all API-related files for the backend.  
 
+# Project Idea
+
 # Frontend Deployment
 
-The frontend is primarily built for iOS and Android but can also run on macOS (via iPhone mirroring or emulators), Windows, and Linux (via Android emulators). While the web version *should* work, it hasn't been thoroughly tested.  
+The frontend is primarily built for iOS and Android but can also run on macOS (via iPhone mirroring or emulators), Windows, and Linux (via Android emulators). While the web version *should* work, it hasn't been thoroughly tested. 
 
 ### Prerequisites  
 - Ensure you have Flutter installed. Follow the [official Flutter installation guide](https://flutter.dev/docs/get-started/install) for setup instructions.
