@@ -47,7 +47,6 @@ class _McdupageState extends State<Mcdupage> {
 
   @override
   Widget build(BuildContext context) {
-    print("Building sortedSLK: $sortedSLK");
     return Container(
       padding: const EdgeInsets.all(8.0),
       child: Column(
