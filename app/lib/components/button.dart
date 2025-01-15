@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MCDUEntryBTN extends StatefulWidget {
   final bool isRightSide;
   final String title;
   final Widget? nextPage;
   final Widget? previousPage;
+  final bool unTimed; // Used for buttons like save and exit in opts
 
   const MCDUEntryBTN(
       {super.key,
+      this.unTimed = false,
       this.isRightSide = false,
       required this.title,
       this.nextPage,
@@ -18,6 +21,22 @@ class MCDUEntryBTN extends StatefulWidget {
 }
 
 class _MCDUEntryBTNState extends State<MCDUEntryBTN> {
+  bool realsiticTimings = false;
+  late SharedPreferences? prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPreferences();
+  }
+
+  Future<void> _loadPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      realsiticTimings = prefs!.getBool('timings') ?? false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isDisabled = false;
@@ -34,8 +53,22 @@ class _MCDUEntryBTNState extends State<MCDUEntryBTN> {
       isDisabled = true;
     } else if (widget.nextPage != null) {
       callback = () => {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => widget.nextPage!))
+            if (realsiticTimings)
+              {
+                Future.delayed(const Duration(seconds: 2), () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => widget.nextPage!),
+                  );
+                })
+              }
+            else
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => widget.nextPage!),
+                )
+              }
           };
     } else if (widget.previousPage != null) {
       callback = () => {

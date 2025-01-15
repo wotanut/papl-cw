@@ -1,7 +1,7 @@
 import 'package:app/components/button.dart';
 import 'package:app/main.dart';
 import 'package:flutter/material.dart';
-import 'package:localstore/localstore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Opts extends StatefulWidget {
   const Opts({super.key});
@@ -11,12 +11,20 @@ class Opts extends StatefulWidget {
 }
 
 class _OptsState extends State<Opts> {
-  final db = Localstore.getInstance();
+  late SharedPreferences? prefs;
   bool timings = false;
 
   @override
   void initState() {
     super.initState();
+    _loadPreferences();
+  }
+
+  Future<void> _loadPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      timings = prefs!.getBool('timings') ?? false;
+    });
   }
 
   @override
@@ -43,10 +51,9 @@ class _OptsState extends State<Opts> {
                   value: timings,
                   onChanged: (bool newValue) {
                     setState(() {
-                      timings = newValue;
+                      prefs?.setBool('timings', newValue);
+                      timings = prefs!.getBool('timings') ?? false;
                     });
-                    // final id = db.collection('settings').doc().id;
-                    // db.collection('settings').doc(id).set({'timings': true});
                   },
                 ),
               ],
