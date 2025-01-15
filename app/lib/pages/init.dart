@@ -35,163 +35,155 @@ class _FltInitState extends State<FltInit> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true, // For anroid, defualt on iOS
-          actions: const [Icon(Icons.arrow_circle_up_sharp)],
-          title: const Text(
-            "AOC FLT INIT",
-          ),
+      appBar: AppBar(
+        centerTitle: true, // For anroid, defualt on iOS
+        actions: const [Icon(Icons.arrow_circle_up_sharp)],
+        title: const Text(
+          "AOC FLT INIT",
         ),
-        body: FutureBuilder(
-            future: _futureFlight,
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return AlertDialog.adaptive(
-                  icon: const Icon(Icons.warning),
-                  iconColor: Colors.red,
-                  shadowColor: Colors.amberAccent,
-                  title: const Text(
-                      'An error occured whilst initialising the flight'),
-                  content: Text('${snapshot.error}'),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, 'Ok'),
-                      child: const Text('Ok'),
-                    ),
-                    TextButton(
-                      onPressed: () async {
-                        Uri url =
-                            Uri.https("https://discord.gg", '/2w5KSXjhGe');
-                        if (await canLaunchUrl(url)) {
-                          await launchUrl(url);
-                        } else {
-                          throw 'Could not launch $url';
-                        }
-                        if (context.mounted) {
-                          // https://stackoverflow.com/questions/68871880/do-not-use-buildcontexts-across-async-gaps
-                          Navigator.pop(context, 'Report');
-                        }
-                      },
-                      child: const Text('Report'),
-                    ),
-                  ],
-                );
-              }
+      ),
+      body: FutureBuilder(
+        future: _futureFlight,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return AlertDialog.adaptive(
+              icon: const Icon(Icons.warning),
+              iconColor: Colors.red,
+              shadowColor: Colors.amberAccent,
+              title:
+                  const Text('An error occured whilst initialising the flight'),
+              content: Text('${snapshot.error}'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Ok'),
+                  child: const Text('Ok'),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    Uri url = Uri.https("https://discord.gg", '/2w5KSXjhGe');
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                    if (context.mounted) {
+                      // https://stackoverflow.com/questions/68871880/do-not-use-buildcontexts-across-async-gaps
+                      Navigator.pop(context, 'Report');
+                    }
+                  },
+                  child: const Text('Report'),
+                ),
+              ],
+            );
+          }
 
-              return Stack(children: [
-                Mcdupage(
-                  slkButtons: [
-                    Slk(
-                        slk: 1,
-                        leftKey: GestureDetector(
-                          onTap: () {
-                            callsign = scratchpad;
-                            setState(() {}); //NOTE - Needed to update the UI
-                          },
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              const Text("FLT NO"),
-                              Text(callsign.isNotEmpty
-                                  ? callsign
-                                  : (snapshot.data?.callsign ?? ""))
-                            ],
-                          ),
-                        ),
-                        rightKey: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            const Text("UTC"),
-                            Text(time.hour.toString() +
-                                time.minute
-                                    .toString()) // FIXME - Make update every minute
-                          ],
-                        )),
-                    Slk(
-                        slk: 2,
-                        leftKey: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            const Text("DEP"),
-                            Text(departure.isNotEmpty
-                                ? departure
-                                : (snapshot.data?.dep ?? ""))
-                          ],
-                        ),
-                        rightKey: null),
-                    Slk(
-                        slk: 3,
-                        leftKey: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            const Text("DEST"),
-                            Text(dest.isNotEmpty
-                                ? dest
-                                : (snapshot.data?.dest ?? ""))
-                          ],
-                        ),
-                        rightKey: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            const Text("DATE"),
-                            Text("${time.day}/${time.month}/${time.year}")
-                          ],
-                        )),
-                    Slk(
-                        slk: 4,
-                        leftKey: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            const Text("ALTN"),
-                            Text(altn.isNotEmpty
-                                ? altn
-                                : (snapshot.data?.altn ?? ""))
-                          ],
-                        ),
-                        rightKey: null),
-                    Slk(
-                        slk: 5,
-                        leftKey: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            const Text("ETE"),
-                            Text(ete.isNotEmpty
-                                ? ete
-                                : (snapshot.data?.ete ?? ""))
-                          ],
-                        ),
-                        rightKey: null),
-                    Slk(
-                      slk: 6,
-                      leftKey: const MCDUEntryBTN(
-                        title: "AOC MENU",
-                        previousPage: AocMenu(),
+          return Stack(
+            children: [
+              Mcdupage(
+                slkButtons: [
+                  Slk(
+                    slk: 1,
+                    leftKey: SlkEntry(callsign: callsign),
+                    rightKey: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        const Text("UTC"),
+                        Text(
+                          time.hour.toString() + time.minute.toString(),
+                        ) // I am not kidding when I say this doesn't actually update every minute on the real aircraft
+                      ],
+                    ),
+                  ),
+                  Slk(
+                      slk: 2,
+                      leftKey: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          const Text("DEP"),
+                          Text(departure.isNotEmpty
+                              ? departure
+                              : (snapshot.data?.dep ?? ""))
+                        ],
                       ),
-                      rightKey:
-                          snapshot.connectionState == ConnectionState.waiting
-                              ? const CircularProgressIndicator.adaptive()
-                              : TextButton(
-                                  child: const Text("INIT DATA REQ *"),
-                                  onPressed: () {
-                                    setState(() {
+                      rightKey: null),
+                  Slk(
+                      slk: 3,
+                      leftKey: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          const Text("DEST"),
+                          Text(dest.isNotEmpty
+                              ? dest
+                              : (snapshot.data?.dest ?? ""))
+                        ],
+                      ),
+                      rightKey: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          const Text("DATE"),
+                          Text("${time.day}/${time.month}/${time.year}")
+                        ],
+                      )),
+                  Slk(
+                      slk: 4,
+                      leftKey: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          const Text("ALTN"),
+                          Text(altn.isNotEmpty
+                              ? altn
+                              : (snapshot.data?.altn ?? ""))
+                        ],
+                      ),
+                      rightKey: null),
+                  Slk(
+                      slk: 5,
+                      leftKey: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          const Text("ETE"),
+                          Text(
+                              ete.isNotEmpty ? ete : (snapshot.data?.ete ?? ""))
+                        ],
+                      ),
+                      rightKey: null),
+                  Slk(
+                    slk: 6,
+                    leftKey: const MCDUEntryBTN(
+                      title: "AOC MENU",
+                      previousPage: AocMenu(),
+                    ),
+                    rightKey:
+                        snapshot.connectionState == ConnectionState.waiting
+                            ? const CircularProgressIndicator.adaptive()
+                            : TextButton(
+                                child: const Text("INIT DATA REQ *"),
+                                onPressed: () {
+                                  setState(
+                                    () {
                                       _futureFlight = createFlight(
                                           callsign, dest, departure, altn, ete);
-                                    });
-                                  }),
-                    )
-                  ],
+                                    },
+                                  );
+                                },
+                              ),
+                  )
+                ],
+              ),
+              Container(
+                alignment: Alignment.bottomCenter,
+                child: TextField(
+                  onSubmitted: (value) {
+                    scratchpad = value;
+                    _changeSPADEntry();
+                  },
                 ),
-                Container(
-                  alignment: Alignment.bottomCenter,
-                  child: TextField(
-                    onSubmitted: (value) {
-                      scratchpad = value;
-                      _changeSPADEntry();
-                    },
-                  ),
-                )
-              ]);
-            }));
+              )
+            ],
+          );
+        },
+      ),
+    );
   }
 
   FutureBuilder<Flight> buildFutureBuilder() {
@@ -208,5 +200,49 @@ class _FltInitState extends State<FltInit> {
           }
           return Container();
         });
+  }
+}
+
+class SlkEntry extends StatefulWidget {
+  SlkEntry(
+      {super.key,
+      required this.callsign,
+      required this.snapshot,
+      required this.scratchpad});
+
+  late String callsign;
+  final AsyncSnapshot<Flight> snapshot;
+  final String scratchpad;
+
+  @override
+  State<SlkEntry> createState() => _SlkEntryState();
+}
+
+class _SlkEntryState extends State<SlkEntry> {
+  late String callsign;
+
+  @override
+  void initState() {
+    super.initState();
+    callsign = widget.callsign;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        callsign = widget.scratchpad;
+        setState(() {}); //NOTE - Needed to update the UI
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text("FLT NO"),
+          Text(widget.callsign.isNotEmpty
+              ? widget.callsign
+              : (widget.snapshot.data?.callsign ?? ""))
+        ],
+      ),
+    );
   }
 }
