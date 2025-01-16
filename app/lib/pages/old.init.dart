@@ -88,22 +88,15 @@ class _FltInitState extends State<FltInit> {
 
           print("snapshot data ${snapshot.data}");
           print("snapshot data ${snapshot.data?.dep}");
-          print("state ${snapshot.connectionState}");
-          print(departure);
-          if (snapshot.connectionState != ConnectionState.done &&
-              snapshot.connectionState != ConnectionState.none) {
-            return Text("e");
-          }
-
           return Stack(
             children: [
               Mcdupage(
                 slkButtons: [
                   Slk(
+                    key: ValueKey(callsign),
                     slk: 1,
                     leftKey: SlkEntry(
-                      title: "FLT NO",
-                      slkVariable: callsign,
+                      callsign: callsign,
                       snapshot: snapshot,
                       scratchpad: scratchpad,
                     ),
@@ -119,19 +112,28 @@ class _FltInitState extends State<FltInit> {
                   ),
                   Slk(
                       slk: 2,
-                      rightKey: null,
-                      leftKey: SlkEntry(
-                          title: "DEP",
-                          slkVariable: departure,
-                          snapshot: snapshot,
-                          scratchpad: scratchpad)),
+                      leftKey: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          const Text("DEP"),
+                          Text(
+                            departure.isNotEmpty ? departure : "",
+                            style: TextStyle(color: Colors.green),
+                          )
+                        ],
+                      ),
+                      rightKey: null),
                   Slk(
                       slk: 3,
-                      leftKey: SlkEntry(
-                          slkVariable: dest,
-                          snapshot: snapshot,
-                          scratchpad: scratchpad,
-                          title: "DEST"),
+                      leftKey: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          const Text("DEST"),
+                          Text(dest.isNotEmpty
+                              ? dest
+                              : (snapshot.data?.dest ?? ""))
+                        ],
+                      ),
                       rightKey: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
@@ -141,19 +143,22 @@ class _FltInitState extends State<FltInit> {
                       )),
                   Slk(
                       slk: 4,
-                      leftKey: SlkEntry(
-                          slkVariable: altn,
-                          snapshot: snapshot,
-                          scratchpad: scratchpad,
-                          title: "ALTN"),
+                      leftKey: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          const Text("ALTN"),
+                          Text(altn.isNotEmpty
+                              ? altn
+                              : (snapshot.data?.altn ?? ""))
+                        ],
+                      ),
                       rightKey: null),
                   Slk(
                       slk: 5,
-                      leftKey: SlkEntry(
-                          slkVariable: ete,
-                          snapshot: snapshot,
-                          scratchpad: scratchpad,
-                          title: "ETE"),
+                      leftKey: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [const Text("ETE"), Text(ete)],
+                      ),
                       rightKey: null),
                   Slk(
                     slk: 6,
@@ -198,15 +203,13 @@ class _FltInitState extends State<FltInit> {
 class SlkEntry extends StatefulWidget {
   const SlkEntry(
       {super.key,
-      required this.slkVariable,
+      required this.callsign,
       required this.snapshot,
-      required this.scratchpad,
-      required this.title});
+      required this.scratchpad});
 
-  final String slkVariable;
+  final String callsign;
   final AsyncSnapshot<Flight> snapshot;
   final String scratchpad;
-  final String title;
 
   @override
   State<SlkEntry> createState() => _SlkEntryState();
@@ -218,7 +221,7 @@ class _SlkEntryState extends State<SlkEntry> {
   @override
   void initState() {
     super.initState();
-    callsign = widget.slkVariable;
+    callsign = widget.callsign;
   }
 
   @override
@@ -231,12 +234,12 @@ class _SlkEntryState extends State<SlkEntry> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.title),
+          const Text("FLT NO"),
           Text(
-            widget.slkVariable.isNotEmpty
-                ? widget.slkVariable
+            widget.callsign.isNotEmpty
+                ? widget.callsign
                 : (widget.snapshot.data?.callsign ?? ""),
-            style: const TextStyle(color: Colors.green),
+            style: TextStyle(color: Colors.green),
           )
         ],
       ),

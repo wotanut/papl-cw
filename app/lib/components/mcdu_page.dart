@@ -47,6 +47,7 @@ class _McdupageState extends State<Mcdupage> {
 
   @override
   Widget build(BuildContext context) {
+    print("Rebuilding page");
     return Container(
       padding: const EdgeInsets.all(8.0),
       child: Column(
