@@ -77,16 +77,15 @@ class _FltInitState extends State<FltInit> {
             );
           }
 
+          if (snapshot.hasData) {
+            callsign = snapshot.data!.callsign;
+            departure = snapshot.data!.dep;
+            dest = snapshot.data!.dest;
+            altn = snapshot.data!.altn;
+            ete = snapshot.data!.ete;
+          }
           if (snapshot.connectionState != ConnectionState.done &&
               snapshot.connectionState != ConnectionState.none) {
-            if (snapshot.hasData) {
-              callsign = snapshot.data!.callsign;
-              departure = snapshot.data!.dep;
-              dest = snapshot.data!.dest;
-              altn = snapshot.data!.altn;
-              ete = snapshot.data!.ete;
-            }
-
             // I wouldn't like it to be like this, but it's the only way I could figure out how without having to move the whole page into a widget of itself
             return const Center(child: CircularProgressIndicator());
           }
