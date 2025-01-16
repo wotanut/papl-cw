@@ -6,6 +6,17 @@ This is a monolithic repository structured as follows:
 
 # Project Idea
 
+I decided to reimplement the MCDU for the A320 as my papl idea. As the project is large at best, my initial submission focuses on the ATSU and building up a scalable frontend and backend. 
+
+## Key Terms
+MCDU - Multipurpose Control and Display Unit. It is the primary interface for the pilots to interact with the FMGC and ATSU of the A320
+FMGC - Flight Management and Guidance Computer
+ATSU - Air Traffic Services Unit
+ACARS - Aircraft Communications Addressing and Reporting System
+CPDLC - Controller-Pilot Data Link Communications
+PDC - Pre-Departure Clearance
+DDU - Datalkink Display Unit
+
 # Frontend Deployment
 
 The frontend is primarily built for iOS and Android but can also run on macOS (via iPhone mirroring or emulators), Windows, and Linux (via Android emulators). While the web version *should* work, it hasn't been thoroughly tested. 

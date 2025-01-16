@@ -90,6 +90,8 @@ class _FltInitState extends State<FltInit> {
             ete = snapshot.data!.ete;
           }
 
+          // The error occurs on the second time because you are trying to get details from the server with a callsign in the spad
+
           return Stack(
             children: [
               Mcdupage(
