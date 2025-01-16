@@ -77,22 +77,18 @@ class _FltInitState extends State<FltInit> {
             );
           }
 
-          if (snapshot.hasData) {
-            callsign = snapshot.data!.callsign;
-            departure = snapshot.data!.dep;
-            dest = snapshot.data!.dest;
-            altn = snapshot.data!.altn;
-            ete = snapshot.data!.ete;
-            print(ete);
-          }
-
-          print("snapshot data ${snapshot.data}");
-          print("snapshot data ${snapshot.data?.dep}");
-          print("state ${snapshot.connectionState}");
-          print(departure);
           if (snapshot.connectionState != ConnectionState.done &&
               snapshot.connectionState != ConnectionState.none) {
-            return Text("e");
+            if (snapshot.hasData) {
+              callsign = snapshot.data!.callsign;
+              departure = snapshot.data!.dep;
+              dest = snapshot.data!.dest;
+              altn = snapshot.data!.altn;
+              ete = snapshot.data!.ete;
+            }
+
+            // I wouldn't like it to be like this, but it's the only way I could figure out how without having to move the whole page into a widget of itself
+            return const Center(child: CircularProgressIndicator());
           }
 
           return Stack(
@@ -112,7 +108,10 @@ class _FltInitState extends State<FltInit> {
                       children: [
                         const Text("UTC"),
                         Text(
-                          time.hour.toString() + time.minute.toString(),
+                          time.hour.toString() +
+                              (time.minute < 10
+                                  ? '0${time.minute}'
+                                  : time.minute.toString()),
                         ) // I am not kidding when I say this doesn't actually update every minute on the real aircraft
                       ],
                     ),
@@ -213,19 +212,19 @@ class SlkEntry extends StatefulWidget {
 }
 
 class _SlkEntryState extends State<SlkEntry> {
-  late String callsign;
+  late String variable;
 
   @override
   void initState() {
     super.initState();
-    callsign = widget.slkVariable;
+    variable = widget.slkVariable;
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        callsign = widget.scratchpad;
+        variable = widget.scratchpad;
         setState(() {}); //NOTE - Needed to update the UI
       },
       child: Column(
@@ -233,9 +232,7 @@ class _SlkEntryState extends State<SlkEntry> {
         children: [
           Text(widget.title),
           Text(
-            widget.slkVariable.isNotEmpty
-                ? widget.slkVariable
-                : (widget.snapshot.data?.callsign ?? ""),
+            widget.slkVariable,
             style: const TextStyle(color: Colors.green),
           )
         ],

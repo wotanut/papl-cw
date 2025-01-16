@@ -12,7 +12,6 @@ class Slk extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // If Both
-    print("slk $slk rebuilding with ${leftKey} $rightKey");
     if (leftKey != null && rightKey != null) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
