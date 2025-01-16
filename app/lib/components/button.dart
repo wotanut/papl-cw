@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MCDUEntryBTN extends StatefulWidget {
   final bool isRightSide;
   final String title;
   final Widget? nextPage;
   final Widget? previousPage;
+  final bool unTimed; // Used for buttons like save and exit in opts
 
   const MCDUEntryBTN(
       {super.key,
+      this.unTimed = false,
       this.isRightSide = false,
       required this.title,
       this.nextPage,
@@ -18,15 +21,38 @@ class MCDUEntryBTN extends StatefulWidget {
 }
 
 class _MCDUEntryBTNState extends State<MCDUEntryBTN> {
+  bool realsiticTimings = false;
+  late SharedPreferences? prefs;
+  late var actualTitle = widget.title;
+  late int renderCounter =
+      0; // Required to remove the SEL the next time the page is rendered
+
+  @override
+  void initState() {
+    renderCounter++;
+    super.initState();
+    _loadPreferences();
+  }
+
+  Future<void> _loadPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      if (widget.unTimed) {
+        realsiticTimings = false;
+      } else {
+        realsiticTimings = prefs!.getBool('timings') ?? false;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isDisabled = false;
     VoidCallback callback = () {};
-    var actualTitle = widget.title;
 
     if (widget.isRightSide) {
       actualTitle = "${widget.title} >";
-    } else {
+    } else if (!widget.isRightSide) {
       actualTitle = "< ${widget.title}";
     }
 
@@ -34,8 +60,25 @@ class _MCDUEntryBTNState extends State<MCDUEntryBTN> {
       isDisabled = true;
     } else if (widget.nextPage != null) {
       callback = () => {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => widget.nextPage!))
+            if (realsiticTimings)
+              {
+                Future.delayed(const Duration(seconds: 2), () {
+                  if (mounted) {
+                    Navigator.push(
+                      // ignore: use_build_context_synchronously
+                      context,
+                      MaterialPageRoute(builder: (context) => widget.nextPage!),
+                    );
+                  }
+                })
+              }
+            else
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => widget.nextPage!),
+                )
+              }
           };
     } else if (widget.previousPage != null) {
       callback = () => {
@@ -46,7 +89,14 @@ class _MCDUEntryBTNState extends State<MCDUEntryBTN> {
     }
 
     return TextButton(
-      onPressed: callback,
+      onPressed: () {
+        callback();
+        if (widget.title == "ATSU") {
+          setState(() {
+            actualTitle = "< ATSU (SEL)";
+          });
+        }
+      },
       style: ButtonStyle(
         foregroundColor: WidgetStateProperty.resolveWith<Color>(
           (Set<WidgetState> states) {

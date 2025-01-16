@@ -2,6 +2,8 @@ import 'package:app/components/button.dart';
 import 'package:app/components/mcdu_page.dart';
 import 'package:app/components/slk.dart';
 import 'package:app/menus/aoc_menu.dart';
+import 'package:app/menus/atc_menu.dart';
+import 'package:app/menus/comm_menu.dart';
 import 'package:flutter/material.dart';
 
 class DlkPage extends StatefulWidget {
@@ -33,11 +35,29 @@ class _DlkPageState extends State<DlkPage> {
           slk: 1,
           leftKey: MCDUEntryBTN(
             title: "ATC MENU",
+            nextPage: AtcMenu(),
           ),
           rightKey: MCDUEntryBTN(
             nextPage: AocMenu(),
             title: "AOC MENU",
             isRightSide: true,
+          ),
+        ),
+        Slk(
+          slk: 5,
+          leftKey: null,
+          rightKey: MCDUEntryBTN(
+            title: "DATALINK STATUS",
+            isRightSide: true,
+          ),
+        ),
+        Slk(
+          slk: 6,
+          leftKey: null,
+          rightKey: MCDUEntryBTN(
+            title: "COMM MENU",
+            isRightSide: true,
+            nextPage: CommPage(),
           ),
         )
       ]),

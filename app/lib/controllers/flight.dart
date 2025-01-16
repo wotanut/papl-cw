@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:app/models/Flight.dart';
+import 'package:app/models/flight.dart';
 import 'package:http/http.dart' as http;
 
 import '../globals.dart' as globals;
@@ -23,7 +23,7 @@ Future<Flight> createFlight(String callsign, String dest, String departure,
   );
 
   if (response.statusCode != 200) {
-    return Future.error('Error ${response.statusCode}');
+    return Future.error('Error ${response.statusCode} - ${response.body}');
   } else {
     // Flight model succesfully created
     return Flight.fromJson(jsonDecode(response.body) as Map<String, dynamic>);

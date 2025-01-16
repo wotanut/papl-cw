@@ -1,17 +1,17 @@
 import 'package:app/components/button.dart';
 import 'package:app/components/mcdu_page.dart';
 import 'package:app/components/slk.dart';
-import 'package:app/pages/init.dart';
+import 'package:app/menus/aoc_menu.dart';
 import 'package:flutter/material.dart';
 
-class AocMenu extends StatefulWidget {
-  const AocMenu({super.key});
+class AtcMenu extends StatefulWidget {
+  const AtcMenu({super.key});
 
   @override
-  State<AocMenu> createState() => _AocMenuState();
+  State<AtcMenu> createState() => _AtcMenuState();
 }
 
-class _AocMenuState extends State<AocMenu> {
+class _AtcMenuState extends State<AtcMenu> {
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -25,52 +25,33 @@ class _AocMenuState extends State<AocMenu> {
         centerTitle: true, // For anroid, defualt on iOS
         actions: const [Icon(Icons.arrow_circle_up_sharp)],
         title: const Text(
-          "ATSU DATALINK",
+          "ATC MENU",
         ),
       ),
       body: const Mcdupage(slkButtons: [
         Slk(
           slk: 1,
-          rightKey: MCDUEntryBTN(
-            title: "WX",
-            isRightSide: true,
-          ),
+          rightKey: null,
           leftKey: MCDUEntryBTN(
-            nextPage: FltInit(),
-            title: "FLT INIT",
-          ),
-        ),
-        Slk(
-          slk: 2,
-          leftKey: MCDUEntryBTN(title: "ATC REQ"),
-          rightKey: MCDUEntryBTN(
-            title: "ATIS",
-            isRightSide: true,
-          ),
-        ),
-        Slk(
-          slk: 3,
-          leftKey: null,
-          rightKey: MCDUEntryBTN(
-            title: "DIVERSION",
-            isRightSide: true,
+            title: "REQUEST",
           ),
         ),
         Slk(
           slk: 4,
           rightKey: MCDUEntryBTN(
-            title: "ADC DELAY",
+            title: "REPORTS",
             isRightSide: true,
           ),
-          leftKey: MCDUEntryBTN(title: "FREE TEXT"),
+          leftKey: MCDUEntryBTN(title: "MSG RECORD"),
         ),
+        Slk(slk: 5, leftKey: MCDUEntryBTN(title: "CONNECTION"), rightKey: null),
         Slk(
-          slk: 5,
-          leftKey: MCDUEntryBTN(title: "ARR MSG"),
-          rightKey: MCDUEntryBTN(
-            title: "RCVD MSGS",
-            isRightSide: true,
+          slk: 6,
+          leftKey: MCDUEntryBTN(
+            title: "ATSU RETURN",
+            previousPage: AocMenu(),
           ),
+          rightKey: null,
         )
       ]),
     );
